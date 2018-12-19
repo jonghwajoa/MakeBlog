@@ -1,2 +1,0 @@
-# MakeBlog
-blog v2

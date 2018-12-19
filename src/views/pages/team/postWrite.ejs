@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <title>WeKnowJS</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <% include ../../partials/team/essentialCss.ejs %>
+    <link rel="stylesheet" href="/css/team/postWrite.css" />
+    <% include ../../partials/team/editorWrite.ejs %>
+  </head>
+
+  <body>
+    <% include ../../partials/team/header.ejs %>
+
+    <article>
+      <section>
+        <div class="custom title">
+          <input type="text" id="title" name="title" placeholder="Title" />
+        </div>
+        <div class="custom tag">
+          <input type="text" id="tag" name="tag" placeholder="Tag" />
+        </div>
+        <div class="category">
+          <label for="category">category</label>
+          <select name="category" id="category">
+            <option value="1">TeamStudy</option>
+            <option value="2">PersonStudy</option>
+            <option value="3">SubProject</option>
+          </select>
+        </div>
+        <div id="editSection" id="content" name="content"></div>
+
+        <button class="custom" onclick="back()">뒤로가기</button>
+        <button class="custom" id="submit" onclick="submit()">작성하기</button>
+      </section>
+    </article>
+
+    <% include ../../partials/footer.ejs %>
+
+    <script>
+      let editor = new tui.Editor({
+        el: document.getElementById('editSection'),
+        initialEditType: 'markdown',
+        previewStyle: 'vertical',
+        height: '120vh',
+        exts: [
+          'scrollSync',
+          'table',
+          'uml',
+          {
+            name: 'chart',
+            minWidth: 100,
+            maxWidth: 600,
+            minHeight: 100,
+            maxHeight: 300,
+          },
+          'colorSyntax',
+        ],
+
+        hooks: {
+          addImageBlobHook(fileOrBlob, callback) {
+            savePhoto(fileOrBlob, callback);
+          },
+        },
+      });
+
+      function savePhoto(photo, cb) {
+        const xhr = new XMLHttpRequest();
+        const formData = new FormData();
+        formData.append('photo', photo);
+        xhr.onload = function() {
+          if (xhr.status === 200) {
+            return cb(`http://localhost/images/${xhr.responseText}`);
+          }
+          return alert(`업로드 실패\n${xhr.responseText}`);
+        };
+        xhr.open('POST', '/posts/file', true);
+        xhr.send(formData);
+      }
+
+      function submit() {
+        const title = document.getElementById('title').value;
+        if (!title) {
+          alert('제목을 입력하세요..');
+          return false;
+        }
+        let content = editor
+          .getValue()
+          .trim()
+          .replace(/`/g, '&grave;');
+        if (!content) {
+          alert('내용을 입력하세요.');
+          return false;
+        }
+
+        const category = document.getElementById('category');
+        const categoryText = '#' + category[category.value - 1].text;
+        const tag =
+          categoryText +
+          ' #' +
+          document
+            .getElementById('tag')
+            .value.trim()
+            .replace(/\s*,+\s*|\s+/g, ' #');
+        const params = {
+          title,
+          tag,
+          content,
+          category: category.value,
+        };
+        const xhr = new XMLHttpRequest();
+        xhr.onload = function() {
+          if (xhr.status === 200 || xhr.status === 201) {
+            location.href = '/posts/';
+          } else {
+            alert(`작성 실패\n${xhr.responseText}`);
+          }
+        };
+        xhr.open('POST', '/posts/', true);
+        xhr.setRequestHeader('Content-type', 'application/json');
+        xhr.send(JSON.stringify(params));
+      }
+    </script>
+  </body>
+</html>

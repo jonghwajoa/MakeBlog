@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <title>WeKnowJS</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <% include ../../partials/team/essentialCss.ejs %>
+        <link rel='stylesheet' href='/css/team/postWrite.css' />
+        <% include ../../partials/team/editorWrite.ejs %>
+
+
+</head>
+
+<body>
+    <% include ../../partials/team/header.ejs %>
+
+        <article>
+            <section>
+                <div class='custom title'>
+                    <input type='text' id='title' name='title' placeholder='Title' /> </div>
+                </div>
+                <div id="editSection" id='content' name='content'>
+                </div>
+
+                <button class='custom' onclick='back()'>뒤로가기 </button>
+                <button class='custom' onclick='update()'>수정하기</button>
+            </section>
+        </article>
+
+        <% include ../../partials/footer.ejs %>
+
+            <script>
+                      let content = `<%- post.content %>`
+                        .replace(/&gt;/g, '>')
+                        .replace(/&#39;/g, "'")
+                        .replace(/&lt;/g, '<')
+                        .replace(/&#34;/g, '"')
+                        .replace(/&grave;/g, '\`')
+                        .replace(/&amp;/g, '&');
+                let title = document.getElementById('title')
+                title.value = `<%= post.title %>`.replace(/&gt;/g, '>')
+                        .replace(/&#39;/g, "'")
+                        .replace(/&lt;/g, '<')
+                        .replace(/&#34;/g, '"')
+                        .replace(/&grave;/g, '\`')
+                        .replace(/&amp;/g, '&');
+
+                let editor = new tui.Editor({
+                    el: document.getElementById('editSection'),
+                    initialEditType: 'markdown',
+                    initialValue: content,
+                    previewStyle: 'vertical',
+                    height: '100vh',
+                    exts: ['scrollSync', 'table', 'uml', {
+                        name: 'chart',
+                        minWidth: 100,
+                        maxWidth: 600,
+                        minHeight: 100,
+                        maxHeight: 300
+                    }, 'colorSyntax'],
+
+                    hooks: {
+                        addImageBlobHook(fileOrBlob, callback) {
+                            savePhoto(fileOrBlob, callback)
+                        }
+                    },
+
+                });
+
+
+                function savePhoto(photo, cb) {
+                    const xhr = new XMLHttpRequest();
+                    const formData = new FormData();
+                    formData.append("photo", photo);
+                    xhr.onload = function () {
+                        if (xhr.status === 200) {
+                            return cb(`http://localhost/images/${xhr.responseText}`);
+                        }
+                        return alert('업로드 실패')
+                    }
+                    xhr.open('POST', '/posts/file', true);
+                    xhr.send(formData);
+                }
+
+                function update() {
+                    let content = editor
+                    .getValue()
+                     .trim()
+                    .replace(/`/g, '&grave;');
+                    const params = {
+                        title: document.getElementById('title').value,
+                        content,
+                    }
+
+                    const xhr = new XMLHttpRequest();
+                    xhr.onload = function () {
+                        if (xhr.status === 200 || xhr.status === 204) {
+                            alert('수정 성공')
+                            location.href = '/posts/<%=home%>/<%=post.no%>'
+                        } else {
+                            alert(`작성 실패\n${xhr.responseText}`)
+                        }
+                    }
+                    xhr.open('PUT', '/posts/<%=home%>/<%=post.no%>', true);
+                    xhr.setRequestHeader('Content-type', 'application/json');
+                    xhr.send(JSON.stringify(params))
+
+                }
+
+            </script>
+
+
+
+
+</body>
+
+</html>

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>WeKnowJS</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <% include ../../partials/team/essentialCss.ejs %>
+    <link rel='stylesheet' href='/css/common/postsRead.css' />
+    <% include ../../partials/editorViewer.ejs %>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <link rel='stylesheet' href='/css/team/header.css' />
+
+</head>
+
+<body>
+    <% include ../../partials/team/header.ejs %>
+
+
+    <article class="post">
+        <section class='title'>
+            <div class='intro'>
+                <h1>
+                    <%= post.title %>
+                </h1>
+                <dl class=postInfo>
+                    <dt>
+                    <dd>
+                        <%= post.created_at %> |
+                    </dd>
+                    </dt>
+                    <dt>
+                    <dd>
+                        View
+                        <%= post.count %>
+                    </dd>
+                    </dt>
+                </dl>
+            </div>
+
+            <div class="manageArea">
+                <a href='/posts/<%= post.no%>/edit'>
+                    <input type="button" value='수정하기' id='update' />
+                </a>
+                <input type="button" value='삭제하기' id='delete' onclick="deletePost()" />
+            </div>
+        </section>
+
+
+        <section class='content'>
+            <div id="content"></div>
+            <div class="side">
+                <div class='sidePosts'>
+                    <div class='sideTop'>
+                        <h2>Sub Posts</h2>
+                    </div>
+
+                    <div class='subPosts'>
+                        <a href='/posts/<%=post.no%>'>Home</a>
+                        <% subPost.forEach((item,index) => { %>
+                        <a href='/posts/<%=post.no%>/<%=item.no %>'>
+                            <%=item.title %></a>
+                        <% }) %>
+                    </div>
+                </div>
+
+                <div class='subPostAdd'>
+                    <a href="/posts/<%=post.no%>/new">
+                        <input type="button" value='add subPage' />
+                    </a>
+
+                </div>
+            </div>
+
+        </section>
+
+
+        <section>
+            <div id="disqus_thread"></div>
+        </section>
+    </article>
+
+
+    <% include ../../partials/footer.ejs %>
+
+    <noscript>Please enable JavaScript</noscript>
+
+    <script>
+        window.onload = function () {
+            const disqus_config = function () {
+                this.page.url = '/posts/<%=post.no%>';  // Replace PAGE_URL with your page's canonical URL variable
+                this.page.identifier = `<%=post.no%>`; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+            };
+
+            (function () { // DON'T EDIT BELOW THIS LINE
+                var d = document, s = d.createElement('script');
+                s.src = 'https://weknowjs-xyz.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+
+
+            let content = `<%- post.content %>`.replace(/&gt;/g, '>').replace(/&#39;/g, '\'').replace(/&lt;/g, '<').replace(/&#34;/g, '\"').replace(/&grave;/g,'\`').replace(/&amp;/g,'&');
+
+            let editor = new tui.Editor({
+                el: document.querySelector('#content'),
+                initialValue: content,
+                exts: ['table', 'uml', {
+                    name: 'chart',
+                    minWidth: 100,
+                    maxWidth: 600,
+                    minHeight: 100,
+                    maxHeight: 300
+                }]
+            });
+
+
+
+            
+        }
+
+        function deletePost() {
+            let confirmflag = confirm("게시글을 삭제하시겠습니까..??\n서브게시글도 전부 삭제됩니다.");
+            if (confirmflag) {
+                const xhr = new XMLHttpRequest();
+                xhr.onload = function () {
+                    if (xhr.status === 200 || xhr.status === 204) {
+                        alert('삭제성공')
+                        location.href = '/posts/'
+                    } else {
+                        alert(`작성 실패\n${xhr.responseText}`)
+                    }
+                }
+                xhr.open('DELETE', '/posts/<%=post.no%>', true);
+                xhr.setRequestHeader('Content-type', 'application/json');
+                xhr.send()
+            }
+        }
+    </script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,8 @@
+node_modules/
+.vscode/
+src/lib/ssl
+src/uploads/
+src/config
+.env
+src/bin/www.js
+src/public
