@@ -31,7 +31,7 @@
         <% include ../../partials/footer.ejs %>
 
             <script>
-                      let content = `<%- post.content %>`
+                let content = `<%- post.content %>`
                         .replace(/&gt;/g, '>')
                         .replace(/&#39;/g, "'")
                         .replace(/&lt;/g, '<')
@@ -65,9 +65,7 @@
                             savePhoto(fileOrBlob, callback)
                         }
                     },
-
                 });
-
 
                 function savePhoto(photo, cb) {
                     const xhr = new XMLHttpRequest();
@@ -105,14 +103,7 @@
                     xhr.open('PUT', '/posts/<%=home%>/<%=post.no%>', true);
                     xhr.setRequestHeader('Content-type', 'application/json');
                     xhr.send(JSON.stringify(params))
-
                 }
-
             </script>
-
-
-
-
 </body>
-
 </html>

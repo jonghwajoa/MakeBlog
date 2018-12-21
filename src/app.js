@@ -6,12 +6,14 @@ const cookieParser = require('cookie-parser');
 const morgan = require('morgan');
 const helmet = require('helmet');
 const hpp = require('hpp');
-require('dotenv').config();
 
+const visitMiddle = require('./lib/middleware/visit');
+
+require('dotenv').config();
 if (process.env.NODE_ENV === 'production') {
   app.use(morgan('combined'));
 } else {
-  app.use(morgan('dev'));
+  //app.use(morgan('dev'));
 }
 
 app.set('views', `${__dirname}/views/pages`);
@@ -42,8 +44,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json({ limit: '50mb' }));
 app.use(cookieParser());
 app.use(hpp());
-app.use(require('./lib/middleware/visit').visitToday);
-
+app.use(visitMiddle.visit);
 app.use('/', require('./api'));
 
 module.exports = app;

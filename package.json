@@ -34,6 +34,7 @@
     "sequelize": "^4.38.0",
     "sequelize-cli": "^4.1.1",
     "tui-editor": "^1.2.6",
+    "ua-parser-js": "^0.7.19",
     "winston": "^3.0.0"
   },
   "devDependencies": {

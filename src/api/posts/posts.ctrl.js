@@ -197,7 +197,7 @@ remove = async (req, res, next) => {
   try {
     result = await postDB.findById(id);
     if (!result) return next();
-    await result.destroy();
+    await result.destroy(id);
   } catch (e) {
     return next(e);
   }
@@ -218,10 +218,6 @@ removeSubPost = async (req, res, next) => {
 };
 
 uploadImage = (req, res, next) => {
-  console.log('응..?');
-  console.log('응..?');
-  console.log('응..?');
-  //return res.json('ㅋㅋㅋ')
   return res.end(req.files[0].filename);
 };
 
