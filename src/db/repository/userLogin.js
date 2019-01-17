@@ -1,6 +1,6 @@
 const { UserLogin } = require('../../db');
 
-create = (id, pw, transaction) => {
+const create = (id, pw, transaction) => {
   return UserLogin.create(
     {
       id,
@@ -10,7 +10,7 @@ create = (id, pw, transaction) => {
   );
 };
 
-findById = id => {
+const findById = id => {
   return UserLogin.findOne({
     where: {
       id,

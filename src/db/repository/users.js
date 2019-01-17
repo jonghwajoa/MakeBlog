@@ -1,6 +1,6 @@
 const { Users } = require('../../db');
 
-create = (no, id, nickname, transaction) => {
+const create = (no, id, nickname, transaction) => {
   return Users.create(
     {
       no,

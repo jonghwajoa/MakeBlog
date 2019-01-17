@@ -18,14 +18,12 @@ const storage = multer.diskStorage({
       const salt = await bcrypt.genSalt(10);
       reName = await bcrypt.hash(fileName[0], salt);
     } catch (e) {
-      console.log(`응..? 왜!@#!@`);
       cb(null, false);
     }
     let finalName = `${reName}.${fileName[fileName.length - 1]}`.replace(
       /\//g,
       'v',
     );
-    console.log(`응..?`);
     cb(null, finalName);
   },
 });
@@ -36,8 +34,6 @@ const upload = multer({
   },
   fileFilter: function(req, file, cb) {
     const mimetype = file.mimetype.split('/');
-    console.log(`밈타입`);
-    console.log(mimetype);
     mimetype[0] === 'image' ? cb(null, true) : cb(null, false);
   },
 });

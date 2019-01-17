@@ -15,6 +15,15 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: true,
         defaultValue: false,
       },
+      ip: {
+        type: DataTypes.STRING(20),
+      },
+      referrer: {
+        type: DataTypes.TEXT,
+      },
+      path: {
+        type: DataTypes.TEXT,
+      },
     },
     {
       freezeTableName: true,

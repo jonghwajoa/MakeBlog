@@ -1,12 +1,12 @@
 const { Posts } = require('../../db');
 
-findById = id => {
+const findById = id => {
   return Posts.findById(id, {
     attributes: ['no', 'title', 'tag', 'content', 'category_no'],
   });
 };
 
-findHotPost = () => {
+const findHotPost = () => {
   return Posts.findAll({
     limit: 5,
     attributes: ['no', 'title'],
@@ -14,7 +14,7 @@ findHotPost = () => {
   });
 };
 
-findAllList = (pageNum = 10, offset = 0) => {
+const findAllList = (pageNum = 10, offset = 0) => {
   return Posts.findAll({
     limit: pageNum,
     offset,
@@ -36,9 +36,7 @@ findAllList = (pageNum = 10, offset = 0) => {
   });
 };
 
-creatPost = ({ title, tag, content, category }, writer) => {
-  console.log('writer는');
-  console.log(writer);
+const creatPost = ({ title, tag, content, category }, writer) => {
   return Posts.create({
     title,
     tag,
@@ -48,7 +46,7 @@ creatPost = ({ title, tag, content, category }, writer) => {
   });
 };
 
-postFindById = id => {
+const postFindById = id => {
   return Posts.findById(id, {
     attributes: [
       'no',
@@ -68,7 +66,7 @@ postFindById = id => {
   });
 };
 
-deleteById = id => {
+const deleteById = id => {
   return Posts.destroy({
     where: {
       no: id,
@@ -76,7 +74,7 @@ deleteById = id => {
   });
 };
 
-updateById = (id, title, content, categories) => {
+const updateById = (id, title, content, categories) => {
   return Posts.update(
     {
       title,
@@ -87,7 +85,7 @@ updateById = (id, title, content, categories) => {
   );
 };
 
-totalCount = () => {
+const totalCount = () => {
   return Posts.count();
 };
 

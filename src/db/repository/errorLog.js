@@ -1,9 +1,12 @@
 const { errorLog } = require('../../db');
 
-create = (status, content) => {
+const create = (status, content, ip, referrer, path) => {
   return errorLog.create({
     status,
     content,
+    ip,
+    referrer,
+    path,
   });
 };
 

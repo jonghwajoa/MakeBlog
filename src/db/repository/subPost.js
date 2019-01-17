@@ -1,6 +1,6 @@
 const { SubPosts } = require('../../db');
 
-create = (postNo, { title, content }) => {
+const create = (postNo, { title, content }) => {
   return SubPosts.create({
     title,
     content,
@@ -8,11 +8,11 @@ create = (postNo, { title, content }) => {
   });
 };
 
-findById = id => {
+const findById = id => {
   return SubPosts.findById(id);
 };
 
-findHotPost = () => {
+const findHotPost = () => {
   return SubPosts.findAll({
     limit: 5,
     attributes: ['no', 'title', 'post_no'],
@@ -20,7 +20,7 @@ findHotPost = () => {
   });
 };
 
-findByPostNo = id => {
+const findByPostNo = id => {
   return SubPosts.findAll({
     where: {
       post_no: id,
@@ -29,7 +29,7 @@ findByPostNo = id => {
   });
 };
 
-findDetailByPostNo = id => {
+const findDetailByPostNo = id => {
   return SubPosts.findById(id, {
     attributes: [
       'no',

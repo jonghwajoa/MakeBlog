@@ -11,10 +11,7 @@ router.get('/about', async (req, res) => {
   return res.render('noauth/aboutTeam');
 });
 
-router.get('/test', (req, res) => {
-  return res.render('deleteindex');
-});
-
+router.use('/cote', require('./cote'));
 router.use('/auth', require('./auth'));
 router.use('/posts', require('./posts'));
 
@@ -32,7 +29,13 @@ router.use((err, req, res, next) => {
   err.message = err.message || 'Server Error';
 
   if (err.status === 500) {
-    errorDB.create(err.status, err.stack);
+    errorDB.create(
+      err.status,
+      err.stack,
+      req.ip.substr(7),
+      req.headers['referer'],
+      req._parsedUrl.path,
+    );
   }
 
   if (req.headers['content-type'] === 'application/json') {

@@ -80,15 +80,16 @@
 
       function submit() {
         const title = document.getElementById('title').value;
-        if (!title) {
-          alert('제목을 입력하세요..');
-          return false;
-        }
         let content = editor
           .getValue()
           .trim()
           .replace(/`/g, '&grave;');
-          
+
+        if (!title) {
+          alert('제목을 입력하세요..');
+          return false;
+        }
+
         if (!content) {
           alert('내용을 입력하세요.');
           return false;

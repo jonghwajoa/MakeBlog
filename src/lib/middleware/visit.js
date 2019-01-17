@@ -28,19 +28,20 @@ async function visit(req, res, next) {
     device: ua.device.model,
     device_type: ua.device.type,
     device_vendor: ua.device.vendor,
-    ip: req.ip,
+    ip: req.ip.substr(7),
     referrer: req.headers['referer'],
     path: req._parsedUrl.path,
     year,
     month,
     day,
   };
+
   visitLogDB.create(log);
 
   next();
 }
 
-getToday = date => {
+const getToday = date => {
   return ([year, month, day] = [
     date.getFullYear(),
     ('0' + (date.getMonth() + 1)).slice(-2),

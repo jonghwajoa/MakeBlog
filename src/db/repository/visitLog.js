@@ -1,6 +1,6 @@
 const { VisitLog } = require('../../db');
 
-create = obj => {
+const create = obj => {
   return VisitLog.create({
     ...obj,
   });

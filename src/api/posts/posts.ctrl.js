@@ -53,7 +53,7 @@ list = async (req, res, next) => {
       ],
     );
   } catch (e) {
-    next(e);
+    return next(e);
   }
 
   pagingInfo = libPost.paging(totalCnt, req.query);
@@ -61,7 +61,7 @@ list = async (req, res, next) => {
   try {
     postList = await postDB.findAllList(pagingInfo.perPageNum, offset);
   } catch (e) {
-    next(e);
+    return next(e);
   }
 
   if (req.session.isLogin)
@@ -96,7 +96,7 @@ show = async (req, res, next) => {
     subPost = await subPostDB.findByPostNo(id);
     post.updateAttributes({ count: post.dataValues.count + 1 });
   } catch (e) {
-    next(e);
+    return next(e);
   }
 
   if (req.session.isLogin)
@@ -113,7 +113,7 @@ showSubPost = async (req, res, next) => {
     post.updateAttributes({ count: post.dataValues.count + 1 });
     subPost = await subPostDB.findByPostNo(id);
   } catch (e) {
-    next(e);
+    return next(e);
   }
 
   if (req.session.isLogin)
@@ -129,7 +129,7 @@ updateView = async (req, res, next) => {
     post = await postDB.findById(id);
     if (!post) return next();
   } catch (e) {
-    next(e);
+    return next(e);
   }
   return res.render('team/postsUpdate', { post });
 };
@@ -164,7 +164,7 @@ updateSubView = async (req, res, next) => {
     post = await subPostDB.findById(subId);
     if (!post) return next();
   } catch (e) {
-    next(e);
+    return next(e);
   }
 
   return res.render('team/subPostUpdate', { home: id, post });

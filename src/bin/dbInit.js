@@ -27,8 +27,17 @@ categories = () => {
   ]);
 };
 
+categoriesCote = () => {
+  db.CategoriesCote.bulkCreate([
+    { title: 'Stack', order: 1 },
+    { title: 'Queue', order: 2 },
+    { title: 'DP', order: 3 },
+  ]);
+};
+
 module.exports = {
   post,
   grade,
   categories,
+  categoriesCote,
 };

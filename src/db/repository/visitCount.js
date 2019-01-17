@@ -1,6 +1,6 @@
 const { VisitCount } = require('../../db');
 
-findOrCreate = (year, month, day) => {
+const findOrCreate = (year, month, day) => {
   return VisitCount.findOrCreate({
     where: {
       year,
@@ -10,13 +10,13 @@ findOrCreate = (year, month, day) => {
   });
 };
 
-findMonthCount = (year, month) => {
+const findMonthCount = (year, month) => {
   return VisitCount.sum('count', {
     where: { year, month },
   });
 };
 
-findToalCount = month => {
+const findToalCount = month => {
   return VisitCount.sum('count');
 };
 
