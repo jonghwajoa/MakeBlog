@@ -1,10 +1,11 @@
 const { SubPosts } = require('../../db');
 
-const create = (postNo, { title, content }) => {
+const create = (postNo, { title, content }, sub_no) => {
   return SubPosts.create({
     title,
     content,
     post_no: postNo,
+    sub_no,
   });
 };
 
@@ -25,12 +26,13 @@ const findByPostNo = id => {
     where: {
       post_no: id,
     },
-    attributes: ['no', 'title'],
+    attributes: ['title', 'sub_no'],
   });
 };
 
-const findDetailByPostNo = id => {
-  return SubPosts.findById(id, {
+const findDetailByPostNo = (postId, subId) => {
+  return SubPosts.findOne({
+    where: { post_no: postId, sub_no: subId },
     attributes: [
       'no',
       'title',
@@ -48,10 +50,19 @@ const findDetailByPostNo = id => {
   });
 };
 
+const findNextNo = postNo => {
+  return SubPosts.max('sub_no', {
+    where: {
+      post_no: postNo,
+    },
+  });
+};
+
 module.exports = {
   create,
   findByPostNo,
   findDetailByPostNo,
   findHotPost,
   findById,
+  findNextNo,
 };

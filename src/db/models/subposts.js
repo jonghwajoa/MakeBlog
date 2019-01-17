@@ -18,6 +18,9 @@ module.exports = (sequelize, DataTypes) => {
         defaultValue: 0,
         allowNull: false,
       },
+      sub_no: {
+        type: DataTypes.INTEGER,
+      },
     },
     {
       freezeTableName: true,

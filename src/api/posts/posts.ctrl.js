@@ -2,15 +2,16 @@ const postDB = require('../../db/repository/posts');
 const subPostDB = require('../../db/repository/subPost');
 const libPost = require('../../lib/validation/post');
 const visitDB = require('../../db/repository/visitCount');
-createView = (req, res) => {
+
+const createView = (req, res) => {
   return res.render('team/postWrite');
 };
 
-createSubView = (req, res) => {
+const createSubView = (req, res) => {
   return res.render('team/subPostWrite', { no: req.params.id });
 };
 
-create = async (req, res, next) => {
+const create = async (req, res, next) => {
   if (!libPost.postValidation(req.body)) {
     return res.status(400).json('입력이 올바르지 않습니다.');
   }
@@ -23,22 +24,23 @@ create = async (req, res, next) => {
   }
 };
 
-createSubPost = async (req, res, next) => {
+const createSubPost = async (req, res, next) => {
   let id = req.params.id;
-
   if (!libPost.subPostValidation(req.body)) {
     return res.status(400).json('입력이 올바르지 않습니다.');
   }
 
   try {
-    let result = await subPostDB.create(id, req.body);
+    let nextNo = await subPostDB.findNextNo(id);
+    nextNo = isNaN(nextNo) ? 2 : nextNo + 1;
+    let result = await subPostDB.create(id, req.body, nextNo);
     return res.status(201).json(result);
   } catch (e) {
     return next(e);
   }
 };
 
-list = async (req, res, next) => {
+const list = async (req, res, next) => {
   let postList, totalCnt, pagingInfo;
   let hotPost, hotSubPost, monthCount, totalCount;
 
@@ -86,7 +88,7 @@ list = async (req, res, next) => {
   });
 };
 
-show = async (req, res, next) => {
+const show = async (req, res, next) => {
   const id = req.params.id;
   let post, subPost;
 
@@ -104,15 +106,18 @@ show = async (req, res, next) => {
   return res.render('noauth/postsRead', { post, subPost });
 };
 
-showSubPost = async (req, res, next) => {
+const showSubPost = async (req, res, next) => {
   const { id, subId } = req.params;
+  console.log(`id는 ${id} subid는 ${subId}`);
   let post, subPost;
   try {
-    post = await subPostDB.findDetailByPostNo(subId);
+    post = await subPostDB.findDetailByPostNo(id, subId);
     if (!post) return next();
     post.updateAttributes({ count: post.dataValues.count + 1 });
-    subPost = await subPostDB.findByPostNo(id);
+    subPost = await subPostDB.findByPostNo(id, subId);
   } catch (e) {
+    console.log(e);
+    console.log('이거아냐?');
     return next(e);
   }
 
@@ -121,7 +126,7 @@ showSubPost = async (req, res, next) => {
   return res.render('noauth/subPostRead', { post, subPost, home: id });
 };
 
-updateView = async (req, res, next) => {
+const updateView = async (req, res, next) => {
   const { id } = req.params;
   let post;
 
@@ -134,7 +139,7 @@ updateView = async (req, res, next) => {
   return res.render('team/postsUpdate', { post });
 };
 
-update = async (req, res, next) => {
+const update = async (req, res, next) => {
   let { id } = req.params;
   let { title, tag, content, category } = req.body;
 
@@ -156,7 +161,7 @@ update = async (req, res, next) => {
   return res.status(204).end();
 };
 
-updateSubView = async (req, res, next) => {
+const updateSubView = async (req, res, next) => {
   const { id, subId } = req.params;
 
   let post;
@@ -170,7 +175,7 @@ updateSubView = async (req, res, next) => {
   return res.render('team/subPostUpdate', { home: id, post });
 };
 
-updateSubPost = async (req, res, next) => {
+const updateSubPost = async (req, res, next) => {
   let { subId } = req.params;
   let { title, content } = req.body;
 
@@ -191,7 +196,7 @@ updateSubPost = async (req, res, next) => {
   return res.status(204).end();
 };
 
-remove = async (req, res, next) => {
+const remove = async (req, res, next) => {
   let { id } = req.params;
   let result;
   try {
@@ -204,7 +209,7 @@ remove = async (req, res, next) => {
   res.status(204).end();
 };
 
-removeSubPost = async (req, res, next) => {
+const removeSubPost = async (req, res, next) => {
   let { subId } = req.params;
   let result;
   try {
@@ -217,7 +222,7 @@ removeSubPost = async (req, res, next) => {
   res.status(204).end();
 };
 
-uploadImage = (req, res, next) => {
+const uploadImage = (req, res, next) => {
   return res.end(req.files[0].filename);
 };
 
