@@ -1,0 +1,29 @@
+footer {
+  overflow: hidden;
+  background-color: #fff;
+}
+
+footer .content::before {
+  display: block;
+  content: '';
+  margin: 20px auto 0;
+  border-top: 1px solid rgba(200, 200, 200, 1);
+}
+
+footer .content {
+  font-family: 'Nanum Gothic', sans-serif;
+  font-weight: bold;
+  text-align: center;
+  font-size: 1.5rem;
+  line-height: 50px;
+}
+
+@media (max-width: 700px) {
+  footer .content {
+    font-family: 'Nanum Gothic', sans-serif;
+    font-weight: bold;
+    text-align: center;
+    font-size: 0.8rem;
+    line-height: 50px;
+  }
+}

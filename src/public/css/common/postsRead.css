@@ -1,0 +1,166 @@
+article {
+  min-height: 80vh;
+  max-width: 1500px;
+  margin: 10px auto 50px;
+  box-sizing: border-box;
+  padding: 30px 50px;
+}
+
+section.title {
+  margin-bottom: 20px;
+}
+
+.title .manageArea {
+  text-align: right;
+  height: 0;
+}
+
+.title .manageArea input[type='button'] {
+  position: relative;
+  bottom: 50px;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  background-color: violet;
+  font-size: 1.5rem;
+}
+
+section.title::after {
+  display: block;
+  content: '';
+  margin-top: 20px;
+  border-bottom: 1px solid #e6ebf1;
+}
+
+section .intro {
+  box-sizing: border-box;
+  font-family: 'Do Hyeon', sans-serif;
+}
+
+section .intro h1 {
+  font-size: 2rem;
+  color: black;
+  margin-bottom: 10px;
+}
+
+section .intro dl {
+  display: block;
+}
+
+section .intro dt {
+  display: inline-block;
+}
+
+section .intro dd {
+  display: inline-block;
+}
+
+article section.content {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 100px;
+}
+
+article section.content #content {
+  flex-basis: 100%;
+  font-size: 1.5rem;
+}
+
+article section.content .side {
+  flex-basis: 250px;
+  flex-shrink: 0;
+  margin-left: 50px;
+}
+
+.sidePosts {
+  border-radius: 5px;
+  box-shadow: 0 0 0px 1px rgba(0, 0, 0, 0.3);
+}
+
+sidePosts .sideTop {
+  background-color: #d1d5da;
+}
+
+.sidePosts .sideTop h2 {
+  text-align: center;
+  font-family: 'Nanum Gothic', sans-serif;
+  font-size: 1.3rem;
+  font-weight: bold;
+  padding: 10px 0;
+  border-bottom: 1px solid #d1d5da;
+  box-sizing: border-box;
+}
+
+.sidePosts .subPosts {
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+@media (min-width: 801px) {
+  .sidePosts .subPosts a {
+    display: block;
+    overflow: hidden;
+    width: inherit;
+    max-width: 250px;
+    padding: 10px 10px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+}
+
+.sidePosts .subPosts a:hover {
+  color: #e67700;
+}
+
+a + a {
+  border-top: 1px solid #cccccc;
+}
+
+.side input[type='button'] {
+  margin-top: 20px;
+  width: 250px;
+  padding: 10px 5px;
+  border: none;
+  cursor: pointer;
+  outline: none;
+  background-color: violet;
+  color: white;
+  font-size: 1.3rem;
+}
+
+@media (max-width: 800px) {
+  article {
+    min-height: 80vh;
+    margin: 10px 10px;
+    box-sizing: border-box;
+    padding: 10px;
+  }
+
+  article section.content {
+    display: flex;
+    flex-direction: column-reverse;
+  }
+
+  article section.content .side {
+    flex-shrink: 0;
+    flex-basis: 0;
+    margin: 0;
+  }
+
+  article section.content .side::after {
+    display: block;
+    content: '';
+    margin-top: 20px;
+    border-top: 4px solid #c9add8;
+  }
+
+  .sidePosts .subPosts a {
+    display: block;
+    overflow: hidden;
+    width: inherit;
+    padding: 10px 10px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+}

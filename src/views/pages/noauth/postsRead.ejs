@@ -41,7 +41,9 @@
 
 
         <section class='content'>
-            <div id="content"></div>
+            <div id="content">
+               
+            </div>
             <div class="side">
                 <div class='sidePosts'>
                     <div class='sideTop'>
@@ -66,13 +68,17 @@
         <section>
             <div id="disqus_thread"></div>
         </section>
+
+        <p hidden id="hiddenContent">
+            <%- post.content %>
+        </p>
     </article>
 
 
     <% include ../../partials/footer.ejs %>
 
     <noscript>Please enable JavaScript</noscript>
-
+    <script src="/js/editor/editor.js"></script>
     <script>
         window.onload = function () {
             const disqus_config = function () {
@@ -86,19 +92,6 @@
                 s.setAttribute('data-timestamp', +new Date());
                 (d.head || d.body).appendChild(s);
             })();
-
-            let content = `<%- post.content %>`.replace(/&gt;/g, '>').replace(/&#39;/g, '\'').replace(/&lt;/g, '<').replace(/&#34;/g, '\"').replace(/&grave;/g,'\`').replace(/&amp;/g,'&');
-            let editor = new tui.Editor({
-                el: document.querySelector('#content'),
-                initialValue: content,
-                exts: ['table', 'uml', {
-                    name: 'chart',
-                    minWidth: 100,
-                    maxWidth: 600,
-                    minHeight: 100,
-                    maxHeight: 300
-                }]
-            });
         }
     </script>
 

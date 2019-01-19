@@ -2,9 +2,15 @@ const postDB = require('../../db/repository/posts');
 const subPostDB = require('../../db/repository/subPost');
 const libPost = require('../../lib/validation/post');
 const visitDB = require('../../db/repository/visitCount');
+const categoryDB = require('../../db/repository/categories');
 
-const createView = (req, res) => {
-  return res.render('team/postWrite');
+const createView = async (req, res) => {
+  try {
+    const category = await categoryDB.findAll();
+    return res.render('team/postWrite', { category });
+  } catch (e) {
+    next(e);
+  }
 };
 
 const createSubView = (req, res) => {
@@ -108,7 +114,9 @@ const show = async (req, res, next) => {
 
 const showSubPost = async (req, res, next) => {
   const { id, subId } = req.params;
-  console.log(`id는 ${id} subid는 ${subId}`);
+  if (subId == 1) {
+    return show(req, res, next);
+  }
   let post, subPost;
   try {
     post = await subPostDB.findDetailByPostNo(id, subId);
@@ -116,8 +124,6 @@ const showSubPost = async (req, res, next) => {
     post.updateAttributes({ count: post.dataValues.count + 1 });
     subPost = await subPostDB.findByPostNo(id, subId);
   } catch (e) {
-    console.log(e);
-    console.log('이거아냐?');
     return next(e);
   }
 

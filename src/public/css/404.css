@@ -1,0 +1,16 @@
+article {
+    width: 90%;
+    margin: 0px auto;
+    min-height: 80vh;
+    font-family: 'Do Hyeon', sans-serif;
+}
+
+article>h1 {
+    font-size: 3rem;
+    font-weight: bold;
+    margin-bottom: 50px;
+}
+
+article>p {
+    font-size: 2rem;
+}

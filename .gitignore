@@ -5,4 +5,7 @@ src/uploads/
 src/config
 .env
 src/bin/www.js
-src/public
+src/public/lib
+src/public/dist
+src/public/fonts
+

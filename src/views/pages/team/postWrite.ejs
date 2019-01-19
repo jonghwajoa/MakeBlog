@@ -23,9 +23,9 @@
         <div class="category">
           <label for="category">category</label>
           <select name="category" id="category">
-            <option value="1">TeamStudy</option>
-            <option value="2">PersonStudy</option>
-            <option value="3">SubProject</option>
+            <% category.forEach((item,idx) => { %>
+            <option value="<%=item.no%>"><%=item.explain %> </option>
+            <% }) %>
           </select>
         </div>
         <div id="editSection" id="content" name="content"></div>
@@ -43,19 +43,6 @@
         initialEditType: 'markdown',
         previewStyle: 'vertical',
         height: '120vh',
-        exts: [
-          'scrollSync',
-          'table',
-          'uml',
-          {
-            name: 'chart',
-            minWidth: 100,
-            maxWidth: 600,
-            minHeight: 100,
-            maxHeight: 300,
-          },
-          'colorSyntax',
-        ],
 
         hooks: {
           addImageBlobHook(fileOrBlob, callback) {
