@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const ctrl = require('./posts.ctrl');
+const ctrl = require('./post.ctrl');
 const checkPram = require('../../lib/validation/isInteger');
 const { isLogin, isLoginPhoto } = require('../../lib/middleware/isAuth');
 const { Checkcors } = require('../../lib/middleware/cors');

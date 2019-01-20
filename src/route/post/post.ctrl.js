@@ -1,4 +1,4 @@
-const postDB = require('../../db/repository/posts');
+const postDB = require('../../db/repository/post');
 const subPostDB = require('../../db/repository/subPost');
 const libPost = require('../../lib/validation/post');
 const visitDB = require('../../db/repository/visitCount');
@@ -73,7 +73,7 @@ const list = async (req, res, next) => {
   }
 
   if (req.session.isLogin)
-    return res.render('team/postsList', {
+    return res.render('team/postList', {
       postList,
       pagingInfo,
       hotPost,
@@ -83,7 +83,7 @@ const list = async (req, res, next) => {
       totalCount,
     });
 
-  return res.render('noauth/postsList', {
+  return res.render('noauth/postList', {
     postList,
     pagingInfo,
     hotPost,
@@ -108,8 +108,8 @@ const show = async (req, res, next) => {
   }
 
   if (req.session.isLogin)
-    return res.render('team/postsRead', { post, subPost });
-  return res.render('noauth/postsRead', { post, subPost });
+    return res.render('team/postRead', { post, subPost });
+  return res.render('noauth/postRead', { post, subPost });
 };
 
 const showSubPost = async (req, res, next) => {
@@ -142,7 +142,7 @@ const updateView = async (req, res, next) => {
   } catch (e) {
     return next(e);
   }
-  return res.render('team/postsUpdate', { post });
+  return res.render('team/postUpdate', { post });
 };
 
 const update = async (req, res, next) => {
