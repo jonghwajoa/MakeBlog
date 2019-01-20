@@ -1,6 +1,6 @@
 article {
   min-height: 80vh;
-  max-width: 1500px;
+  max-width: 1700px;
   margin: 10px auto 50px;
   box-sizing: border-box;
   padding: 30px 50px;
@@ -78,8 +78,8 @@ article section.content .side {
   box-shadow: 0 0 0px 1px rgba(0, 0, 0, 0.3);
 }
 
-sidepost .sideTop {
-  background-color: #d1d5da;
+.sidepost .sideTop {
+  background-color: #c9add8;
 }
 
 .sidepost .sideTop h2 {
@@ -95,6 +95,10 @@ sidepost .sideTop {
 .sidepost .subpost {
   font-size: 1rem;
   font-weight: bold;
+}
+
+.sidepost .subpost a {
+  cursor: pointer;
 }
 
 @media (min-width: 801px) {

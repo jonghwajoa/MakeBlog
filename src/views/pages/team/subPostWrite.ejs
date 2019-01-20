@@ -69,10 +69,7 @@
       }
 
       function submit() {
-        let content = editor
-          .getValue()
-          .trim()
-          .replace(/`/g, '&grave;');
+        let content = editor.getMarkdown().trim();
         const params = {
           title: document.getElementById('title').value,
           content,

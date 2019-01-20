@@ -42,7 +42,7 @@ const findDetailByPostNo = (postId, subId) => {
         SubPosts.sequelize.fn(
           'date_format',
           SubPosts.sequelize.col('created_at'),
-          '%Y.%m.%d',
+          '%Y-%m-%d',
         ),
         'created_at',
       ],

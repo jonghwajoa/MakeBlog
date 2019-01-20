@@ -20,17 +20,17 @@
     <article class="post">
         <section class='title'>
             <div class='intro'>
-                <h1>
+                <h1 id="title">
                     <%= post.title %>
                 </h1>
                 <dl class=postInfo>
                     <dt>
-                    <dd>
+                    <dd id="createDate">
                         <%= post.created_at %> |
                     </dd>
                     </dt>
                     <dt>
-                    <dd>
+                    <dd id="viewCount">
                         View
                         <%= post.count %>
                     </dd>
@@ -42,7 +42,6 @@
 
         <section class='content'>
             <div id="content">
-               
             </div>
             <div class="side">
                 <div class='sidepost'>
@@ -53,7 +52,7 @@
                     <div class='subpost'>
                         <a href='/post/<%=post.no%>'>Home</a>
                         <% subPost.forEach((item,index) => { %>
-                        <a href='/post/<%=post.no%>/<%=item.sub_no %>'>
+                        <a onclick="getContent('<%=post.no%>','<%=item.sub_no %>')" >
                             <%=item.title %></a>
                         <% }) %>
                     </div>
@@ -79,6 +78,7 @@
 
     <noscript>Please enable JavaScript</noscript>
     <script src="/js/editor/editor.js"></script>
+    
     <script>
         window.onload = function () {
             const disqus_config = function () {

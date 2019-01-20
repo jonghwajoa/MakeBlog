@@ -114,6 +114,7 @@ const show = async (req, res, next) => {
 
 const showSubPost = async (req, res, next) => {
   const { id, subId } = req.params;
+
   if (subId == 1) {
     return show(req, res, next);
   }
@@ -125,6 +126,10 @@ const showSubPost = async (req, res, next) => {
     subPost = await subPostDB.findByPostNo(id, subId);
   } catch (e) {
     return next(e);
+  }
+
+  if (req.headers['content-type'] === 'application/json') {
+    return res.json({ post });
   }
 
   if (req.session.isLogin)
