@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <% include ../../partials/noauth/essentialCss.ejs %>
-    <link rel='stylesheet' href='/css/common/postsRead.css' />
+    <link rel='stylesheet' href='/css/common/postRead.css' />
     <% include ../../partials/editorViewer.ejs %>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <link rel='stylesheet' href='/css/noauth/header.css' />
@@ -45,15 +45,15 @@
                
             </div>
             <div class="side">
-                <div class='sidePosts'>
+                <div class='sidepost'>
                     <div class='sideTop'>
-                        <h2>Sub Posts</h2>
+                        <h2>Sub post</h2>
                     </div>
 
-                    <div class='subPosts'>
-                        <a href='/posts/<%=post.no%>'>Home</a>
+                    <div class='subpost'>
+                        <a href='/post/<%=post.no%>'>Home</a>
                         <% subPost.forEach((item,index) => { %>
-                        <a href='/posts/<%=post.no%>/<%=item.sub_no %>'>
+                        <a href='/post/<%=post.no%>/<%=item.sub_no %>'>
                             <%=item.title %></a>
                         <% }) %>
                     </div>
@@ -82,7 +82,7 @@
     <script>
         window.onload = function () {
             const disqus_config = function () {
-                this.page.url = '/posts/<%=post.no%>';
+                this.page.url = '/post/<%=post.no%>';
                 this.page.identifier = `<%=post.no%>`;
             };
 

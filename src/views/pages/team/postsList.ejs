@@ -1,128 +1,102 @@
 <!DOCTYPE html>
 <html lang="ko">
-
-<head>
+  <head>
     <title>WeKnowJS</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <% include ../../partials/team/essentialCss.ejs %>
-        <link rel='stylesheet' href='/css/common/postList.css' />
-</head>
+    <link rel="stylesheet" href="/css/common/postList.css" />
+  </head>
 
-<body>
-
-
+  <body>
     <% include ../../partials/team/header.ejs %>
-        <div class="postArea">
-            <article>
-                <section>
-                    <div class='addButton'>
-                        <a href="/posts/new">
-                            <input type="button" value="글등록" />
-                        </a>
-                    </div>
-                    <% postList.forEach((item,index) => { %>
-                        <div class='post'>
-                            <p class='tag'>
-                                <%= item.tag %>
-                            </p>
+    <div class="postArea">
+      <article>
+        <section>
+          <div class="addButton">
+            <a href="/post/new"> <input type="button" value="글등록" /> </a>
+          </div>
+          <% postList.forEach((item,index) => { %>
+          <div class="post">
+            <p class="tag"><%= item.tag %></p>
 
-                            <h2><a href='/posts/<%=item.no %>'><%= item.title %></a></h2>
+            <h2><a href="/post/<%=item.no %>"><%= item.title %></a></h2>
 
-                            <div class='postInfo'>
-                                <span><%= item.created_at %> | view
-                                        <%= item.count %> </span>
-                            </div>
+            <div class="postInfo">
+              <span><%= item.created_at %> | view <%= item.count %> </span>
+            </div>
+          </div>
+          <% }) %>
 
-                        </div>
-                        <% }) %>
+          <div class="paging">
+            <% if(pagingInfo.page >10) { %>
+            <div class="pagingArrow">
+              <a href="/post?page=<%=pagingInfo.startPage -1%>">&lt;</a>
+            </div>
+            <% } %> <% for (let i=pagingInfo.startPage; i <= pagingInfo.endPage
+            ; i++) { %>
+            <div class="pagingNum">
+              <% if(parseInt(pagingInfo.page) === i) { %>
+              <a href="/post?page=<%=i%>" class="targetPage"><%= i %></a> <%
+              }else { %> <a href="/post?page=<%=i%>"><%= i %></a> <% } %>
+            </div>
 
-                            <div class='paging'>
-                                <% if(pagingInfo.page >10) { %>
-                                    <div class="pagingArrow">
-                                        <a href="/posts?page=<%=pagingInfo.startPage -1%>">&lt;</a>
-                                    </div>
-                                    <% } %>
+            <% } %> <% if (pagingInfo.endPage < pagingInfo.totalPage) { %>
+            <div class="pagingArrow">
+              <a href="/post?page=<%=pagingInfo.endPage +1%>">&gt;</a>
+            </div>
+            <% } %>
+          </div>
+        </section>
+      </article>
 
-                                        <% for (let i=pagingInfo.startPage; i <= pagingInfo.endPage ; i++) { %>
-                                            <div class="pagingNum">
-                                                <% if(parseInt(pagingInfo.page) === i) { %>
-                                                    <a href="/posts?page=<%=i%>" class='targetPage'><%= i %></a>
-                                                    <% }else { %>
-                                                        <a href="/posts?page=<%=i%>"><%= i %></a>
-                                                        <% } %>
-                                            </div>
+      <aside>
+        <section class="NumberOfVisitor">
+          <div class="gridItem title">total</div>
+          <div class="gridItem title">monthly</div>
+          <div class="gridItem title">today</div>
+          <div class="gridItem"><%= totalCount %></div>
+          <div class="gridItem"><%= monthCount %></div>
+          <div class="gridItem"><%=today%></div>
+        </section>
 
-                                            <% } %>
-                                                <% if (pagingInfo.endPage < pagingInfo.totalPage) { %>
-                                                    <div class="pagingArrow">
-                                                        <a href="/posts?page=<%=pagingInfo.endPage +1%>">&gt;</a>
-                                                    </div>
-                                                    <% } %>
+        <section div="categories">
+          <h2>카테고리 -미구현-</h2>
+          <ul>
+            <li>1 Team Study</li>
+            <li>2 Person Study</li>
+            <li>3 Sub Project</li>
+          </ul>
+        </section>
 
-                            </div>
-                </section>
-            </article>
+        <section class="hotPost">
+          <h2>Post TOP5</h2>
+          <ul>
+            <% hotPost.forEach((item,index) => { %>
+            <li>
+              <a href="/post/<%=item.no%>">
+                <span><%= index+1 %></span> <span><%= item.title %></span>
+              </a>
+            </li>
+            <% }) %>
+          </ul>
+        </section>
 
-            <aside>
-                <section class='NumberOfVisitor'>
-                    <div class="gridItem title">total</div>
-                    <div class="gridItem title">monthly</div>
-                    <div class="gridItem title">today</div>
-                    <div class="gridItem">
-                        <%= totalCount %>
-                    </div>
-                    <div class="gridItem">
-                        <%= monthCount %>
-                    </div>
-                    <div class="gridItem">
-                        <%=today%>
-                    </div>
-                </section>
+        <section class="hotSubPost">
+          <h2>SubPost TOP5</h2>
+          <ul>
+            <% hotSubPost.forEach((item,index) => { %>
+            <li>
+              <a href="/post/<%=item.post_no%>/<%=item.sub_no%>">
+                <span><%= index+1 %></span> <span><%= item.title %></span>
+              </a>
+            </li>
+            <% }) %>
+          </ul>
+        </section>
+      </aside>
+    </div>
 
-                <section div='categories'>
-                    <h2>카테고리 -미구현-</h2>
-                    <ul>
-                        <li>1 Team Study</li>
-                        <li>2 Person Study</li>
-                        <li>3 Sub Project</li>
-                    </ul>
-                </section>
-
-                <section class='hotPost'>
-                    <h2>Post TOP5</h2>
-                    <ul>
-                        <% hotPost.forEach((item,index) => { %>
-                            <li>
-                                <a href='/posts/<%=item.no%>'>
-                                    <span><%= index+1 %></span>
-                                    <span><%= item.title %></span>
-                                </a>
-                            </li>
-                            <% }) %>
-                    </ul>
-                </section>
-
-                <section class='hotSubPost'>
-                    <h2>SubPost TOP5</h2>
-                    <ul>
-                        <% hotSubPost.forEach((item,index) => { %>
-                            <li>
-                                <a href='/posts/<%=item.post_no%>/<%=item.no%>'>
-                                    <span><%= index+1 %></span>
-                                    <span><%= item.title %></span>
-                                </a>
-                            </li>
-                            <% }) %>
-                    </ul>
-                </section>
-
-            </aside>
-
-        </div>
-
-        <% include ../../partials/footer.ejs %>
-
-</body>
-
+    <% include ../../partials/footer.ejs %>
+  </body>
 </html>

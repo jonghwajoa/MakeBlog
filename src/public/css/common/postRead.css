@@ -73,16 +73,16 @@ article section.content .side {
   margin-left: 50px;
 }
 
-.sidePosts {
+.sidepost {
   border-radius: 5px;
   box-shadow: 0 0 0px 1px rgba(0, 0, 0, 0.3);
 }
 
-sidePosts .sideTop {
+sidepost .sideTop {
   background-color: #d1d5da;
 }
 
-.sidePosts .sideTop h2 {
+.sidepost .sideTop h2 {
   text-align: center;
   font-family: 'Nanum Gothic', sans-serif;
   font-size: 1.3rem;
@@ -92,13 +92,13 @@ sidePosts .sideTop {
   box-sizing: border-box;
 }
 
-.sidePosts .subPosts {
+.sidepost .subpost {
   font-size: 1rem;
   font-weight: bold;
 }
 
 @media (min-width: 801px) {
-  .sidePosts .subPosts a {
+  .sidepost .subpost a {
     display: block;
     overflow: hidden;
     width: inherit;
@@ -109,7 +109,7 @@ sidePosts .sideTop {
   }
 }
 
-.sidePosts .subPosts a:hover {
+.sidepost .subpost a:hover {
   color: #e67700;
 }
 
@@ -155,7 +155,7 @@ a + a {
     border-top: 4px solid #c9add8;
   }
 
-  .sidePosts .subPosts a {
+  .sidepost .subpost a {
     display: block;
     overflow: hidden;
     width: inherit;

@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <% include ../../partials/noauth/essentialCss.ejs %>
-        <link rel='stylesheet' href='/css/common/postsRead.css' />
+        <link rel='stylesheet' href='/css/common/postRead.css' />
         <% include ../../partials/editorViewer.ejs %>
             <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
             <link rel='stylesheet' href='/css/noauth/header.css' />
@@ -43,15 +43,15 @@
             <section class='content'>
                 <div id="content"></div>
                 <div class="side">
-                    <div class='sidePosts'>
+                    <div class='sidepost'>
                         <div class='sideTop'>
-                            <h2>Sub Posts</h2>
+                            <h2>Sub post</h2>
                         </div>
 
-                        <div class='subPosts'>
-                            <a href='/posts/<%=home%>'>Home</a>
+                        <div class='subpost'>
+                            <a href='/post/<%=home%>'>Home</a>
                             <% subPost.forEach((item,index) => { %>
-                                <a href='/posts/<%=home%>/<%=item.sub_no %>'><%=item.title %></a>
+                                <a href='/post/<%=home%>/<%=item.sub_no %>'><%=item.title %></a>
                                 <% }) %>
                         </div>
                     </div>
@@ -79,7 +79,7 @@
             <script>
                 window.onload = function () {
                     const disqus_config = function () {
-                        this.page.url = '/posts/<%=home%>/<%= post.no %>';  // Replace PAGE_URL with your page's canonical URL variable
+                        this.page.url = '/post/<%=home%>/<%= post.no %>';  // Replace PAGE_URL with your page's canonical URL variable
                         this.page.identifier = `<%=home%>/<%= post.no %>`;; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
                     };
 

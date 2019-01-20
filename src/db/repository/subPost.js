@@ -16,7 +16,7 @@ const findById = id => {
 const findHotPost = () => {
   return SubPosts.findAll({
     limit: 5,
-    attributes: ['no', 'title', 'post_no'],
+    attributes: ['sub_no', 'title', 'post_no'],
     order: [['count', 'desc']],
   });
 };

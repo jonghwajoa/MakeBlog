@@ -1,24 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
+  <head>
     <title>WeKnowJS</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <% include ../../partials/noauth/essentialCss.ejs %>
-        <link rel='stylesheet' href='/css/404.css' />
+    <link rel="stylesheet" href="/css/404.css" />
+  </head>
 
-</head>
-
-<body>
+  <body>
     <% include ../../partials/noauth/header.ejs %>
 
-        <article>
-            <h1>401 Unauthorized</h1>
-            <p> Unauthorized 잘못된 요청입니다. </p>
-        </article>
-        <% include ../../partials/footer.ejs %>
-
-</body>
-
+    <article>
+      <h1>401 Unauthorized</h1>
+      <p>Unauthorized</p>
+    </article>
+    <% include ../../partials/footer.ejs %>
+  </body>
 </html>

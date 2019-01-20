@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <% include ../../partials/team/essentialCss.ejs %>
-    <link rel='stylesheet' href='/css/common/postsRead.css' />
+    <link rel='stylesheet' href='/css/common/postRead.css' />
     <% include ../../partials/editorViewer.ejs %>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <link rel='stylesheet' href='/css/team/header.css' />
@@ -39,7 +39,7 @@
             </div>
 
             <div class="manageArea">
-                <a href='/posts/<%= post.no%>/edit'>
+                <a href='/post/<%= post.no%>/edit'>
                     <input type="button" value='수정하기' id='update' />
                 </a>
                 <input type="button" value='삭제하기' id='delete' onclick="deletePost()" />
@@ -51,22 +51,22 @@
             <div id="content">
             </div>
             <div class="side">
-                <div class='sidePosts'>
+                <div class='sidepost'>
                     <div class='sideTop'>
-                        <h2>Sub Posts</h2>
+                        <h2>Sub post</h2>
                     </div>
 
-                    <div class='subPosts'>
-                        <a href='/posts/<%=post.no%>'>Home</a>
+                    <div class='subpost'>
+                        <a href='/post/<%=post.no%>'>Home</a>
                         <% subPost.forEach((item,index) => { %>
-                        <a href='/posts/<%=post.no%>/<%=item.sub_no %>'>
+                        <a href='/post/<%=post.no%>/<%=item.sub_no %>'>
                             <%=item.title %></a>
                         <% }) %>
                     </div>
                 </div>
 
                 <div class='subPostAdd'>
-                    <a href="/posts/<%=post.no%>/new">
+                    <a href="/post/<%=post.no%>/new">
                         <input type="button" value='add subPage' />
                     </a>
 
@@ -93,7 +93,7 @@
     <script>
         window.onload = function () {
             const disqus_config = function () {
-                this.page.url = '/posts/<%=post.no%>';  // Replace PAGE_URL with your page's canonical URL variable
+                this.page.url = '/post/<%=post.no%>';  // Replace PAGE_URL with your page's canonical URL variable
                 this.page.identifier = `<%=post.no%>`; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
             };
 
@@ -112,12 +112,12 @@
                 xhr.onload = function () {
                     if (xhr.status === 200 || xhr.status === 204) {
                         alert('삭제성공')
-                        location.href = '/posts/'
+                        location.href = '/post/'
                     } else {
                         alert(`작성 실패\n${xhr.responseText}`)
                     }
                 }
-                xhr.open('DELETE', '/posts/<%=post.no%>', true);
+                xhr.open('DELETE', '/post/<%=post.no%>', true);
                 xhr.setRequestHeader('Content-type', 'application/json');
                 xhr.send()
             }

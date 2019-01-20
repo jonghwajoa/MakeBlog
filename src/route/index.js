@@ -3,7 +3,7 @@ const router = express.Router();
 const errorDB = require('../db/repository/errorLog');
 
 router.get('/', async (req, res) => {
-  return res.status(301).redirect('/posts');
+  return res.status(301).redirect('/post');
 });
 
 router.get('/about', async (req, res) => {
@@ -13,7 +13,7 @@ router.get('/about', async (req, res) => {
 
 router.use('/cote', require('./cote'));
 router.use('/auth', require('./auth'));
-router.use('/posts', require('./posts'));
+router.use('/post', require('./post'));
 
 router.use((req, res) => {
   if (req.headers['content-type'] === 'application/json') {

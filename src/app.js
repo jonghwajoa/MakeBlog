@@ -45,6 +45,6 @@ app.use(bodyParser.json({ limit: '50mb' }));
 app.use(cookieParser());
 app.use(hpp());
 app.use(visitMiddle.visit);
-app.use('/', require('./api'));
+app.use('/', require('./route'));
 
 module.exports = app;

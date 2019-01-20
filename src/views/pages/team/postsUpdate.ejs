@@ -91,7 +91,7 @@
           }
           return alert('업로드 실패');
         };
-        xhr.open('POST', '/posts/file', true);
+        xhr.open('POST', '/post/file', true);
         xhr.send(formData);
       }
 
@@ -120,13 +120,13 @@
         xhr.onload = function() {
           if (xhr.status === 200 || xhr.status === 204) {
             alert('수정 성공');
-            location.href = '/posts/<%=post.no%>';
+            location.href = '/post/<%=post.no%>';
           } else {
             alert(`작성 실패\n${xhr.responseText}`);
           }
         };
-        console.log(`/posts/<%=post.no%>`);
-        xhr.open('PUT', '/posts/<%=post.no%>', true);
+        console.log(`/post/<%=post.no%>`);
+        xhr.open('PUT', '/post/<%=post.no%>', true);
         xhr.setRequestHeader('Content-type', 'application/json');
         xhr.send(JSON.stringify(params));
       }

@@ -1,76 +1,84 @@
 <!DOCTYPE html>
 <html lang="ko">
-
-<head>
+  <head>
     <title>WeKnowJS</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <% include ../../partials/noauth/essentialCss.ejs %>
-        <link rel='stylesheet' href='/css/noauth/login.css' />
+    <link rel="stylesheet" href="/css/noauth/login.css" />
+  </head>
 
-</head>
-
-<body>
-
+  <body>
     <% include ../../partials/noauth/header.ejs %>
 
-        <article>
-            <section>
-                <label>로그인</label>
+    <article>
+      <section>
+        <label>로그인</label>
 
-                <div class='formArea'>
-                    <input type='text' id='id' name='id' placeholder="ID" maxlength=20 minlength=5 autocomplete="off" />
-                    <input type='password' id='pw' name='pw' placeholder="PW" maxlength=20 minlength=5 autocomplete="off" />
-                    <button type="submit" onclick="loginAjax()">로그인</button>
-                    <button onclick="location.href='/auth/register'">회원가입</button>
-                </div>
+        <div class="formArea">
+          <input
+            type="text"
+            id="id"
+            name="id"
+            placeholder="ID"
+            maxlength="20"
+            minlength="5"
+            autocomplete="off"
+          />
+          <input
+            type="password"
+            id="pw"
+            name="pw"
+            placeholder="PW"
+            maxlength="20"
+            minlength="5"
+            autocomplete="off"
+          />
+          <button type="submit" onclick="loginAjax()">로그인</button>
+          <button onclick="location.href='/auth/register'">회원가입</button>
+        </div>
+      </section>
+    </article>
 
-            </section>
+    <% include ../../partials/footer.ejs %>
 
-        </article>
+    <script>
+      function loginAjax() {
+        const xhr = new XMLHttpRequest();
+        const id = document.getElementById('id').value;
+        const pw = document.getElementById('pw').value;
 
+        if (!validation(id, pw)) {
+          return false;
+        }
 
-        <% include ../../partials/footer.ejs %>
+        const params = {
+          id,
+          pw,
+        };
+        xhr.onload = function() {
+          if (xhr.status === 200) {
+            location.href = '/post/';
+          } else {
+            alert(`${xhr.responseText}`);
+          }
+        };
+        xhr.open('POST', '/auth/login', true);
+        xhr.setRequestHeader('Content-type', 'application/json');
+        xhr.send(JSON.stringify(params));
+      }
 
-
-            <script>
-                function loginAjax() {
-                    const xhr = new XMLHttpRequest();
-                    const id = document.getElementById('id').value
-                    const pw = document.getElementById('pw').value;
-
-                    if (!validation(id, pw)) {
-                        return false;
-                    }
-
-                    const params = {
-                        id, pw
-                    }
-                    xhr.onload = function () {
-                        if (xhr.status === 200) {
-                            location.href = '/posts/'
-                        } else {
-                            alert(`${xhr.responseText}`)
-                        }
-                    }
-                    xhr.open('POST', '/auth/login', true);
-                    xhr.setRequestHeader('Content-type', 'application/json');
-                    xhr.send(JSON.stringify(params))
-                }
-
-                function validation(id, pw) {
-                    if (id.length < 5 || id.length > 20 || typeof id !== "string") {
-                        alert('아이디 형식이 올바르지 않습니다.')
-                        return false;
-                    }
-                    if (pw.length < 5 || pw.length > 20 || typeof id !== "string") {
-                        alert('비밀번호 형식이 올바르지 않습니다.')
-                        return false;
-                    }
-                    return true;
-                }
-            </script>
-
-</body>
-
+      function validation(id, pw) {
+        if (id.length < 5 || id.length > 20 || typeof id !== 'string') {
+          alert('아이디 형식이 올바르지 않습니다.');
+          return false;
+        }
+        if (pw.length < 5 || pw.length > 20 || typeof id !== 'string') {
+          alert('비밀번호 형식이 올바르지 않습니다.');
+          return false;
+        }
+        return true;
+      }
+    </script>
+  </body>
 </html>
