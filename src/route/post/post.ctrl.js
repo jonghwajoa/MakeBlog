@@ -228,8 +228,27 @@ const removeSubPost = async (req, res, next) => {
   res.status(204).end();
 };
 
-const uploadImage = (req, res, next) => {
+const uploadImage = (req, res) => {
   return res.end(req.files[0].filename);
+};
+
+const categoryAdd = async (req, res, next) => {
+  const { categoryName } = req.body;
+
+  try {
+    let result = await categoryDB.find(categoryName);
+    if (result !== null) {
+      return res.status(400).json('이미 존재하는 카테고리 입니다.');
+    }
+    result = await categoryDB.create(categoryName);
+    return res.json({
+      message: '카테고리 추가 성공',
+      no: result.dataValues.no,
+    });
+  } catch (e) {
+    e.message = '카테고리 추가 실패';
+    next(e);
+  }
 };
 
 module.exports = {
@@ -247,4 +266,5 @@ module.exports = {
   remove,
   removeSubPost,
   uploadImage,
+  categoryAdd,
 };

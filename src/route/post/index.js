@@ -47,7 +47,7 @@ router
 router.get('/new', isLogin, ctrl.createView);
 
 router.post('/file', upload.array('photo'), ctrl.uploadImage);
-
+router.post('/category', ctrl.categoryAdd);
 router
   .route('/:id')
   .get(checkPram.paramIsINT, ctrl.show)

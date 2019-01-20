@@ -30,8 +30,8 @@ module.exports = (sequelize, DataTypes) => {
     },
   );
 
-  CategoriesCote.associate = function(models) {
-    CategoriesCote.hasMany(models.Posts);
-  };
+  // CategoriesCote.associate = function(models) {
+  //   CategoriesCote.hasMany(models.Posts);
+  // };
   return CategoriesCote;
 };

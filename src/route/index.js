@@ -28,7 +28,7 @@ router.use((err, req, res, next) => {
   err.status = err.status || 500;
   err.message = err.message || 'Server Error';
 
-  if (err.status === 500) {
+  if (err.status >= 500) {
     errorDB.create(
       err.status,
       err.stack,
