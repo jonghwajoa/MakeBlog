@@ -115,9 +115,16 @@ const show = async (req, res, next) => {
 const showSubPost = async (req, res, next) => {
   const { id, subId } = req.params;
 
-  if (subId == 1) {
+  // json으로 컨텐츠 요청할 경우
+  if (req.headers['content-type'] === 'application/json') {
+    return getContent(req, res, next);
+  }
+
+  // subId=1 : Main Post
+  if (subId === '1') {
     return show(req, res, next);
   }
+
   let post, subPost;
   try {
     post = await subPostDB.findDetailByPostNo(id, subId);
@@ -128,26 +135,46 @@ const showSubPost = async (req, res, next) => {
     return next(e);
   }
 
-  if (req.headers['content-type'] === 'application/json') {
-    return res.json({ post });
-  }
-
   if (req.session.isLogin)
     return res.render('team/subPostRead', { post, subPost, home: id });
   return res.render('noauth/subPostRead', { post, subPost, home: id });
 };
 
-const updateView = async (req, res, next) => {
-  const { id } = req.params;
+const getContent = async (req, res, next) => {
+  const { id, subId } = req.params;
+  console.log(`id는 ${id} subId는 ${subId}`);
   let post;
 
   try {
+    post =
+      subId === '1'
+        ? await postDB.postFindById(id)
+        : await subPostDB.findDetailByPostNo(id, subId);
+
+    if (!post) {
+      console.log(`왜 여기에 있지 ${post}`);
+      return next();
+    }
+    post.updateAttributes({ count: post.dataValues.count + 1 });
+  } catch (e) {
+    return next(e);
+  }
+
+  return res.json({ post });
+};
+
+const updateView = async (req, res, next) => {
+  const { id } = req.params;
+  let post, category;
+
+  try {
     post = await postDB.findById(id);
+    category = await categoryDB.findAll();
     if (!post) return next();
   } catch (e) {
     return next(e);
   }
-  return res.render('team/postUpdate', { post });
+  return res.render('team/postUpdate', { post, category });
 };
 
 const update = async (req, res, next) => {

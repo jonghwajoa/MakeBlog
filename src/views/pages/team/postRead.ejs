@@ -42,7 +42,7 @@
                 <a href='/post/<%= post.no%>/edit'>
                     <input type="button" value='수정하기' id='update' />
                 </a>
-                <input type="button" value='삭제하기' id='delete' onclick="deletePost()" />
+                <input type="button" value='삭제하기' id='delete' onclick="postRead.deletePost()" />
             </div>
         </section>
 
@@ -89,7 +89,7 @@
     <% include ../../partials/footer.ejs %>
 
     <noscript>Please enable JavaScript</noscript>
-    <script src="/js/editor/editor.js"></script>
+    <script src="/js/post/postRead.js"></script>
     <script>
         window.onload = function () {
             const disqus_config = function () {
@@ -105,23 +105,7 @@
             })();
         }
 
-        function deletePost() {
-            let confirmflag = confirm("게시글을 삭제하시겠습니까..??\n서브게시글도 전부 삭제됩니다.");
-            if (confirmflag) {
-                const xhr = new XMLHttpRequest();
-                xhr.onload = function () {
-                    if (xhr.status === 200 || xhr.status === 204) {
-                        alert('삭제성공')
-                        location.href = '/post/'
-                    } else {
-                        alert(`작성 실패\n${xhr.responseText}`)
-                    }
-                }
-                xhr.open('DELETE', '/post/<%=post.no%>', true);
-                xhr.setRequestHeader('Content-type', 'application/json');
-                xhr.send()
-            }
-        }
+       
     </script>
 
 

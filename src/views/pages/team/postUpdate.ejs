@@ -23,12 +23,14 @@
         <div class="category">
           <label for="category">category</label>
           <select name="category" id="category">
-            <option value="1">TeamStudy</option>
-            <option value="2">PersonStudy</option>
-            <option value="3">SubProject</option>
+            <% category.forEach((item,idx) => { %>
+            <option value="<%=item.no%>"><%=item.explain %> </option>
+            <% }) %>
           </select>
         </div>
-        <div id="editSection" id="content" name="content"></div>
+        <div id="editSection" id="content" name="content">
+          <p hidden id="hiddenContent"><%- post.content %></p>
+        </div>
 
         <button class="custom" onclick="back()">뒤로가기</button>
         <button class="custom" onclick="update()">수정하기</button>
@@ -38,13 +40,7 @@
     <% include ../../partials/footer.ejs %>
 
     <script>
-      let content = `<%- post.content %>`
-        .replace(/&gt;/g, '>')
-        .replace(/&#39;/g, "'")
-        .replace(/&lt;/g, '<')
-        .replace(/&#34;/g, '"')
-        .replace(/&grave;/g, '\`')
-        .replace(/&amp;/g, '&');
+      let content = document.getElementById('hiddenContent');
       let tag = document.getElementById('tag');
       let title = document.getElementById('title');
       let category = document.getElementById('category');
@@ -57,7 +53,6 @@
       let editor = new tui.Editor({
         el: document.getElementById('editSection'),
         initialEditType: 'markdown',
-        initialValue: content,
         previewStyle: 'vertical',
         height: '100vh',
         exts: [
@@ -80,6 +75,7 @@
           },
         },
       });
+      editor.setMarkdown(content.innerHTML.trim());
 
       function savePhoto(photo, cb) {
         const xhr = new XMLHttpRequest();

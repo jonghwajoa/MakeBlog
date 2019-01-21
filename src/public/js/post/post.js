@@ -1,3 +1,79 @@
+let test = {
+  titleDOM: document.getElementById('title'),
+  categoryDOM: document.getElementById('category'),
+  tagDOM: document.getElementById('tag'),
+  editor: new tui.Editor({
+    el: document.getElementById('editSection'),
+    initialEditType: 'markdown',
+    previewStyle: 'vertical',
+    height: '120vh',
+    exts: [
+      'scrollSync',
+      'table',
+      'uml',
+      {
+        name: 'chart',
+        minWidth: 100,
+        maxWidth: 600,
+        minHeight: 100,
+        maxHeight: 300,
+      },
+      'colorSyntax',
+    ],
+    hooks: {
+      addImageBlobHook(fileOrBlob, callback) {
+        savePhoto(fileOrBlob, callback);
+      },
+    },
+  }),
+
+  submit() {
+    const title = this.titleDOM.value;
+    const content = this.editor.getValue().trim();
+
+    if (!title) {
+      alert('제목을 입력하세요..');
+      return false;
+    }
+
+    if (!content) {
+      alert('내용을 입력하세요.');
+      return false;
+    }
+
+    const categoryText =
+      '#' + this.categoryDOM[this.category.selectedIndex].text;
+
+    let tag = this.tagDOM.value.trim().replace(/\s*,+\s*|\s+/g, ' #');
+
+    if (tag) {
+      tag = categoryText + ' #' + tag;
+    } else {
+      tag = categoryText;
+    }
+
+    const params = {
+      title,
+      tag,
+      content,
+      category: this.categoryDOM.value,
+    };
+
+    const xhr = new XMLHttpRequest();
+    xhr.onload = function() {
+      if (xhr.status === 200 || xhr.status === 201) {
+        location.href = '/post/';
+      } else {
+        alert(`작성 실패\n${xhr.responseText}`);
+      }
+    };
+    xhr.open('POST', '/post/', true);
+    xhr.setRequestHeader('Content-type', 'application/json');
+    xhr.send(JSON.stringify(params));
+  },
+};
+
+/*
 let editor = new tui.Editor({
   el: document.getElementById('editSection'),
   initialEditType: 'markdown',
@@ -92,3 +168,4 @@ function addCategory() {
   xhr.setRequestHeader('Content-type', 'application/json');
   xhr.send(JSON.stringify({ categoryName }));
 }
+*/
