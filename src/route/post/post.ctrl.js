@@ -142,7 +142,6 @@ const showSubPost = async (req, res, next) => {
 
 const getContent = async (req, res, next) => {
   const { id, subId } = req.params;
-  console.log(`id는 ${id} subId는 ${subId}`);
   let post;
 
   try {
@@ -152,7 +151,6 @@ const getContent = async (req, res, next) => {
         : await subPostDB.findDetailByPostNo(id, subId);
 
     if (!post) {
-      console.log(`왜 여기에 있지 ${post}`);
       return next();
     }
     post.updateAttributes({ count: post.dataValues.count + 1 });
@@ -244,6 +242,8 @@ const remove = async (req, res, next) => {
   } catch (e) {
     return next(e);
   }
+
+  console.log('삭제성공');
   res.status(204).end();
 };
 
@@ -261,6 +261,7 @@ const removeSubPost = async (req, res, next) => {
 };
 
 const uploadImage = (req, res) => {
+  console.log('이으으으으응');
   return res.end(req.files[0].filename);
 };
 

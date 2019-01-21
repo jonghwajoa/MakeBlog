@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ko">
   <head>
-    <title>WeKnowJS</title>
+    <title>WeKnowJS-글작성</title>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <% include ../../partials/team/essentialCss.ejs %>
@@ -42,85 +42,88 @@
         <div id="editSection" id="content" name="content"></div>
 
         <button class="custom" onclick="back()">뒤로가기</button>
-        <button class="custom" id="submit" onclick="submit()">작성하기</button>
+        <button class="custom" id="submit" onclick="postWrite.submit()">
+          작성하기
+        </button>
       </section>
     </article>
 
     <% include ../../partials/footer.ejs %>
-    <!-- <script src="/js/post/post.js"></script> -->
+    <script src="/js/util/ajaxUtil.js"></script>
+    <script src="/js/post/postWrite.js"></script>
 
     <script>
-      let editor = new tui.Editor({
-        el: document.getElementById('editSection'),
-        initialEditType: 'markdown',
-        previewStyle: 'vertical',
-        height: '120vh',
-        exts: [
-          'scrollSync',
-          'table',
-          'uml',
-          {
-            name: 'chart',
-            minWidth: 100,
-            maxWidth: 600,
-            minHeight: 100,
-            maxHeight: 300,
-          },
-          'colorSyntax',
-        ],
-        hooks: {
-          addImageBlobHook(fileOrBlob, callback) {
-            savePhoto(fileOrBlob, callback);
-          },
-        },
-      });
+      // let editor = new tui.Editor({
+      //   el: document.getElementById('editSection'),
+      //   initialEditType: 'markdown',
+      //   previewStyle: 'vertical',
+      //   height: '120vh',
+      //   exts: [
+      //     'scrollSync',
+      //     'table',
+      //     'uml',
+      //     {
+      //       name: 'chart',
+      //       minWidth: 100,
+      //       maxWidth: 600,
+      //       minHeight: 100,
+      //       maxHeight: 300,
+      //     },
+      //     'colorSyntax',
+      //   ],
+      //   hooks: {
+      //     addImageBlobHook(fileOrBlob, callback) {
+      //       savePhoto(fileOrBlob, callback);
+      //     },
+      //   },
+      // });
 
-      function submit() {
-        const title = document.getElementById('title').value;
-        let content = editor.getMarkdown().trim();
+      // function submit() {
+      //   const title = document.getElementById('title').value;
+      //   let content = editor.getMarkdown().trim();
 
-        if (!title) {
-          alert('제목을 입력하세요..');
-          return false;
-        }
+      //   if (!title) {
+      //     alert('제목을 입력하세요..');
+      //     return false;
+      //   }
 
-        if (!content) {
-          alert('내용을 입력하세요.');
-          return false;
-        }
+      //   if (!content) {
+      //     alert('내용을 입력하세요.');
+      //     return false;
+      //   }
 
-        const category = document.getElementById('category');
-        const categoryText = '#' + category[category.selectedIndex].text;
-        let tag = document
-          .getElementById('tag')
-          .value.trim()
-          .replace(/\s*,+\s*|\s+/g, ' #');
+      //   const category = document.getElementById('category');
+      //   const categoryText = '#' + category[category.selectedIndex].text;
+      //   let tag = document
+      //     .getElementById('tag')
+      //     .value.trim()
+      //     .replace(/\s*,+\s*|\s+/g, ' #');
 
-        if (tag) {
-          tag = categoryText + ' #' + tag;
-        } else {
-          tag = categoryText;
-        }
+      //   if (tag) {
+      //     tag = categoryText + ' #' + tag;
+      //   } else {
+      //     tag = categoryText;
+      //   }
 
-        const params = {
-          title,
-          tag,
-          content,
-          category: category.value,
-        };
+      //   const params = {
+      //     title,
+      //     tag,
+      //     content,
+      //     category: category.value,
+      //   };
 
-        const xhr = new XMLHttpRequest();
-        xhr.onload = function() {
-          if (xhr.status === 200 || xhr.status === 201) {
-            location.href = '/post/';
-          } else {
-            alert(`작성 실패\n${xhr.responseText}`);
-          }
-        };
-        xhr.open('POST', '/post/', true);
-        xhr.setRequestHeader('Content-type', 'application/json');
-        xhr.send(JSON.stringify(params));
-      }
+      //   const xhr = new XMLHttpRequest();
+      //   xhr.onload = function() {
+      //     if (xhr.status === 200 || xhr.status === 201) {
+      //       location.href = '/post/';
+      //     } else {
+      //       alert(`작성 실패\n${xhr.responseText}`);
+      //     }
+      //   };
+      //   xhr.open('POST', '/post/', true);
+      //   xhr.setRequestHeader('Content-type', 'application/json');
+      //   xhr.send(JSON.stringify(params));
+      // }
 
       function addCategory() {
         const categoryName = document.getElementById('addCategory').value;

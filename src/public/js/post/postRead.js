@@ -28,12 +28,10 @@ let postRead = {
   },
 
   getContent(postNo, subNo = 1) {
-    const xhr = new XMLHttpRequest();
-    xhr.onload = () => {
-      if (xhr.status === 200) {
-        let { content, title, count, created_at } = JSON.parse(
-          xhr.responseText,
-        ).post;
+    ajaxUtil
+      .getPostContent(`/post/${postNo}/${subNo}`)
+      .then(result => {
+        let { content, title, count, created_at } = JSON.parse(result).post;
 
         this.date.innerHTML = `${created_at} |`;
         this.viewCount.innerHTML = `View ${count}`;
@@ -41,33 +39,28 @@ let postRead = {
         this.headTitle.innerHTML = `WeKnowJS-${title}`;
         this.editor.setValue(content.trim());
         window.history.replaceState(null, '', `/post/${postNo}/${subNo}`);
-      } else {
-        alert(`${xhr.responseText}`);
-      }
-    };
-
-    xhr.open('GET', `/post/${postNo}/${subNo}`, true);
-    xhr.setRequestHeader('Content-type', 'application/json');
-    xhr.send();
+      })
+      .catch(e => {
+        alert(`Server Error(${e.status})`);
+      });
   },
 
-  deletePost() {
+  deletePost(postNo) {
     let confirmflag = confirm(
       '게시글을 삭제하시겠습니까..??\n서브게시글도 전부 삭제됩니다.',
     );
-    if (confirmflag) {
-      const xhr = new XMLHttpRequest();
-      xhr.onload = function() {
-        if (xhr.status === 200 || xhr.status === 204) {
-          alert('삭제성공');
-          location.href = '/post/';
-        } else {
-          alert(`작성 실패\n${xhr.responseText}`);
-        }
-      };
-      xhr.open('DELETE', '/post/<%=post.no%>', true);
-      xhr.setRequestHeader('Content-type', 'application/json');
-      xhr.send();
+    if (!confirmflag) {
+      return;
     }
+
+    ajaxUtil
+      .deletePost(`/post/${postNo}`)
+      .then(() => {
+        alert('삭제 성공');
+        location.href = '/post/';
+      })
+      .catch(e => {
+        alert(`삭제 실패\n${e.status}`);
+      });
   },
 };

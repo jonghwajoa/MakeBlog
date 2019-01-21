@@ -42,7 +42,7 @@
                 <a href='/post/<%= post.no%>/edit'>
                     <input type="button" value='수정하기' id='update' />
                 </a>
-                <input type="button" value='삭제하기' id='delete' onclick="postRead.deletePost()" />
+                <input type="button" value='삭제하기' id='delete' onclick="postRead.deletePost('<%= post.no%>')" />
             </div>
         </section>
 
@@ -89,6 +89,7 @@
     <% include ../../partials/footer.ejs %>
 
     <noscript>Please enable JavaScript</noscript>
+    <script src="/js/util/ajaxUtil.js"></script>
     <script src="/js/post/postRead.js"></script>
     <script>
         window.onload = function () {
