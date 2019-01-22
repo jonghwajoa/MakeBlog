@@ -44,18 +44,26 @@ let postRead = {
     window.history.replaceState(null, '', `/post/${postNo}/${subNo}`);
   },
 
-  async deletePost(postNo) {
-    let confirmflag = confirm(
-      '게시글을 삭제하시겠습니까..??\n서브게시글도 전부 삭제됩니다.',
-    );
+  async deletePost(postNo, subNo = 1) {
+    let message = '서브게시글을 삭제하시겠습니까?';
+    let url = `/post/${postNo}/${subNo}`;
+    let redirect = `/post/${postNo}`;
+
+    if (subNo === 1) {
+      message = '게시글을 삭제하시겠습니까..??\n서브게시글도 전부 삭제됩니다.';
+      url = `/post/${postNo}`;
+      redirect = '/post';
+    }
+
+    let confirmflag = confirm(message);
     if (!confirmflag) {
       return;
     }
 
     try {
-      await ajaxUtil.sendDeleteAjax(`/post/${postNo}`);
+      await ajaxUtil.sendDeleteAjax(url);
       alert('삭제 성공');
-      location.href = '/post/';
+      location.href = redirect;
     } catch (e) {
       alert(`삭제 실패\n${e.status}`);
     }

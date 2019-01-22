@@ -240,10 +240,10 @@ const remove = async (req, res, next) => {
 };
 
 const removeSubPost = async (req, res, next) => {
-  let { subId } = req.params;
+  let { id, subId } = req.params;
   let result;
   try {
-    result = await subPostDB.findById(subId);
+    result = await subPostDB.findByNo(id, subId);
     if (!result) return next();
     await result.destroy();
   } catch (e) {
