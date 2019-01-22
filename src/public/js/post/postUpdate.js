@@ -40,6 +40,15 @@ let postUpdate = {
       },
     });
     this.editor.setMarkdown(this.content.innerHTML.trim());
+
+    if (this.tag) {
+      let tagVal = this.tag.value.split(' ');
+      tagVal.shift();
+
+      this.tag.value = tagVal
+        .map(item => item.substr(1, item.length))
+        .join(' ');
+    }
   },
 
   async update(postNo, subNo = 1) {
@@ -74,7 +83,6 @@ let postUpdate = {
 
     let url = `/post/${postNo}`;
 
-    console.log(url);
     try {
       await ajaxUtil.sendPutAjax(url, params);
       location.href = `/post/${postNo}`;
@@ -108,7 +116,6 @@ let postUpdate = {
       await ajaxUtil.sendPutAjax(url, params);
       location.href = `/post/${postNo}/${subNo}`;
     } catch (e) {
-      console.log(e);
       alert(`업데이트 실패\n${e.responseText}`);
     }
   },

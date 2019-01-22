@@ -77,9 +77,9 @@ const list = async (req, res, next) => {
     pagingInfo,
     hotPost,
     hotSubPost,
-    today: req.today,
     monthCount,
     totalCount,
+    today: req.today,
   };
 
   if (req.session.isLogin) return res.render('team/postList', { ...returnObj });

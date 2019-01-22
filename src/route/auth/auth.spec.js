@@ -121,7 +121,7 @@ describe('Auth는..', () => {
 
   /** POST /auth/login 로그인시..
    *
-   * success :
+   * success : 200반환
    * fail : id,pw가 길이제한에 맞지 않는경우
    *        id가 없는경우
    *        pw가 틀린경우

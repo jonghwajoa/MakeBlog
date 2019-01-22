@@ -80,6 +80,33 @@ let postWrite = {
     }
   },
 
+  async submitSub(postNo) {
+    const title = this.postTitle.value;
+    const content = this.editor.getMarkdown().trim();
+
+    if (!title) {
+      alert('제목을 입력하세요..');
+      return false;
+    }
+
+    if (!content) {
+      alert('내용을 입력하세요.');
+      return false;
+    }
+
+    const params = {
+      title,
+      content,
+    };
+
+    try {
+      await ajaxUtil.sendPostAjax(`/post/${postNo}`, params);
+      location.href = `/post/${postNo}`;
+    } catch (e) {
+      alert(`작성 실패\n${e.responseText}`);
+    }
+  },
+
   async addCategory() {
     const categoryName = this.categoryName.value;
     const selectBox = this.category;
