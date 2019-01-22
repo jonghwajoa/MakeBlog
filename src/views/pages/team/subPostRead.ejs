@@ -38,7 +38,7 @@
                     </dl>
                 </div>
                 <div class="manageArea">
-                    <a href='/post/<%=home%>/<%=post.no %>/edit'>
+                    <a href='/post/<%=home%>/<%=post.sub_no %>/edit'>
                         <input type="button" value='수정하기' id='update' />
                     </a>
                     <input type="button" value='삭제하기' id='delete' onclick='deletePost()' />
@@ -81,12 +81,14 @@
         <% include ../../partials/footer.ejs %>
 
             <noscript>Please enable JavaScript</noscript>
-            <script src="/js/editor/editor.js"></script>
+            <script src="/js/util/ajaxUtil.js"></script>
+            <script src="/js/post/postRead.js"></script>
+            
             <script>
                 window.onload = function () {
                     const disqus_config = function () {
-                        this.page.url = '/post/<%=home%>/<%= post.no %>';  // Replace PAGE_URL with your page's canonical URL variable
-                        this.page.identifier = `<%=home%>/<%= post.no %>`;; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+                        this.page.url = '/post/<%=home%>/<%= post.sub_no %>';  // Replace PAGE_URL with your page's canonical URL variable
+                        this.page.identifier = `<%=home%>/<%= post.sub_no %>`;; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
                     };
 
                     (function () { // DON'T EDIT BELOW THIS LINE
@@ -109,7 +111,7 @@
                                 alert(`작성 실패\n${xhr.responseText}`)
                             }
                         }
-                        xhr.open('DELETE', '/post/<%=home%>/<%=post.no%>', true);
+                        xhr.open('DELETE', '/post/<%=home%>/<%=post.sub_no%>', true);
                         xhr.setRequestHeader('Content-type', 'application/json');
                         xhr.send()
                     }

@@ -13,6 +13,13 @@ const findById = id => {
   return SubPosts.findById(id);
 };
 
+const findByNo = (postId, subId) => {
+  return SubPosts.findOne({
+    where: { post_no: postId, sub_no: subId },
+    attributes: ['no'],
+  });
+};
+
 const findHotPost = () => {
   return SubPosts.findAll({
     limit: 5,
@@ -35,6 +42,7 @@ const findDetailByPostNo = (postId, subId) => {
     where: { post_no: postId, sub_no: subId },
     attributes: [
       'no',
+      'sub_no',
       'title',
       'content',
       'count',
@@ -65,4 +73,5 @@ module.exports = {
   findHotPost,
   findById,
   findNextNo,
+  findByNo,
 };

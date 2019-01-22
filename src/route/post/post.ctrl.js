@@ -127,8 +127,9 @@ const showSubPost = async (req, res, next) => {
     return next(e);
   }
 
-  if (req.session.isLogin)
+  if (req.session.isLogin) {
     return res.render('team/subPostRead', { post, subPost, home: id });
+  }
   return res.render('noauth/subPostRead', { post, subPost, home: id });
 };
 
@@ -194,7 +195,7 @@ const updateSubView = async (req, res, next) => {
 
   let post;
   try {
-    post = await subPostDB.findById(subId);
+    post = await subPostDB.findDetailByPostNo(id, subId);
     if (!post) return next();
   } catch (e) {
     return next(e);
@@ -204,7 +205,7 @@ const updateSubView = async (req, res, next) => {
 };
 
 const updateSubPost = async (req, res, next) => {
-  let { subId } = req.params;
+  let { id, subId } = req.params;
   let { title, content } = req.body;
 
   if (!libPost.subPostValidation(req.body)) {
@@ -215,7 +216,7 @@ const updateSubPost = async (req, res, next) => {
   let updateVal = { title, content };
 
   try {
-    result = await subPostDB.findById(subId);
+    result = await subPostDB.findByNo(id, subId);
     if (!result) return next();
     result = await result.update(updateVal);
   } catch (e) {

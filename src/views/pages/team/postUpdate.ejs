@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ko">
   <head>
-    <title>WeKnowJS</title>
+    <title>WeKnowJS-게시글 수정중</title>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <% include ../../partials/team/essentialCss.ejs %>
@@ -15,10 +15,15 @@
     <article>
       <section>
         <div class="custom title">
-          <input type="text" id="title" name="title" placeholder="Title" />
+          <input
+            type="text"
+            id="title"
+            name="title"
+            value="<%= post.title %>"
+          />
         </div>
         <div class="custom tag">
-          <input type="text" id="tag" name="tag" placeholder="Tag" />
+          <input type="text" id="tag" name="tag" value="<%= post.tag %>" />
         </div>
         <div class="category">
           <label for="category">category</label>
@@ -33,13 +38,17 @@
         </div>
 
         <button class="custom" onclick="back()">뒤로가기</button>
-        <button class="custom" onclick="update()">수정하기</button>
+        <button class="custom" onclick="postUpdate.update('<%=post.no%>')">
+          수정하기
+        </button>
       </section>
     </article>
 
     <% include ../../partials/footer.ejs %>
+    <script src="/js/util/ajaxUtil.js"></script>
+    <script src="/js/post/postUpdate.js"></script>
 
-    <script>
+    <!-- <script>
       let content = document.getElementById('hiddenContent');
       let tag = document.getElementById('tag');
       let title = document.getElementById('title');
@@ -49,83 +58,6 @@
       title.value = `<%= post.title %>`;
       tagVal.shift();
       tag.value = tagVal.map(item => item.substr(1, item.length)).join(' ');
-
-      let editor = new tui.Editor({
-        el: document.getElementById('editSection'),
-        initialEditType: 'markdown',
-        previewStyle: 'vertical',
-        height: '100vh',
-        exts: [
-          'scrollSync',
-          'table',
-          'uml',
-          {
-            name: 'chart',
-            minWidth: 100,
-            maxWidth: 600,
-            minHeight: 100,
-            maxHeight: 300,
-          },
-          'colorSyntax',
-        ],
-
-        hooks: {
-          addImageBlobHook(fileOrBlob, callback) {
-            savePhoto(fileOrBlob, callback);
-          },
-        },
-      });
-      editor.setMarkdown(content.innerHTML.trim());
-
-      function savePhoto(photo, cb) {
-        const xhr = new XMLHttpRequest();
-        const formData = new FormData();
-        formData.append('photo', photo);
-        xhr.onload = function() {
-          if (xhr.status === 200) {
-            return cb(`http://localhost/images/${xhr.responseText}`);
-          }
-          return alert('업로드 실패');
-        };
-        xhr.open('POST', '/post/file', true);
-        xhr.send(formData);
-      }
-
-      function update() {
-        let content = editor
-          .getValue()
-          .trim()
-          .replace(/`/g, '&grave;');
-        const category = document.getElementById('category');
-        const categoryText = '#' + category[category.value - 1].text;
-        const tag =
-          categoryText +
-          ' #' +
-          document
-            .getElementById('tag')
-            .value.trim()
-            .replace(/\s*,+\s*|\s+/g, ' #');
-        const params = {
-          title: document.getElementById('title').value,
-          tag: tag,
-          content,
-          category: category.value,
-        };
-
-        const xhr = new XMLHttpRequest();
-        xhr.onload = function() {
-          if (xhr.status === 200 || xhr.status === 204) {
-            alert('수정 성공');
-            location.href = '/post/<%=post.no%>';
-          } else {
-            alert(`작성 실패\n${xhr.responseText}`);
-          }
-        };
-        console.log(`/post/<%=post.no%>`);
-        xhr.open('PUT', '/post/<%=post.no%>', true);
-        xhr.setRequestHeader('Content-type', 'application/json');
-        xhr.send(JSON.stringify(params));
-      }
-    </script>
+    </script> -->
   </body>
 </html>

@@ -30,18 +30,13 @@ let postWrite = {
       ],
 
       hooks: {
-        addImageBlobHook(photo, cb) {
-          const xhr = new XMLHttpRequest();
-          const formData = new FormData();
-          formData.append('photo', photo);
-          xhr.onload = function() {
-            if (xhr.status === 200) {
-              return cb(`http://localhost/images/${xhr.responseText}`);
-            }
-            return alert('업로드 실패');
-          };
-          xhr.open('POST', '/post/file', true);
-          xhr.send(formData);
+        async addImageBlobHook(photo, cb) {
+          try {
+            let result = await ajaxUtil.saveFileAjax(photo);
+            return cb(`http://localhost/images/${result}`);
+          } catch (e) {
+            alert(e.statusText);
+          }
         },
       },
     });
@@ -99,6 +94,24 @@ let postWrite = {
 
     let select = document.createElement('option');
     let { no, message } = JSON.parse(result.responseText);
+    select.text = categoryName;
+    select.value = no;
+    selectBox.options.add(select);
+    alert(message);
+  },
+
+  async addCategory() {
+    const categoryName = this.categoryName.value;
+    const selectBox = this.selectBox;
+    let result;
+    try {
+      result = await ajaxUtil.sendPostAjax('/post/category/', { categoryName });
+    } catch (e) {
+      alert(`${e.message}\n${e.status}`);
+      return;
+    }
+    let select = document.createElement('option');
+    let { no, message } = JSON.parse(result);
     select.text = categoryName;
     select.value = no;
     selectBox.options.add(select);

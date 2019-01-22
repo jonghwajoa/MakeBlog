@@ -30,7 +30,7 @@ let postRead = {
   async getContent(postNo, subNo = 1) {
     let result;
     try {
-      result = await ajaxUtil.getPostContent(`/post/${postNo}/${subNo}`);
+      result = await ajaxUtil.sendGetAjax(`/post/${postNo}/${subNo}`);
     } catch (e) {
       alert(`Server Error(${e.status})`);
       return;

@@ -18,19 +18,21 @@
         <article>
             <section>
                 <div class='custom title'>
-                    <input type='text' id='title' name='title' placeholder='Title' /> </div>
+                    <input type='text' id='title' name='title' value="<%=post.title %>" /> </div>
                 </div>
                 <div id="editSection" id='content' name='content'>
+                  <p hidden id="hiddenContent"><%- post.content %></p>
                 </div>
 
                 <button class='custom' onclick='back()'>뒤로가기 </button>
-                <button class='custom' onclick='update()'>수정하기</button>
+                <button class='custom' onclick='postUpdate.updateSub("<%=home%>","<%=post.sub_no%>")'>수정하기</button>
             </section>
         </article>
 
         <% include ../../partials/footer.ejs %>
-
-            <script>
+        <script src="/js/util/ajaxUtil.js"></script>
+        <script src="/js/post/postUpdate.js"></script>
+            <!-- <script>
                 let content = `<%- post.content %>`
                         .replace(/&gt;/g, '>')
                         .replace(/&#39;/g, "'")
@@ -104,6 +106,6 @@
                     xhr.setRequestHeader('Content-type', 'application/json');
                     xhr.send(JSON.stringify(params))
                 }
-            </script>
+            </script> -->
 </body>
 </html>

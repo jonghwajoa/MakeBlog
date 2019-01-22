@@ -36,7 +36,7 @@
             name="addCategory"
             placeholder="Category add name"
           />
-          <button onclick="addCategory()">추가하기</button>
+          <button onclick="postWrite.addCategory()">추가하기</button>
         </div>
 
         <div id="editSection" id="content" name="content"></div>
@@ -53,28 +53,7 @@
     <script src="/js/post/postWrite.js"></script>
 
     <script>
-      function addCategory() {
-        const categoryName = document.getElementById('addCategory').value;
-        const selectBox = document.getElementById('category');
-        const xhr = new XMLHttpRequest();
-        xhr.onload = function() {
-          if (xhr.status === 200) {
-            let select = document.createElement('option');
-            let result = JSON.parse(xhr.responseText);
-            select.text = categoryName;
-            select.value = result.no;
-            selectBox.options.add(select);
-            alert(result.message);
-          } else if (xhr.status === 400) {
-            alert(`${xhr.responseText}`);
-          } else {
-            alert(`Error \n${xhr.responseText}`);
-          }
-        };
-        xhr.open('POST', '/post/category/', true);
-        xhr.setRequestHeader('Content-type', 'application/json');
-        xhr.send(JSON.stringify({ categoryName }));
-      }
+     
     </script>
   </body>
 </html>
