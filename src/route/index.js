@@ -6,14 +6,10 @@ router.get('/', async (req, res) => {
   return res.status(301).redirect('/post');
 });
 
-router.get('/about', async (req, res) => {
-  if (req.session.isLogin) return res.render('team/aboutTeam');
-  return res.render('noauth/aboutTeam');
-});
-
 router.use('/cote', require('./cote'));
 router.use('/auth', require('./auth'));
 router.use('/post', require('./post'));
+router.use('/about', require('./about'));
 
 router.use((req, res) => {
   if (req.headers['content-type'] === 'application/json') {

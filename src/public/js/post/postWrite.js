@@ -47,7 +47,7 @@ let postWrite = {
     });
   },
 
-  submit() {
+  async submit() {
     const title = this.postTitle.value;
     const content = this.editor.getMarkdown().trim();
     const category = this.category;
@@ -77,32 +77,31 @@ let postWrite = {
       category: category.value,
     };
 
-    ajaxUtil
-      .sendPostAjax('/post/', params)
-      .then(result => {
-        location.href = '/post/';
-      })
-      .catch(e => {
-        alert(`작성 실패\n${e.responseText}`);
-      });
+    try {
+      await ajaxUtil.sendPostAjax('/post/', params);
+      location.href = '/post/';
+    } catch (e) {
+      alert(`작성 실패\n${e.responseText}`);
+    }
   },
 
-  addCategory() {
+  async addCategory() {
     const categoryName = this.categoryName.value;
     const selectBox = this.category;
+    let result;
 
-    ajaxUtil
-      .sendPostAjax('/post/category/', categoryName)
-      .then(result => {
-        let select = document.createElement('option');
-        let { no, message } = JSON.parse(result.responseText);
-        select.text = categoryName;
-        select.value = no;
-        selectBox.options.add(select);
-        alert(message);
-      })
-      .catch(e => {
-        alert(`${e.responseText}`);
-      });
+    try {
+      result = await ajaxUtil.sendPostAjax('/post/category/', categoryName);
+    } catch (e) {
+      alert(`${e.responseText}`);
+      return;
+    }
+
+    let select = document.createElement('option');
+    let { no, message } = JSON.parse(result.responseText);
+    select.text = categoryName;
+    select.value = no;
+    selectBox.options.add(select);
+    alert(message);
   },
 };

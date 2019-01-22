@@ -1,14 +1,14 @@
 {
   "name": "MakeBlog",
-  "Author": "WeKnowJS",
+  "Author": "JongHwa",
   "description": "make Tech Blog",
-  "version": "1.0.1",
+  "version": "2.0.0",
   "main": "index.js",
   "scripts": {
     "start": "set NODE_ENV=production&&node ./src/bin/www",
     "dev": "set NODE_ENV=development&&nodemon -w ./src src/bin/www",
     "product": "port=80 ssl_port=443 node ./src/bin/www",
-    "test": "set NODE_ENV=test&&mocha -w src/api/posts/posts.spec.js"
+    "test": "set NODE_ENV=test&&mocha -w src/route/auth/auth.spec.js"
   },
   "keywords": [],
   "author": "",

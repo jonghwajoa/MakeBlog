@@ -34,7 +34,7 @@ let ajaxUtil = {
     });
   },
 
-  deletePost(url) {
+  sendDeleteAjax(url) {
     return new Promise((resolve, reject) => {
       const xhr = new XMLHttpRequest();
       xhr.onload = () => {

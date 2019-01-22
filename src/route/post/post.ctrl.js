@@ -72,18 +72,7 @@ const list = async (req, res, next) => {
     return next(e);
   }
 
-  if (req.session.isLogin)
-    return res.render('team/postList', {
-      postList,
-      pagingInfo,
-      hotPost,
-      hotSubPost,
-      today: req.today,
-      monthCount,
-      totalCount,
-    });
-
-  return res.render('noauth/postList', {
+  let returnObj = {
     postList,
     pagingInfo,
     hotPost,
@@ -91,7 +80,10 @@ const list = async (req, res, next) => {
     today: req.today,
     monthCount,
     totalCount,
-  });
+  };
+
+  if (req.session.isLogin) return res.render('team/postList', { ...returnObj });
+  return res.render('noauth/postList', { ...returnObj });
 };
 
 const show = async (req, res, next) => {
@@ -243,7 +235,6 @@ const remove = async (req, res, next) => {
     return next(e);
   }
 
-  console.log('삭제성공');
   res.status(204).end();
 };
 
@@ -261,7 +252,6 @@ const removeSubPost = async (req, res, next) => {
 };
 
 const uploadImage = (req, res) => {
-  console.log('이으으으으응');
   return res.end(req.files[0].filename);
 };
 

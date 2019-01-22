@@ -4,11 +4,11 @@ const db = require('../../db');
 const validation = require('../../lib/validation/validation');
 const bcrypt = require('bcrypt');
 
-loginView = (req, res, next) => {
+const loginView = (req, res, next) => {
   res.render('noauth/login');
 };
 
-login = async (req, res, next) => {
+const login = async (req, res, next) => {
   let { id, pw } = req.body;
 
   if (!validation.arrayElementIsString([id, pw])) {
@@ -51,11 +51,11 @@ login = async (req, res, next) => {
   return res.status(200).end();
 };
 
-registerView = (req, res) => {
+const registerView = (req, res) => {
   return res.render('noauth/register');
 };
 
-register = async (req, res, next) => {
+const register = async (req, res, next) => {
   let { id, pw, nickname } = req.body;
 
   if (!validation.arrayElementIsString([id, pw, nickname])) {
@@ -97,7 +97,6 @@ register = async (req, res, next) => {
   let result, transaction;
   try {
     transaction = await db.sequelize.transaction();
-
     result = await loginDB.create(id, hash, transaction);
     const userNo = result.dataValues.no;
     await userDB.create(userNo, id, nickname, transaction);
@@ -107,10 +106,10 @@ register = async (req, res, next) => {
     return next(e);
   }
 
-  return res.status(200).end();
+  return res.status(201).json({ id });
 };
 
-logout = (req, res, next) => {
+const logout = (req, res, next) => {
   req.session.destroy(err => {
     if (err) {
       return next(err);

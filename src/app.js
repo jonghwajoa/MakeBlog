@@ -6,7 +6,6 @@ const cookieParser = require('cookie-parser');
 const morgan = require('morgan');
 const helmet = require('helmet');
 const hpp = require('hpp');
-
 const visitMiddle = require('./lib/middleware/visit');
 
 require('dotenv').config();
