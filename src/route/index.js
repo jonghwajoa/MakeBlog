@@ -13,7 +13,7 @@ router.use('/about', require('./about'));
 
 router.use((req, res) => {
   if (req.headers['content-type'] === 'application/json') {
-    return res.status(404).json('Not Found');
+    return res.status(404).json({ message: 'Not Found' });
   }
 
   if (req.session.isLogin) return res.status(404).render('team/404');
@@ -35,7 +35,7 @@ router.use((err, req, res, next) => {
   }
 
   if (req.headers['content-type'] === 'application/json') {
-    return res.status(err.status).json(err.message);
+    return res.status(err.status).json({ message: err.message });
   }
 
   if (err.status === 400) {

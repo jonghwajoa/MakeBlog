@@ -13,7 +13,18 @@ const createView = async (req, res) => {
   }
 };
 
-const createSubView = (req, res) => {
+const createSubView = async (req, res, next) => {
+  let no = req.params.id;
+  let result;
+  try {
+    result = await postDB.findById(no);
+  } catch (e) {
+    return next(e);
+  }
+  if (!result) {
+    return res.status(404).end();
+  }
+
   return res.render('team/subPostWrite', { no: req.params.id });
 };
 
@@ -24,7 +35,7 @@ const create = async (req, res, next) => {
 
   try {
     let result = await postDB.creatPost(req.body, req.session.userid);
-    return res.status(201).json(result);
+    return res.status(201).json({ no: result.dataValues.no });
   } catch (e) {
     return next(e);
   }
@@ -33,6 +44,7 @@ const create = async (req, res, next) => {
 const createSubPost = async (req, res, next) => {
   let id = req.params.id;
   if (!libPost.subPostValidation(req.body)) {
+    console.log(`벨리데이션에서 걸렸습니다.`);
     return res.status(400).json('입력이 올바르지 않습니다.');
   }
 
@@ -82,8 +94,12 @@ const list = async (req, res, next) => {
     today: req.today,
   };
 
-  if (req.session.isLogin) return res.render('team/postList', { ...returnObj });
-  return res.render('noauth/postList', { ...returnObj });
+  let path = 'noauth/postList';
+  if (req.session.isLogin) {
+    path = 'team/postList';
+  }
+
+  return res.render(path, { ...returnObj });
 };
 
 const show = async (req, res, next) => {
@@ -99,9 +115,16 @@ const show = async (req, res, next) => {
     return next(e);
   }
 
-  if (req.session.isLogin)
-    return res.render('team/postRead', { post, subPost });
-  return res.render('noauth/postRead', { post, subPost });
+  if (req.headers['content-type'] === 'application/json') {
+    return res.json({ post, subPost });
+  }
+
+  let path = 'noauth/postRead';
+  if (req.session.isLogin) {
+    path = 'team/postRead';
+  }
+
+  return res.render(path, { post, subPost });
 };
 
 const showSubPost = async (req, res, next) => {
@@ -258,21 +281,22 @@ const uploadImage = (req, res) => {
 
 const categoryAdd = async (req, res, next) => {
   const { categoryName } = req.body;
-
+  let result;
   try {
-    let result = await categoryDB.find(categoryName);
+    result = await categoryDB.find(categoryName);
     if (result !== null) {
       return res.status(400).json('이미 존재하는 카테고리 입니다.');
     }
     result = await categoryDB.create(categoryName);
-    return res.json({
-      message: '카테고리 추가 성공',
-      no: result.dataValues.no,
-    });
   } catch (e) {
     e.message = '카테고리 추가 실패';
     next(e);
   }
+
+  return res.json({
+    message: '카테고리 추가 성공',
+    no: result.dataValues.no,
+  });
 };
 
 module.exports = {
@@ -292,3 +316,22 @@ module.exports = {
   uploadImage,
   categoryAdd,
 };
+
+
+
+
+ /**
+ * 업데이트뷰
+ * 서브업데이터
+ * 제거
+ 
+ 
+ * 서브글등록
+ * 서브글보기
+ * 서브업데이터뷰
+ * 업데이터
+ * 서브글제거
+ * 파일업로드
+ * 카테고리추가
+ * 
+ */

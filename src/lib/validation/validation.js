@@ -1,8 +1,8 @@
-isString = str => {
+const isString = str => {
   return typeof str === 'string';
 };
 
-arrayElementIsString = strArray => {
+const arrayElementIsString = strArray => {
   for (value of strArray) {
     if (typeof value !== 'string') {
       return false;
@@ -12,7 +12,7 @@ arrayElementIsString = strArray => {
   return true;
 };
 
-isLength = (val, min, max = Number.MAX_SAFE_INTEGER) => {
+const isLength = (val, min, max = Number.MAX_SAFE_INTEGER) => {
   const valLen = val.length;
   if (min > max) {
     [min, max] = [max, min];
@@ -20,12 +20,12 @@ isLength = (val, min, max = Number.MAX_SAFE_INTEGER) => {
   return valLen > min && valLen < max;
 };
 
-isUINT = num => {
+const isUINT = num => {
   num = parseInt(num);
   return num > 0;
 };
 
-checkTag = tag => {
+const checkTag = tag => {
   let array = tag.split(' ');
   for (let item of array) {
     if (item[0] !== '#') return false;

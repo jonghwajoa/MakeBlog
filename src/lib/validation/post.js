@@ -23,6 +23,7 @@ function paging(totalCnt, { page = 1, perPageNum = 20 }) {
 
 function postValidation({ title, tag, content, category }) {
   if (!content) return false;
+
   if (!validation.arrayElementIsString([title, tag, content, category])) {
     return false;
   }
