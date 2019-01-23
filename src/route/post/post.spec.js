@@ -49,6 +49,7 @@ const WritePostVal = {
   writer: 5,
 };
 
+let deleteNo;
 // models.Categories.bulkCreate(category);
 // models.Posts.bulkCreate(post);
 
@@ -209,7 +210,7 @@ describe('Post는......', () => {
               .end(done);
           });
 
-          it('id가 자연수가 아닌경우', done => {
+          it('id가 자연수가 아닌경우 400을 응답한다', done => {
             request(app)
               .get('/post/-1')
               .send({})
@@ -363,6 +364,7 @@ describe('Post는......', () => {
               .expect('Content-Type', /json/)
               .end((err, res) => {
                 body = res.body;
+                deleteNo = body.no;
                 done();
               });
           });
@@ -377,34 +379,268 @@ describe('Post는......', () => {
 
   /** GET /post/:id/edit
    *  success : 200과 html을 반환한다.
-   *  fail :
+   *  fail : 비로그인상태, id가 자연수가 아닌경우, id가 없는경우
    */
-  describe('GET /post/:id/edit 요청시...', () => {});
-  /** GET /post/:id/new 요청시
-   *  case success : 로그인상태, post id가 존재
-   *  case fail : 비로그인 상태, post id가 비존재
-   */
+  describe('GET /post/:id/edit 요청시...', () => {
+    describe('비로그인 상태에서....', () => {
+      it('세션이 없다면 401과 html을 응답한다...', done => {
+        request(app)
+          .get('/post/1/edit')
+          .expect(401)
+          .expect('Content-Type', /html/)
+          .end(done);
+      });
+    });
+    describe('로그인 상태에서....', () => {
+      let agent = request.agent(app);
+      before(done => {
+        agent
+          .post('/auth/login')
+          .send({
+            id: 'jonghwa',
+            pw: 'jonghwapw',
+          })
+          .end(done);
+      });
 
-  describe('GET /post/:id/new 요청시....', () => {
-    describe('비로그인 상태에서...', () => {
-      describe('실패시...', () => {
-        it('401과 html을 응답한다.', done => {
-          request(app)
-            .get('/post/1/new')
+      describe('실패시....', () => {
+        it('id값이 자연수가 아닌경우 400, html 반환한다.', done => {
+          agent
+            .get('/post/a/edit')
+            .expect(400)
             .expect('Content-Type', /html/)
-            .expect(401)
             .end(done);
         });
 
-        it('JSON으로 요청하면 401과 JSON을 응답한다.', done => {
-          request(app)
-            .get('/post/1/new')
-            .expect(401)
+        it('존재하지 않는 id값 이라면 404를 반환한다.', done => {
+          agent
+            .get('/post/79999/edit')
+            .expect(404)
+            .expect('Content-Type', /html/)
+            .end(done);
+        });
+      });
+      describe('성공시....', () => {
+        it('성공시 200과 html을 반환한다.', done => {
+          agent
+            .get('/post/1/edit')
+            .expect(200)
+            .expect('Content-Type', /html/)
+            .end(done);
+        });
+      });
+    });
+  });
+
+  /** PUT /post/:id
+   *  success :
+   *  fail : 비로그인, id가 자연수가 아닌경우, 없는 리소스
+   *
+   */
+  describe('PUT /post/:id 요청시...', () => {
+    describe('비로그인 상태에서...', () => {
+      it('401과 html을 응답한다.', done => {
+        request(app)
+          .get('/post/1/new')
+          .expect('Content-Type', /html/)
+          .expect(401)
+          .end(done);
+      });
+    });
+
+    let agent = request.agent(app);
+    describe('로그인 상태에서...', () => {
+      before(done => {
+        agent
+          .post('/auth/login')
+          .send({
+            id: 'jonghwa',
+            pw: 'jonghwapw',
+          })
+          .end(done);
+      });
+      describe('실패시...', () => {
+        it('id값이 자연수가 아닌경우 400, html 반환한다.', done => {
+          agent
+            .put('/post/a')
+            .expect(400)
+            .expect('Content-Type', /html/)
+            .end(done);
+        });
+
+        it('모든 입력값은 String이지 않으면 400을 반환한다.', done => {
+          agent
+            .put('/post/1')
+            .send({
+              title: '5번',
+              tag: '#아무거나 #갑시다 #히히',
+              content: '1번글 content입니다.',
+              category: 1,
+            })
+            .expect(400)
             .expect('Content-Type', /json/)
+            .end(done);
+        });
+
+        it('title 누락시 400을 반환', done => {
+          agent
+            .put('/post/1')
+            .send({
+              tag: '#아무거나 #갑시다 #히히',
+              content: '1번글 content입니다.',
+              category: '1',
+            })
+            .expect(400)
+            .expect('Content-Type', /json/)
+            .end(done);
+        });
+
+        it('tag 누락시 400을 반환', done => {
+          agent
+            .put('/post/1')
+            .send({
+              title: '5번',
+              content: '1번글 content입니다.',
+              category: '1',
+            })
+            .expect(400)
+            .expect('Content-Type', /json/)
+            .end(done);
+        });
+
+        it('cotent 누락시 400을 반환', done => {
+          agent
+            .put('/post/1')
+            .send({
+              title: '5번',
+              tag: '#아무거나 #갑시다 #히히',
+              category: '1',
+            })
+            .expect(400)
+            .expect('Content-Type', /json/)
+            .end(done);
+        });
+
+        it('존재하지 않는 id 입력시 404를 응답한다....', done => {
+          agent
+            .put('/post/999999999')
+            .send({
+              title: '5번',
+              tag: '#수정 #성공 #합시다.',
+              content: '1번글 content입니다.',
+              category: '1',
+            })
+            .expect(404)
+            .end(done);
+        });
+      });
+
+      describe('성공시...', () => {
+        it('204를 반환한다...', done => {
+          agent
+            .put('/post/1')
+            .send({
+              title: '5번',
+              tag: '#수정 #성공 #합시다.',
+              content: '1번글 content입니다.',
+              category: '1',
+            })
+            .expect(204)
+            .end(done);
+        });
+      });
+    });
+  });
+
+  /** DELETE /post/:id
+   *  success : 204를 응답한다.
+   *  fail : 비로그인시, 아이디가 자연수가 아닌경우, 아이디가 없는경우
+   */
+  describe('DELETE /post/:id 요청시...', () => {
+    describe('비로그인시...', () => {
+      it('세션이 없으면 401과 json을 반환한다.', done => {
+        request(app)
+          .delete('/post/5')
+          .send({})
+          .expect(401)
+          .expect('Content-Type', /json/)
+          .end(done);
+      });
+    });
+
+    let agent = request.agent(app);
+    describe('로그인 상태에서...', () => {
+      before(done => {
+        agent
+          .post('/auth/login')
+          .send({
+            id: 'jonghwa',
+            pw: 'jonghwapw',
+          })
+          .end(done);
+      });
+      describe('실패시...', () => {
+        it('id값이 자연수가 아닌경우 400, html 반환한다.', done => {
+          agent
+            .delete('/post/a')
+            .expect(400)
+            .expect('Content-Type', /html/)
+            .end(done);
+        });
+
+        it('id값이 없는경우 404과 html을 반환한다.', done => {
+          agent
+            .delete('/post/999999')
+            .expect(404)
+            .expect('Content-Type', /html/)
+            .end(done);
+        });
+
+        it('id값이 없고 JSON으로 요청한경우 404, json 반환한다.', done => {
+          agent
+            .delete('/post/999999')
             .send({})
+            .expect(404)
+            .expect('Content-Type', /json/)
+            .end(done);
+        });
+      });
+      describe('성공시...', () => {
+        it('204를 응답한다..', done => {
+          agent
+            .delete(`/post/${deleteNo}`)
+            .expect(204)
             .end(done);
         });
       });
     });
   });
 });
+
+/** GET /post/:id/new 요청시
+ *  case success : 로그인상태, post id가 존재
+ *  case fail : 비로그인 상태, post id가 비존재
+ */
+
+// describe('GET /post/:id/new 요청시....', () => {
+//   describe('비로그인 상태에서...', () => {
+//     describe('실패시...', () => {
+//       it('401과 html을 응답한다.', done => {
+//         request(app)
+//           .get('/post/1/new')
+//           .expect('Content-Type', /html/)
+//           .expect(401)
+//           .end(done);
+//       });
+
+//       it('JSON으로 요청하면 401과 JSON을 응답한다.', done => {
+//         request(app)
+//           .get('/post/1/new')
+//           .expect(401)
+//           .expect('Content-Type', /json/)
+//           .send({})
+//           .end(done);
+//       });
+//     });
+//   });
+// });

@@ -300,38 +300,30 @@ const categoryAdd = async (req, res, next) => {
 };
 
 module.exports = {
-  createView,
-  createSubView,
-  create,
-  createSubPost,
   list,
+  createView,
+  create,
   show,
-  showSubPost,
   updateView,
   update,
+  remove,
+  createSubView,
+  createSubPost,
+  showSubPost,
   updateSubView,
   updateSubPost,
-  remove,
   removeSubPost,
   uploadImage,
   categoryAdd,
 };
 
-
-
-
- /**
- * 업데이트뷰
+/**
  * 서브업데이터
- * 제거
- 
- 
  * 서브글등록
  * 서브글보기
  * 서브업데이터뷰
- * 업데이터
  * 서브글제거
  * 파일업로드
  * 카테고리추가
- * 
+ *
  */
