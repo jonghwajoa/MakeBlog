@@ -1,16 +1,14 @@
-document.addEventListener('DOMContentLoaded', function() {
-  postRead.init();
-});
+let postRead = (() => {
+  let content = document.getElementById('hiddenContent');
+  let viewCount = document.getElementById('viewCount');
+  let date = document.getElementById('createDate');
+  let postTitle = document.getElementById('title');
+  let headTitle = document.getElementById('headTitle');
+  let editor;
+  let module = {};
 
-let postRead = {
-  content: document.getElementById('hiddenContent'),
-  viewCount: document.getElementById('viewCount'),
-  date: document.getElementById('createDate'),
-  postTitle: document.getElementById('title'),
-  headTitle: document.getElementById('headTitle'),
-
-  init() {
-    this.editor = new tui.Editor({
+  module.init = () => {
+    editor = new tui.Editor({
       el: document.querySelector('#content'),
       exts: [
         'table',
@@ -24,10 +22,10 @@ let postRead = {
         },
       ],
     });
-    this.editor.setMarkdown(this.content.innerHTML.trim());
-  },
+    editor.setMarkdown(content.innerHTML.trim());
+  };
 
-  async getContent(postNo, subNo = 1) {
+  module.getContent = async (postNo, subNo = 1) => {
     let result;
     try {
       result = await ajaxUtil.sendGetAjax(`/post/${postNo}/${subNo}`);
@@ -36,15 +34,15 @@ let postRead = {
       return;
     }
     let { content, title, count, created_at } = JSON.parse(result).post;
-    this.date.innerHTML = `${created_at} |`;
-    this.viewCount.innerHTML = `View ${count}`;
-    this.postTitle.innerHTML = title;
-    this.headTitle.innerHTML = `WeKnowJS-${title}`;
-    this.editor.setValue(content.trim());
+    date.innerHTML = `${created_at} |`;
+    viewCount.innerHTML = `View ${count}`;
+    postTitle.innerHTML = title;
+    headTitle.innerHTML = `WeKnowJS-${title}`;
+    editor.setValue(content.trim());
     window.history.replaceState(null, '', `/post/${postNo}/${subNo}`);
-  },
+  };
 
-  async deletePost(postNo, subNo = 1) {
+  module.deletePost = async (postNo, subNo = 1) => {
     let message = '서브게시글을 삭제하시겠습니까?';
     let url = `/post/${postNo}/${subNo}`;
     let redirect = `/post/${postNo}`;
@@ -67,5 +65,11 @@ let postRead = {
     } catch (e) {
       alert(`삭제 실패\n${e.status}`);
     }
-  },
-};
+  };
+
+  return module;
+})();
+
+document.addEventListener('DOMContentLoaded', function() {
+  postRead.init();
+});

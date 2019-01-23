@@ -2,7 +2,6 @@ const should = require('should');
 const request = require('supertest');
 const app = require('../../app');
 const models = require('../../db');
-
 /**
  * Auth는 login, signup, logout을 제공한다.
  */
@@ -220,28 +219,20 @@ describe('Auth는..', () => {
     });
 
     describe('성공시...', () => {
-      before(done => {
-        request(app)
+      let agent = request.agent(app);
+      it('로그인 상태에서 로그아웃 요청시...', done => {
+        agent
           .post('/auth/login')
           .send({
             id: 'jonghwa',
             pw: 'jonghwapw',
           })
-          .expect(200)
           .end((err, res) => {
-            if (err) {
-              done(err);
-            }
-            console.log('성공했다리');
-            done();
+            agent
+              .get('/auth/logout')
+              .expect(302)
+              .end(done);
           });
-      });
-
-      it('로그아웃 성공시...', done => {
-        request(app)
-          .get('/auth/logout')
-          .expect(304)
-          .end(done);
       });
     });
   });

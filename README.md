@@ -2,7 +2,35 @@
 
 https://www.weknowjs.xyz/
 
-## v1 (배포버전)
+## API
+
+| API                   | METHOD | 기능                  |
+| --------------------- | ------ | --------------------- |
+| /auth/login           | GET    | 로그인 form           |
+| /auth/login           | POST   | 로그인                |
+| /auth/register        | GET    | 회원가입 form         |
+| /auth/register        | POST   | 회원가입              |
+| /post                 | GET    | 포스트 리스트 출력    |
+| /post/new             | GET    | 포스트 생성 form      |
+| /post                 | POST   | 포스트 생성           |
+| /post/:id             | GET    | 포스트 보기           |
+| /post/:id             | PUT    | 포스트 수정           |
+| /post/:id             | DELETE | 포스트 삭제           |
+| /post/:id/edit        | GET    | 포스트 수정 form      |
+| /post/:id/            | POST   | 서브 포스트 생성      |
+| /post/:id/:subId      | GET    | 서브 포스트 보기      |
+| /post/:id/:subId      | PUT    | 서브 포스트 수정      |
+| /post/:id/:subId      | DELETE | 서브 포스트 삭제      |
+| /post/:id/:subId/edit | GET    | 서브 포스트 수정 form |
+| /post/category        | POST   | 카테고리 추가         |
+| /post/file            | POST   | 사진 저장             |
+
+## 데이터 형식
+
+ID : LEN[5,20] (5 부터 20 까지) lower (대소문자 구분 x)  
+PW : LEN[5,20] (5 부터 20 까지) lower (대소문자 구분 x)
+
+# v1 (배포버전)
 
 개발기간 : 180814 ~ 180901
 
@@ -19,19 +47,22 @@ https://www.weknowjs.xyz/
 - 페이징 처리
 - 댓글 (disqus)
 
-### 오류 수정
+### v1 오류 수정
 
 - 본글 삭제시 서브글 미삭제
 
-## v2 (진행사항)
+# v2 (완료사항 - 미배포)
 
 - 방문로그 추가
 - 게시글 컬럼 추가
 - 카테고리 추가 기능
 - js 파일 분리
 
-### v2 목표까지 남은 기능
+## v2 (진행사항)
+
+- 테스트 코드작성
+
+### v2 목표까지 남은 기능 (미진행)
 
 - 코딩테스트 텝
-- 테스트 코드작성
 - 오류수정..
