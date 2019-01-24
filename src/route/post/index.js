@@ -44,11 +44,10 @@ router
   .post(isLogin)
   .put(isLogin)
   .delete(isLogin);
-router.get(['/new', '/:id/new', '/:id/edit', '/id/:subId/edit'], isLogin);
-
+router.get(['/new', '/:id/new', '/:id/edit', '/:id/:subId/edit'], isLogin);
 router.route('/:id').all(checkPram.paramIsINT);
-/* 검증 끝*/
 
+/* post route*/
 router
   .route('/')
   .get(ctrl.list)
@@ -65,8 +64,7 @@ router
   .put(ctrl.update)
   .delete(ctrl.remove);
 
-/* 여기부터는 subPost */
-
+/* subPost route */
 router.get('/:id/new', checkPram.paramIsINT, ctrl.createSubView);
 router.route('/:id/').post(checkPram.paramIsINT, ctrl.createSubPost);
 

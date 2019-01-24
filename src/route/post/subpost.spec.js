@@ -18,6 +18,8 @@ const writePost = {
   content: '내용물입니다 ^_^',
 };
 
+let deleteNo;
+
 describe('/Post의 subPost는......', () => {
   let agent = request.agent(app);
   /** GET /post/:id/new 요청시
@@ -179,6 +181,7 @@ describe('/Post의 subPost는......', () => {
             .expect('Content-Type', /json/)
             .end((err, res) => {
               result = res.body;
+              deleteNo = result.sub_no;
               done();
             });
         });
@@ -229,6 +232,325 @@ describe('/Post의 subPost는......', () => {
             .expect(404)
             .end(done);
         });
+      });
+    });
+  });
+
+  /**  GET /post/:id/:subid
+   *   success: id포스트가 존재하며 subid가 존재하면 200과 html or json을 응답
+   *   fail : id가 자연수가 아닌경우, subid가 자연수가 아닌경우 400반환
+   *    id가 없는경우, subid가 없는경우 404반환
+   *
+   */
+  describe('GET /post/:id/:subid 요청시...', () => {
+    describe('URL로 요청한경우..', () => {
+      describe('실패시....', () => {
+        it('id가 없는경우 404를 반환한다..', done => {
+          request(app)
+            .get('/post/10000/1')
+            .expect(404)
+            .end(done);
+        });
+
+        it('subid가 없는경우 404를 반환한다..', done => {
+          request(app)
+            .get('/post/1/10000')
+            .expect(404)
+            .end(done);
+        });
+
+        it('id가 자연수가 아닌경우 400을 반환..', done => {
+          request(app)
+            .get('/post/a/1')
+            .expect(400)
+            .end(done);
+        });
+
+        it('subId가 자연수가 아닌경우 400을 반환..', done => {
+          request(app)
+            .get('/post/1/a')
+            .expect(400)
+            .end(done);
+        });
+      });
+      describe('성공시...', () => {
+        it('200과 html을 반환한다...', done => {
+          request(app)
+            .get('/post/1/a')
+            .expect('Content-Type', /html/)
+            .expect(400)
+            .end(done);
+        });
+      });
+    });
+
+    describe('JSON으로 요청한경우...', () => {
+      describe('실패시....', () => {
+        it('id가 없는경우 404를 Json으로 응답한다..', done => {
+          request(app)
+            .get('/post/10000/1')
+            .send({})
+            .expect(404)
+            .expect('Content-Type', /json/)
+            .end(done);
+        });
+
+        it('subid가 없는경우 404를 Json으로 응답한다..', done => {
+          request(app)
+            .get('/post/1/10000')
+            .send({})
+            .expect('Content-Type', /json/)
+            .expect(404)
+            .end(done);
+        });
+
+        it('id가 자연수가 아닌경우 400을 Json으로 응답한다..', done => {
+          request(app)
+            .get('/post/a/1')
+            .send({})
+            .expect('Content-Type', /json/)
+            .expect(400)
+            .end(done);
+        });
+
+        it('subId가 자연수가 아닌경우 400을 Json으로 응답한다..', done => {
+          request(app)
+            .get('/post/1/a')
+            .send({})
+            .expect('Content-Type', /json/)
+            .expect(400)
+            .end(done);
+        });
+      });
+
+      describe('성공시... ', () => {
+        it('200과 json으로 응답한다...', done => {
+          request(app)
+            .get(`/post/1/${deleteNo}`)
+            .send({})
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .end(done);
+        });
+      });
+    });
+  });
+
+  /**  GET /post/:id/:id/edit
+   *   success : id와 subId가 자연수이며, 로그인상태이면 200과 html을 반환한다.
+   *   fail : id와 subid가 자연수가 아닌경우 400을 반환
+   *          id와 subid가 존재하지 않는 리소스 인경우 404를 반환
+   *          비로그인상태인경우 401과 html을 반환한다.
+   */
+
+  describe('GET /post/:id/:subid/edit', () => {
+    describe('비로그인으로 요청시....', () => {
+      it('401과 html을 응답한다.', done => {
+        request(app)
+          .get('/post/1/1/edit')
+          .expect(401)
+          .expect('Content-Type', /html/)
+          .end(done);
+      });
+    });
+    describe('로그인 상태에서 요청시....', () => {
+      describe('실패시....', () => {
+        it('id가 없는경우 404를 html을 반환한다..', done => {
+          agent
+            .get('/post/10000/2/edit')
+            .expect(404)
+            .expect('Content-Type', /html/)
+            .end(done);
+        });
+
+        it('subId가 없는경우 404를 html을 반환한다..', done => {
+          agent
+            .get('/post/1/1000000/edit')
+            .expect('Content-Type', /html/)
+            .expect(404)
+            .end(done);
+        });
+
+        it('id가 자연수가 아닌경우 400을 html을 반환한다..', done => {
+          agent
+            .get('/post/a/2/edit')
+            .expect('Content-Type', /html/)
+            .expect(400)
+            .end(done);
+        });
+
+        it('subId가 자연수가 아닌경우 400을 html을 반환한다..', done => {
+          agent
+            .get('/post/2/a/edit')
+            .expect(400)
+            .expect('Content-Type', /html/)
+            .end(done);
+        });
+      });
+
+      describe('성공시...', () => {
+        it('200과 html을 반환한다..', done => {
+          agent
+            .get(`/post/1/${deleteNo}/edit`)
+            .expect(200)
+            .expect('Content-Type', /html/)
+            .end(done);
+        });
+      });
+    });
+  });
+
+  /**  PUT /post/:id/:subId
+   *   success : 204를 반환한다...
+   *   fail : id와 subid가 자연수가 아닌경우 400 을 반환
+   *          id와 subid가 없는 리소스 인 경우 404 반환
+   *          비로그인시 401 반환
+   *          content, title 값 검증실패시 400반환
+   */
+
+  describe('PUT /post/:id/:subId', () => {
+    describe('실패시...', () => {
+      it('비로그인시 401을 반환한다.', done => {
+        request(app)
+          .put('/post/1/2')
+          .expect(401)
+          .expect('Content-Type', /html/)
+          .end(done);
+      });
+
+      it('id가 자연수가 아닌경우 400을 반환한다.', done => {
+        agent
+          .put('/post/a/2')
+          .expect(400)
+          .end(done);
+      });
+
+      it('subid가 자연수가 아닌경우 400을 반환한다.', done => {
+        agent
+          .put('/post/3/a')
+          .expect(400)
+          .end(done);
+      });
+
+      it('subid가 없는경우 404을 반환한다.', done => {
+        agent
+          .put('/post/1/100000')
+          .send({
+            title: '수정하는 타이틀',
+            content: '수정하는 컨텐츠',
+          })
+          .expect(404)
+          .end(done);
+      });
+
+      it('id가 없는경우 404을 반환한다.', done => {
+        agent
+          .put('/post/100000/1')
+          .send({
+            title: '수정하는 타이틀',
+            content: '수정하는 컨텐츠',
+          })
+          .expect(404)
+          .end(done);
+      });
+
+      it('타이틀이 없는경우...', done => {
+        agent
+          .put('/post/100000/1')
+          .send({
+            content: '수정하는 컨텐츠',
+          })
+          .expect(400)
+          .end(done);
+      });
+
+      it('컨텐츠가 없는경우...', done => {
+        agent
+          .put('/post/100000/1')
+          .send({
+            title: '수정하는 타이틀',
+          })
+          .expect(400)
+          .end(done);
+      });
+
+      it('타이틀의 길이가 100이 넘는경우 400을 반환...', done => {
+        let title = '수정하는 타이틀 길이100이상'.repeat(100);
+        agent
+          .put('/post/1/2')
+          .send({
+            title,
+            content: '수정하는 컨텐츠',
+          })
+          .expect(400)
+          .end(done);
+      });
+    });
+
+    describe('성공시....', () => {
+      it('204을 반환한다....', done => {
+        agent
+          .put(`/post/1/${deleteNo}`)
+          .send({
+            title: '수정하는 타이틀',
+            content: '수정하는 컨텐츠',
+          })
+          .expect(204)
+          .end(done);
+      });
+    });
+  });
+
+  /**  delete /post/:id/:subid
+   *   success : 로그인상태, id,subid자연수, 존재하는 리소스 인경우 204를 반환
+   *   fail : 비로그인상태 401 반환
+   *          id,subid 리소스 없으면 404 반환
+   *          id,subid가 자연수가 아니면 400반환
+   */
+  describe('delete /post/:id/:subid', () => {
+    describe('실패시....', () => {
+      it('비로그인시 401을 반환한다....', done => {
+        request(app)
+          .delete('/post/1/2')
+          .expect(401)
+          .expect('Content-Type', /html/)
+          .end(done);
+      });
+
+      it('id가 자연수가 아닌경우 400을 반환한다.', done => {
+        agent
+          .delete('/post/ㅁㅁㅇ/2')
+          .expect(400)
+          .end(done);
+      });
+
+      it('subid가 자연수가 아닌경우 400을 반환한다.', done => {
+        agent
+          .delete('/post/1/ㅊㅁㄴ')
+          .expect(400)
+          .end(done);
+      });
+
+      it('subid가 없는경우 404을 반환한다.', done => {
+        agent
+          .delete('/post/1/20000')
+          .expect(404)
+          .end(done);
+      });
+
+      it('id가 없는경우 404을 반환한다.', done => {
+        agent
+          .delete('/post/10000/2')
+          .expect(404)
+          .end(done);
+      });
+    });
+    describe('성공시....', () => {
+      it('204를 반환한다....', done => {
+        agent
+          .delete(`/post/1/${deleteNo}`)
+          .expect(204)
+          .end(done);
       });
     });
   });
