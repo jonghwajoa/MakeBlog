@@ -1,6 +1,6 @@
 const db = require('../db');
 
-post = () => {
+const post = () => {
   db.Posts.bulkCreate([
     {
       title: '타이틀타아이틀',
@@ -11,7 +11,7 @@ post = () => {
   ]);
 };
 
-grade = () => {
+const grade = () => {
   db.UserGrade.bulkCreate([
     { explain: 'admin' },
     { explain: 'team' },
@@ -19,7 +19,7 @@ grade = () => {
   ]);
 };
 
-categories = () => {
+const categories = () => {
   db.Categories.bulkCreate([
     { explain: 'TeamStudy' },
     { explain: 'PersonStudy' },
@@ -27,7 +27,7 @@ categories = () => {
   ]);
 };
 
-categoriesCote = () => {
+const categoriesCote = () => {
   db.CategoriesCote.bulkCreate([
     { title: 'Stack', order: 1 },
     { title: 'Queue', order: 2 },

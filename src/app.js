@@ -7,6 +7,7 @@ const morgan = require('morgan');
 const helmet = require('helmet');
 const hpp = require('hpp');
 const visitMiddle = require('./lib/middleware/visit');
+const cors = require('./lib/middleware/cors');
 
 require('dotenv').config();
 if (process.env.NODE_ENV === 'production') {
@@ -43,6 +44,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json({ limit: '50mb' }));
 app.use(cookieParser());
 app.use(hpp());
+
+app.use(cors.checkCors);
 app.use(visitMiddle.visit);
 app.use('/', require('./route'));
 

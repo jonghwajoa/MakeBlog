@@ -44,11 +44,14 @@ const create = async (req, res, next) => {
 const createSubPost = async (req, res, next) => {
   let id = req.params.id;
   if (!libPost.subPostValidation(req.body)) {
-    console.log(`벨리데이션에서 걸렸습니다.`);
     return res.status(400).json('입력이 올바르지 않습니다.');
   }
 
   try {
+    let isExist = await postDB.findById(id);
+    if (isExist == null) {
+      return next();
+    }
     let nextNo = await subPostDB.findNextNo(id);
     nextNo = isNaN(nextNo) ? 2 : nextNo + 1;
     let result = await subPostDB.create(id, req.body, nextNo);
@@ -108,7 +111,9 @@ const show = async (req, res, next) => {
 
   try {
     post = await postDB.postFindById(id);
-    if (!post) return next();
+    if (!post) {
+      return next();
+    }
     subPost = await subPostDB.findByPostNo(id);
     post.updateAttributes({ count: post.dataValues.count + 1 });
   } catch (e) {
@@ -142,6 +147,10 @@ const showSubPost = async (req, res, next) => {
 
   let post, subPost;
   try {
+    post = await postDB.postFindById(id);
+    if (post == null) {
+      return next();
+    }
     post = await subPostDB.findDetailByPostNo(id, subId);
     if (!post) return next();
     post.updateAttributes({ count: post.dataValues.count + 1 });
@@ -318,9 +327,8 @@ module.exports = {
 };
 
 /**
- * 서브업데이터
- * 서브글등록
  * 서브글보기
+ * 서브업데이터
  * 서브업데이터뷰
  * 서브글제거
  * 파일업로드

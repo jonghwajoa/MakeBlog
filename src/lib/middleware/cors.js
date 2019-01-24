@@ -1,10 +1,16 @@
-function Checkcors(req, res, next) {
-  // if (req.headers.origin !== 'https://www.weknowjs.xyz') {
+const checkCors = (req, res, next) => {
+  let origin = req.headers.origin;
+  // if (origin !== ['https://www.weknowjs.xyz']) {
+  //   console.log(req.headers.origin);
   //   return res.status(400).send('cors ban');
   // }
-  next();
-}
+
+  if (origin == undefined) {
+    return next();
+  }
+  return res.status(400).send('cors ban');
+};
 
 module.exports = {
-  Checkcors,
+  checkCors,
 };

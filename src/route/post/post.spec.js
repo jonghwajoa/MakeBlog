@@ -50,8 +50,6 @@ const WritePostVal = {
 };
 
 let deleteNo;
-// models.Categories.bulkCreate(category);
-// models.Posts.bulkCreate(post);
 
 /** 테스트 케이스
  * 생성뷰
@@ -63,8 +61,21 @@ let deleteNo;
  * 업데이터
  * 제거
  */
+async function dbInit() {
+  try {
+    await models.Categories.bulkCreate(category);
+    await models.Posts.bulkCreate(post);
+  } catch (e) {
+    console.log(e);
+  }
+}
 
-describe('Post는......', () => {
+describe('/Post는......', () => {
+  before(done => {
+    dbInit();
+    done();
+  });
+
   describe('GET / 요청시.....', () => {
     let body;
     it('302와 /post 를 반환한다.', done => {
@@ -73,7 +84,6 @@ describe('Post는......', () => {
         .expect(302)
         .end((err, res) => {
           res.header.should.have.property('location', '/post');
-          body = res.body;
           done();
         });
     });
@@ -164,7 +174,7 @@ describe('Post는......', () => {
     describe('비로그인 상태에서....', () => {
       describe('실패시...', () => {
         describe('url로 요청한경우', () => {
-          it('id가 자연수 아닌경우 응답한다', done => {
+          it('id가 자연수 아닌경우 400으로 응답한다', done => {
             request(app)
               .get('/post/a')
               .expect(400)
@@ -273,13 +283,16 @@ describe('Post는......', () => {
    */
   describe('POST /post/ 요청시....', () => {
     describe('비로그인 상태에서...', () => {
-      it('권한없음 401과 unauthorized 페이지를 반환한다.', done => {
+      it('권한없음 401과 unauthorized 반환한다.', done => {
         request(app)
           .post('/post')
           .send(WritePostVal)
           .expect(401)
           .expect('Content-Type', /json/)
-          .end(done);
+          .end((err, res) => {
+            res.body.should.property('message', 'UnAuthorized');
+            done();
+          });
       });
     });
 
@@ -616,31 +629,3 @@ describe('Post는......', () => {
     });
   });
 });
-
-/** GET /post/:id/new 요청시
- *  case success : 로그인상태, post id가 존재
- *  case fail : 비로그인 상태, post id가 비존재
- */
-
-// describe('GET /post/:id/new 요청시....', () => {
-//   describe('비로그인 상태에서...', () => {
-//     describe('실패시...', () => {
-//       it('401과 html을 응답한다.', done => {
-//         request(app)
-//           .get('/post/1/new')
-//           .expect('Content-Type', /html/)
-//           .expect(401)
-//           .end(done);
-//       });
-
-//       it('JSON으로 요청하면 401과 JSON을 응답한다.', done => {
-//         request(app)
-//           .get('/post/1/new')
-//           .expect(401)
-//           .expect('Content-Type', /json/)
-//           .send({})
-//           .end(done);
-//       });
-//     });
-//   });
-// });
