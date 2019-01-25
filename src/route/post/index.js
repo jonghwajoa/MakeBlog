@@ -1,8 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const ctrl = require('./post.ctrl');
-const checkPram = require('../../lib/validation/isInteger');
-const { isLogin } = require('../../lib/middleware/isAuth');
+const checkPram = require('../../lib/validation/validation');
 const bcrypt = require('bcrypt');
 const multer = require('multer');
 const storage = multer.diskStorage({
@@ -41,13 +40,13 @@ const upload = multer({
 //로그인체크 -> 파라미터 체크
 router
   .route('*')
-  .post(isLogin)
-  .put(isLogin)
-  .delete(isLogin);
-router.get(['/new', '/:id/new', '/:id/edit', '/:id/:subId/edit'], isLogin);
+  .post(checkPram.isLogin)
+  .put(checkPram.isLogin)
+  .delete(checkPram.isLogin);
+router.get(['/new', '/:id/new', '/:id/edit', '/:id/:subId/edit'], checkPram.isLogin);
 router.route('/:id').all(checkPram.paramIsINT);
 
-/* post route*/
+/* post route */
 router
   .route('/')
   .get(ctrl.list)
@@ -61,20 +60,23 @@ router.post('/category', ctrl.categoryAdd);
 router
   .route('/:id')
   .get(ctrl.show)
+  .post(ctrl.createSubPost)
   .put(ctrl.update)
   .delete(ctrl.remove);
 
 /* subPost route */
 router.get('/:id/new', checkPram.paramIsINT, ctrl.createSubView);
-router.route('/:id/').post(checkPram.paramIsINT, ctrl.createSubPost);
+router.get('/:id/edit', checkPram.paramIsINT, ctrl.updateView);
+
+/* 서브포스트 파라미터 검사 */
+router.route('/:id/:subId').all(checkPram.paramIsINT);
 
 router
-  .route('/:id/:subId')
-  .get(checkPram.isEdit, checkPram.paramIsINT, ctrl.showSubPost)
-  .put(checkPram.paramIsINT, ctrl.updateSubPost)
-  .delete(checkPram.paramIsINT, ctrl.removeSubPost);
-
-router.get('/:id/edit', checkPram.paramIsINT, ctrl.updateView);
+.route('/:id/:subId')
+.get(ctrl.showSubPost)
+.put(ctrl.updateSubPost)
+.delete(ctrl.removeSubPost);
 router.get('/:id/:subId/edit', checkPram.paramIsINT, ctrl.updateSubView);
+
 
 module.exports = router;

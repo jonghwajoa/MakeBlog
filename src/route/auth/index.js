@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const ctrl = require('./auth.ctrl');
-const { isLogin } = require('../../lib/middleware/isAuth');
 
 router
   .route('/login')

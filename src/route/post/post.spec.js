@@ -70,7 +70,7 @@ async function dbInit() {
   }
 }
 
-describe('/Post는......', () => {
+describe('/Post는********************************', () => {
   before(done => {
     dbInit();
     done();
@@ -433,6 +433,7 @@ describe('/Post는......', () => {
             .end(done);
         });
       });
+
       describe('성공시....', () => {
         it('성공시 200과 html을 반환한다.', done => {
           agent

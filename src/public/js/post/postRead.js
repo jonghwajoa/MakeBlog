@@ -1,5 +1,5 @@
 let postRead = (() => {
-  let content = document.getElementById('hiddenContent');
+  let content = document.getElementById('postContent');
   let viewCount = document.getElementById('viewCount');
   let date = document.getElementById('createDate');
   let postTitle = document.getElementById('title');
@@ -22,7 +22,7 @@ let postRead = (() => {
         },
       ],
     });
-    editor.setMarkdown(content.innerHTML.trim());
+    editor.setMarkdown(content.value.trim());
   };
 
   module.getContent = async (postNo, subNo = 1) => {

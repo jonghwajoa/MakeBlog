@@ -42,6 +42,7 @@
 
         <section class='content'>
             <div id="content">
+                <input type="hidden" id="postContent" value="<%= post.content %>" />
             </div>
             <div class="side">
                 <div class='sidepost'>
@@ -68,9 +69,7 @@
             <div id="disqus_thread"></div>
         </section>
 
-        <p hidden id="hiddenContent">
-            <%- post.content %>
-        </p>
+        
     </article>
 
 

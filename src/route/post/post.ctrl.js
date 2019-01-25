@@ -1,8 +1,9 @@
 const postDB = require('../../db/repository/post');
 const subPostDB = require('../../db/repository/subPost');
-const libPost = require('../../lib/validation/post');
 const visitDB = require('../../db/repository/visitCount');
 const categoryDB = require('../../db/repository/categories');
+const libPost = require('../../lib/validation/post');
+const paramCheck = require('../../lib/validation/validation');
 
 const createView = async (req, res) => {
   try {
@@ -29,7 +30,7 @@ const createSubView = async (req, res, next) => {
 };
 
 const create = async (req, res, next) => {
-  if (!libPost.postValidation(req.body)) {
+  if (!paramCheck.postValidation(req.body)) {
     return res.status(400).json('입력이 올바르지 않습니다.');
   }
 
@@ -43,7 +44,7 @@ const create = async (req, res, next) => {
 
 const createSubPost = async (req, res, next) => {
   let id = req.params.id;
-  if (!libPost.subPostValidation(req.body)) {
+  if (!paramCheck.subPostValidation(req.body)) {
     return res.status(400).json('입력이 올바르지 않습니다.');
   }
 
@@ -134,7 +135,6 @@ const show = async (req, res, next) => {
 
 const showSubPost = async (req, res, next) => {
   const { id, subId } = req.params;
-
   // json으로 컨텐츠 요청할 경우
   if (req.headers['content-type'] === 'application/json') {
     return getContent(req, res, next);
@@ -193,9 +193,14 @@ const updateView = async (req, res, next) => {
   try {
     post = await postDB.findById(id);
     category = await categoryDB.findAll();
-    if (!post) return next();
   } catch (e) {
     return next(e);
+  }
+
+  if (!post) {
+    let err = new Error('Not Found');
+    err.status = 404;
+    return next(err);
   }
   return res.render('team/postUpdate', { post, category });
 };
@@ -204,7 +209,7 @@ const update = async (req, res, next) => {
   let { id } = req.params;
   let { title, tag, content, category } = req.body;
 
-  if (!libPost.postValidation(req.body)) {
+  if (!paramCheck.postValidation(req.body)) {
     return res.status(400).json('입력이 올바르지 않습니다.');
   }
 
@@ -224,7 +229,6 @@ const update = async (req, res, next) => {
 
 const updateSubView = async (req, res, next) => {
   const { id, subId } = req.params;
-
   let post;
   try {
     post = await subPostDB.findDetailByPostNo(id, subId);
@@ -239,8 +243,8 @@ const updateSubView = async (req, res, next) => {
 const updateSubPost = async (req, res, next) => {
   let { id, subId } = req.params;
   let { title, content } = req.body;
-
-  if (!libPost.subPostValidation(req.body)) {
+  libPost.pag;
+  if (!paramCheck.subPostValidation(req.body)) {
     return res.status(400).json('입력이 올바르지 않습니다.');
   }
 

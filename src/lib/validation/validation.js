@@ -1,3 +1,7 @@
+/**
+ * @param {String} str
+ * @returns {Boolean}
+ */
 const isString = str => {
   return typeof str === 'string';
 };
@@ -12,6 +16,12 @@ const arrayElementIsString = strArray => {
   return true;
 };
 
+/**
+ * @param {String} val
+ * @param {number} min
+ * @param {number} max
+ * @returns {Boolean}
+ */
 const isLength = (val, min, max = Number.MAX_SAFE_INTEGER) => {
   const valLen = val.length;
   if (min > max) {
@@ -33,10 +43,78 @@ const checkTag = tag => {
   return true;
 };
 
+const paramIsINT = (req, res, next) => {
+  let param = Object.values(req.params);
+  if (param[0] === 'new') {
+    return next();
+  }
+
+  for (let element of param) {
+    element = parseInt(element);
+    if (!(element > 0)) {
+      const err = new Error('BadRequest');
+      err.status = 400;
+      return next(err);
+    }
+  }
+  next();
+};
+
+const isLogin = (req, res, next) => {
+  if (req.session.isLogin === undefined || !req.session.isLogin) {
+    if (req.headers['content-type'] === 'application/json') {
+      return res.status(401).json({ message: 'UnAuthorized' });
+    }
+    return res.status(401).render('error/unauthorized');
+  }
+  next();
+};
+
+/**
+ * @deprecated
+ */
+const isEdit = (req, res, next) => {
+  let subId = req.params.subId;
+  if (subId === 'edit') return next('route');
+  next();
+};
+
+const postValidation = ({ title, tag, content, category }) => {
+  if (content === false) return false;
+
+  if (arrayElementIsString([title, tag, content, category]) === false) {
+    return false;
+  }
+
+  if (isLength(title, 1, 100) === false && isLength(tag, 1, 100) === false) {
+    return false;
+  }
+
+  if (checkTag(tag) === false) {
+    return false;
+  }
+
+  return true;
+};
+
+const subPostValidation = ({ title, content }) => {
+  if (arrayElementIsString([title, content]) === false) {
+    return false;
+  }
+
+  if (isLength(title, 1, 100) === false) {
+    return false;
+  }
+  return true;
+};
+
 module.exports = {
-  isString,
   arrayElementIsString,
   isLength,
   isUINT,
-  checkTag,
+  paramIsINT,
+  isLogin,
+  isEdit,
+  postValidation,
+  subPostValidation,
 };

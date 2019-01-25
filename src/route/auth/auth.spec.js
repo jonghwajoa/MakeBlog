@@ -6,7 +6,7 @@ const models = require('../../db');
  * Auth는 login, signup, logout을 제공한다.
  */
 
-describe('Auth는..', () => {
+describe('Auth는********************************', () => {
   before(() => models.sequelize.sync({ force: true }));
 
   describe('GET /register 요청시...', () => {

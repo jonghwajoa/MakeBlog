@@ -20,7 +20,7 @@ const writePost = {
 
 let deleteNo;
 
-describe('/Post의 subPost는......', () => {
+describe('subPost는******************************', () => {
   let agent = request.agent(app);
   /** GET /post/:id/new 요청시
    *  case success : 로그인상태, post id가 존재

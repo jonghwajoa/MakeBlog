@@ -1,11 +1,5 @@
-describe('Auth **********', () => {
+describe('테스트 코드 전체 실행.....', () => {
   require('../route/auth/auth.spec');
-});
-
-describe('Post **********', () => {
   require('../route/post/post.spec');
-});
-
-describe('subPost **********', () => {
   require('../route/post/subpost.spec');
 });
