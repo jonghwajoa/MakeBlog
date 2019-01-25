@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <title>WeKnowJS</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="/css/rest.css" />
+    <link rel="stylesheet" href="/css/common/solving/list.css" />
+    <% include ../../../partials/noauth/essentialCss.ejs %>
+  </head>
+  <body>
+    <% include ../../../partials/noauth/header.ejs %>
+
+    <div class="wrap">
+      <div class="flex">
+        <div class="side">
+          <%categories.forEach((e,i) => { %>
+          <div class="category">
+            <a href="#">
+              <h3>- <%= e.title %> ( <%=e.count%> )</h3>
+              <div class="category-content">
+                <a href="#">└ 1111ㅁㅁㅁㅁ</a>
+                <a href="#">└ 2222</a>
+                <a href="#">└ 3333</a>
+                <a href="#">└ 4444</a>
+                <a href="#">└ 5555</a>
+            </div>
+            </a>
+          </div>
+          <% }) %>
+        </div>
+
+        <div class="content">
+          <div class="container">
+              <div class="content-admin">
+                  <a href='#'>
+                    <input type="button" value='글등록' id='update' />
+                  </a>
+                  <input type="button" value='삭제하기' id='delete' onclick="" />
+                  <a href='#'>
+                      <input type="button" value='수정하기' id='update' />
+                    </a>
+              </div>
+
+            <div class="content-title">
+              <h1>문제 제목입니다.</h1>
+              <dl>
+                  <dt><dd>2019.01.25 |</dd></dt>
+                  <dt><dd>View 0</dd></dt>
+              </dl>
+              <h3><a href="#">www.weknowjs.xyz</a></h3>
+            </div>
+            <!-- content-title -->
+            <div class="content-content">
+              rem molestiae animi commodi cum recusandae minus cumque odio
+        rem molestiae animi commodi cum recusandae minus cumque odio
+            </div>
+            <!-- //content-content -->
+            <div class="content-reply" id="disqus_thread">댓글들</div>
+            <!-- // content-reply -->
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- //wrap -->
+
+    <% include ../../../partials/footer.ejs %>
+    <!-- footer -->
+
+    <script>
+        window.onload = function () {
+            const disqus_config = function () {
+                this.page.url = '/solving/1';  // Replace PAGE_URL with your page's canonical URL variable
+                this.page.identifier = `1`; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+            };
+
+            (function () { // DON'T EDIT BELOW THIS LINE
+                var d = document, s = d.createElement('script');
+                s.src = 'https://weknowjs-xyz.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        }
+    </script>
+
+  </body>
+</html>

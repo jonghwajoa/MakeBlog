@@ -1,5 +1,5 @@
 header {
-  margin-bottom: 110px;
+  margin-bottom: 80px;
 }
 
 header::after {
@@ -18,12 +18,12 @@ nav {
   z-index: 999;
 }
 
-nav .content {
+nav .nav-content {
   width: 95%;
   margin: 0 0 0 5%;
 }
 
-nav .content .brand {
+nav .nav-content .brand {
   display: inline-block;
   height: inherit;
 }
@@ -36,27 +36,26 @@ nav .content .brand {
 
 .brand span a {
   color: black;
-  font-weight: blod;
   font-family: 'Do Hyeon', sans-serif;
 }
 
-nav .content .right_nav {
+nav .nav-content .right_nav {
   height: inherit;
   float: right;
   line-height: 70px;
 }
 
-nav .content .right_nav ul li {
+nav .nav-content .right_nav ul li {
   float: left;
 }
 
-nav .content .right_nav ul li a {
+nav .nav-content .right_nav ul li a {
   color: #a0a0a0;
   font-size: 1.5rem;
   margin-right: 50px;
 }
 
-nav .content .right_nav ul li a:hover {
+nav .nav-content .right_nav ul li a:hover {
   color: black;
 }
 
@@ -66,7 +65,7 @@ nav .content .right_nav ul li a:hover {
     line-height: 70px;
     height: inherit;
   }
-  nav .content .right_nav ul li a {
+  nav .nav-content .right_nav ul li a {
     color: #a0a0a0;
     font-size: 1rem;
     margin-right: 10px;
@@ -79,7 +78,7 @@ nav .content .right_nav ul li a:hover {
     line-height: 70px;
     height: inherit;
   }
-  nav .content .right_nav ul li a {
+  nav .nav-content .right_nav ul li a {
     color: #a0a0a0;
     font-size: 1.2rem;
     margin-right: 20px;

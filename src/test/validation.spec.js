@@ -1,5 +1,5 @@
 const should = require('should');
-const middle = require('../lib/validation/validation');
+const middle = require('../lib/validation');
 
 describe('IsInteger.....', () => {
   it('실패시 false를 반환한다.....', () => {

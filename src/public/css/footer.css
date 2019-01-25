@@ -3,14 +3,14 @@ footer {
   background-color: #fff;
 }
 
-footer .content::before {
+footer .footer-content::before {
   display: block;
   content: '';
   margin: 20px auto 0;
   border-top: 1px solid rgba(200, 200, 200, 1);
 }
 
-footer .content {
+footer .footer-content {
   font-family: 'Nanum Gothic', sans-serif;
   font-weight: bold;
   text-align: center;
@@ -19,7 +19,7 @@ footer .content {
 }
 
 @media (max-width: 700px) {
-  footer .content {
+  footer .footer-content {
     font-family: 'Nanum Gothic', sans-serif;
     font-weight: bold;
     text-align: center;

@@ -8,7 +8,7 @@ const list = async (req, res, next) => {
     return next(e);
   }
 
-  return res.render('noauth/cote/list', { categories: result });
+  return res.render('noauth/solving/list', { categories: result });
 };
 
 module.exports = {

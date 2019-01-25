@@ -1,9 +1,9 @@
-const express = require('express');
-const router = express.Router();
-const ctrl = require('./post.ctrl');
-const checkPram = require('../../lib/validation/validation');
-const bcrypt = require('bcrypt');
+const router = require('express').Router();
 const multer = require('multer');
+const bcrypt = require('bcrypt');
+const ctrl = require('./post.ctrl');
+const { isLogin, paramIsINT } = require('../../lib/validation');
+
 const storage = multer.diskStorage({
   destination: function(req, file, cb) {
     cb(null, 'src/uploads/images');
@@ -36,15 +36,18 @@ const upload = multer({
   },
 });
 
-/* 입력값 검증*/
-//로그인체크 -> 파라미터 체크
+/** 입력값 검증
+ * 로그인확인 -> 파라미터 확인
+ * */
+
 router
   .route('*')
-  .post(checkPram.isLogin)
-  .put(checkPram.isLogin)
-  .delete(checkPram.isLogin);
-router.get(['/new', '/:id/new', '/:id/edit', '/:id/:subId/edit'], checkPram.isLogin);
-router.route('/:id').all(checkPram.paramIsINT);
+  .post(isLogin)
+  .put(isLogin)
+  .delete(isLogin);
+
+router.get(['/new', '/:id/new', '/:id/edit', '/:id/:subId/edit'], isLogin);
+router.route('/:id').all(paramIsINT);
 
 /* post route */
 router
@@ -65,18 +68,17 @@ router
   .delete(ctrl.remove);
 
 /* subPost route */
-router.get('/:id/new', checkPram.paramIsINT, ctrl.createSubView);
-router.get('/:id/edit', checkPram.paramIsINT, ctrl.updateView);
+router.get('/:id/new', paramIsINT, ctrl.createSubView);
+router.get('/:id/edit', paramIsINT, ctrl.updateView);
 
 /* 서브포스트 파라미터 검사 */
-router.route('/:id/:subId').all(checkPram.paramIsINT);
+router.route('/:id/:subId').all(paramIsINT);
 
 router
-.route('/:id/:subId')
-.get(ctrl.showSubPost)
-.put(ctrl.updateSubPost)
-.delete(ctrl.removeSubPost);
-router.get('/:id/:subId/edit', checkPram.paramIsINT, ctrl.updateSubView);
-
+  .route('/:id/:subId')
+  .get(ctrl.showSubPost)
+  .put(ctrl.updateSubPost)
+  .delete(ctrl.removeSubPost);
+router.get('/:id/:subId/edit', paramIsINT, ctrl.updateSubView);
 
 module.exports = router;

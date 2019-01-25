@@ -2,8 +2,9 @@ const postDB = require('../../db/repository/post');
 const subPostDB = require('../../db/repository/subPost');
 const visitDB = require('../../db/repository/visitCount');
 const categoryDB = require('../../db/repository/categories');
-const libPost = require('../../lib/validation/post');
-const paramCheck = require('../../lib/validation/validation');
+const paging = require('../../lib/paging');
+const paramCheck = require('../../lib/validation');
+
 
 const createView = async (req, res) => {
   try {
@@ -80,7 +81,7 @@ const list = async (req, res, next) => {
     return next(e);
   }
 
-  pagingInfo = libPost.paging(totalCnt, req.query);
+  pagingInfo = paging(totalCnt, req.query);
   const offset = (pagingInfo.page - 1) * pagingInfo.perPageNum;
   try {
     postList = await postDB.findAllList(pagingInfo.perPageNum, offset);
@@ -243,7 +244,7 @@ const updateSubView = async (req, res, next) => {
 const updateSubPost = async (req, res, next) => {
   let { id, subId } = req.params;
   let { title, content } = req.body;
-  libPost.pag;
+
   if (!paramCheck.subPostValidation(req.body)) {
     return res.status(400).json('입력이 올바르지 않습니다.');
   }

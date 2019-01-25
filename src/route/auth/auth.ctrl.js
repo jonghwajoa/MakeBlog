@@ -1,7 +1,7 @@
 const userDB = require('../../db/repository/users');
 const loginDB = require('../../db/repository/userLogin');
 const db = require('../../db');
-const validation = require('../../lib/validation/validation');
+const validation = require('../../lib/validation');
 const bcrypt = require('bcrypt');
 
 const loginView = (req, res, next) => {

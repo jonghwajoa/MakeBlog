@@ -4,9 +4,10 @@
  * @param {number} reqeustPage.page
  * @param {number} reequstPage.perPageNum {page, perPageNum} 현재페이지, 한 페이지에 개시글 갯수
  * @returns {Object} paging result
- * pagepostListNum: 한 화면에 보여줄 페이지 갯수
+ *
  */
 function paging(totalCnt, { page = 1, perPageNum = 20 }) {
+  // pagepostListNum: 한 화면에 보여줄 페이지 번호 갯수
   const pageListNum = 10;
   let totalPage = Math.floor(totalCnt / perPageNum);
   totalCnt % perPageNum ? totalPage++ : '';
@@ -21,6 +22,4 @@ function paging(totalCnt, { page = 1, perPageNum = 20 }) {
   return { startPage, endPage, page, perPageNum, totalPage };
 }
 
-module.exports = {
-  paging,
-};
+module.exports = paging;

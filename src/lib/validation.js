@@ -1,6 +1,5 @@
 /**
- * @param {String} str
- * @returns {Boolean}
+ * @deprecated
  */
 const isString = str => {
   return typeof str === 'string';
@@ -80,17 +79,17 @@ const isEdit = (req, res, next) => {
 };
 
 const postValidation = ({ title, tag, content, category }) => {
-  if (content === false) return false;
+  if (!content) return false;
 
-  if (arrayElementIsString([title, tag, content, category]) === false) {
+  if (!arrayElementIsString([title, tag, content, category])) {
     return false;
   }
 
-  if (isLength(title, 1, 100) === false && isLength(tag, 1, 100) === false) {
+  if (!isLength(title, 1, 100) || !isLength(tag, 1, 100)) {
     return false;
   }
 
-  if (checkTag(tag) === false) {
+  if (!checkTag(tag)) {
     return false;
   }
 
@@ -98,17 +97,14 @@ const postValidation = ({ title, tag, content, category }) => {
 };
 
 const subPostValidation = ({ title, content }) => {
-  if (arrayElementIsString([title, content]) === false) {
-    return false;
-  }
-
-  if (isLength(title, 1, 100) === false) {
+  if (!arrayElementIsString([title, content]) || !isLength(title, 1, 100)) {
     return false;
   }
   return true;
 };
 
 module.exports = {
+  isString,
   arrayElementIsString,
   isLength,
   isUINT,

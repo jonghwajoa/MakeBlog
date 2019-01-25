@@ -6,7 +6,7 @@ router.get('/', async (req, res) => {
   return res.status(301).redirect('/post');
 });
 
-router.use('/cote', require('./cote'));
+router.use('/solving', require('./solving'));
 router.use('/auth', require('./auth'));
 router.use('/post', require('./post'));
 router.use('/about', require('./about'));

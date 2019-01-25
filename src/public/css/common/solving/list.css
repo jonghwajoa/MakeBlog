@@ -1,0 +1,143 @@
+.wrap {
+  min-height: 100vh;
+  margin-top: -10px;
+  margin-bottom: -20px;
+}
+
+/* flex container */
+.wrap .flex {
+  display: flex;
+  overflow: hidden;
+  min-height: 100vh;
+}
+
+.flex .side {
+  flex: 0 0 230px;
+  padding-left: 20px;
+  overflow-y: scroll;
+  background-color: #f3d9fa;
+}
+
+.flex .content {
+  flex: 1 1 100%;
+}
+
+.flex .side h3 {
+  font-size: 20px;
+  font-weight: bold;
+  font-family: 'Do Hyeon', sans-serif;
+}
+
+.flex .side .category {
+  margin-bottom: 30px;
+  box-sizing: border-box;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.side .category:first-child {
+  margin-top: 20px;
+}
+
+.category .category-content {
+}
+.category .category-content a {
+  display: block;
+  margin-top: 5px;
+}
+
+.category .category-content a:hover {
+  display: block;
+  margin-top: 5px;
+  color: #d9480f;
+}
+
+.category .category-content a:active {
+  display: block;
+  margin-top: 5px;
+  color: white;
+}
+
+.flex .content .container {
+  margin: 5px auto;
+  padding: 50px 30px;
+  width: 95%;
+  box-sizing: border-box;
+  box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.3);
+  border-radius: 2%;
+  position: relative;
+}
+
+.content-admin {
+  position: absolute;
+  right: 20px;
+  top: 10px;
+}
+.content-admin input[type='button'] {
+  width: 100px;
+  height: 50px;
+  border: none;
+  cursor: pointer;
+  outline: none;
+  background-color: violet;
+  color: white;
+  font-size: 1.3rem;
+}
+
+.content-admin input[type='button']:hover {
+  background-color: darksalmon;
+}
+
+.content-title {
+  width: inherit;
+  font-family: 'Do Hyeon', sans-serif;
+}
+
+.content-title h1 {
+  font-size: 2rem;
+  color: black;
+  margin-bottom: 1rem;
+}
+
+.content-title dl {
+  display: inline-block;
+}
+
+.content-title dt {
+  display: inline-block;
+}
+
+.content-title dd {
+  display: inline-block;
+}
+
+.content-title h3 {
+  text-align: right;
+  display: inline-block;
+  font-size: 1rem;
+  margin-left: 1.5rem;
+}
+
+.content-title h3 a {
+  color: #d9480f;
+}
+
+.content-title h3 a:hover {
+  color: #748ffc;
+}
+
+.content-title::after {
+  display: block;
+  content: '';
+  margin-top: 20px;
+  border-bottom: 1px solid #e6ebf1;
+}
+
+.content-content {
+  margin: 30px 0;
+}
+
+.content-reply {
+  margin: 100px auto 0;
+}
