@@ -14,7 +14,7 @@
     <div class="wrap">
       <div class="flex">
         <div class="side">
-          <%categories.forEach((e,i) => { %>
+          <% category.forEach((e,i) => { %>
           <div class="category">
             <a href="#">
               <h3>- <%= e.title %> ( <%=e.count%> )</h3>
@@ -33,7 +33,7 @@
         <div class="content">
           <div class="container">
               <div class="content-admin">
-                  <a href='#'>
+                  <a href='/solving/new'>
                     <input type="button" value='글등록' id='update' />
                   </a>
                   <input type="button" value='삭제하기' id='delete' onclick="" />

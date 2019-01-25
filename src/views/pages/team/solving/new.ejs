@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <title>Solving 작성중</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <% include ../../../partials/team/essentialCss.ejs %>
+    <link rel="stylesheet" href="/css/common/solving/new.css" />
+    <% include ../../../partials/team/editorWrite.ejs %>
+  </head>
+
+  <body>
+    <% include ../../../partials/team/header.ejs %>
+
+    <div id="wrap">
+      <div class="container">
+        <div class="title">
+          <input
+            type="text"
+            id="title"
+            name="title"
+            class="input"
+            placeholder="Title"
+          />
+        </div>
+
+        <div class="resource">
+          <input
+            class="input"
+            type="text"
+            id="resource"
+            name="resource"
+            placeholder="resource Number or URL"
+          />
+        </div>
+
+        <div class="category">
+          <div class="category-select">
+            <label for="category-select">카테고리 선택</label>
+            <select name="category-select" id="category-select">
+              <% category.forEach((e,i) => { %>
+              <option value="<%=e.no%>"> <%=e.title %> </option>
+              <% }) %>
+            </select>
+          </div>
+
+          <div class="category-add">
+            <label for="category-add">카테고리 추가</label>
+            <input type="text" class="category-input" id="category-add" />
+            <button>추가</button>
+          </div>
+
+          <div class="category-delete">
+            <label for="category-delete">카테고리 삭제</label>
+            <select name="category-delete" id="category-delete">
+              <% category.forEach((e,i) => { %>
+              <option value="<%=e.no%>"> <%=e.title %> </option>
+              <% }) %>
+            </select>
+            <button>삭제</button>
+          </div>
+        </div>
+
+        <div id="content" name="content"></div>
+        <div class="btn">
+          <button class="custom" id="submit" onclick="solving.write();">
+            작성하기
+          </button>
+          <button class="custom" onclick="back()">뒤로가기</button>
+        </div>
+      </div>
+    </div>
+
+    <% include ../../../partials/footer.ejs %>
+    <script src="/js/util/ajaxUtil.js"></script>
+    <script src="/js/solving/write.js"></script>
+  </body>
+</html>

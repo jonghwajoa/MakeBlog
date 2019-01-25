@@ -1,4 +1,8 @@
 const ajaxUtil = {
+  /**
+   * @param {String} url
+   * @returns responseText
+   */
   sendGetAjax(url) {
     return new Promise((resolve, reject) => {
       const xhr = new XMLHttpRequest();
@@ -17,6 +21,11 @@ const ajaxUtil = {
     });
   },
 
+  /**
+   * @param {String} url
+   * @param {Object} params
+   * @returns responseText
+   */
   sendPostAjax(url, params) {
     return new Promise((resolve, reject) => {
       const xhr = new XMLHttpRequest();
@@ -34,6 +43,11 @@ const ajaxUtil = {
     });
   },
 
+  /**
+   * @param {String} url
+   * @param {Object} params
+   * @returns responseText
+   */
   sendPutAjax(url, params) {
     return new Promise((resolve, reject) => {
       const xhr = new XMLHttpRequest();
@@ -51,6 +65,10 @@ const ajaxUtil = {
     });
   },
 
+  /**
+   * @param {String} url
+   * @returns {Boolean}
+   */
   sendDeleteAjax(url) {
     return new Promise((resolve, reject) => {
       const xhr = new XMLHttpRequest();

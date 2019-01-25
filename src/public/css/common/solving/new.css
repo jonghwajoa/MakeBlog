@@ -1,0 +1,85 @@
+.wrap {
+}
+
+.container {
+  width: 90%;
+  margin: 0 auto;
+}
+
+.container .input {
+  width: 100%;
+  box-sizing: border-box;
+  height: 35px;
+  border: 1px solid #cccccc;
+  margin: 0 0 15px;
+  padding: 10px;
+  color: black;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.container .category {
+  border: 1px solid #cccccc;
+  padding: 10px;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: initial;
+  justify-content: space-between;
+}
+
+.category .category-select {
+  flex: auto;
+}
+
+.category .category-add {
+  flex: auto;
+}
+
+.category .category-delete {
+  flex: auto;
+}
+
+.category label {
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+.category select {
+  height: 30px;
+  width: 150px;
+  margin-left: 10px;
+}
+
+.category .category-input {
+  width: 150px;
+  box-sizing: border-box;
+  color: black;
+  font-size: 1.2rem;
+}
+
+.category button {
+  height: 30px;
+  width: 70px;
+  cursor: pointer;
+  font-weight: bold;
+  background-color: blueviolet;
+  border-radius: 5%;
+  border: none;
+  color: white;
+}
+
+.container .btn {
+  text-align: right;
+}
+
+.container button.custom {
+  margin: 20px 0 0 10px;
+  height: 50px;
+  width: 100px;
+  cursor: pointer;
+  font-weight: bold;
+  background-color: blueviolet;
+  border-radius: 5%;
+  border: none;
+  color: white;
+}
