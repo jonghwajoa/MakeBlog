@@ -16,8 +16,8 @@ router.use((req, res) => {
     return res.status(404).json({ message: 'Not Found' });
   }
 
-  if (req.session.isLogin) return res.status(404).render('team/404');
-  res.status(404).render('noauth/404');
+  // if (req.session.isLogin) return res.status(404).render('error/404');
+  return res.status(404).render('error/404', { isLogin: req.session.isLogin });
 });
 
 router.use((err, req, res, next) => {

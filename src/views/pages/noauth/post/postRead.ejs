@@ -5,16 +5,16 @@
     <title id="headTitle">WeKnowJS-<%=post.title%></title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <% include ../../partials/noauth/essentialCss.ejs %>
+    <% include ../../../partials/noauth/essentialCss.ejs %>
+    <% include ../../../partials/editorViewer.ejs %>
     <link rel='stylesheet' href='/css/common/postRead.css' />
-    <% include ../../partials/editorViewer.ejs %>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <link rel='stylesheet' href='/css/noauth/header.css' />
 
 </head>
 
 <body>
-    <% include ../../partials/noauth/header.ejs %>
+    <% include ../../../partials/noauth/header.ejs %>
 
 
     <article class="post">
@@ -73,7 +73,7 @@
     </article>
 
 
-    <% include ../../partials/footer.ejs %>
+    <% include ../../../partials/footer.ejs %>
 
     <noscript>Please enable JavaScript</noscript>
     <script src="/js/util/ajaxUtil.js"></script>

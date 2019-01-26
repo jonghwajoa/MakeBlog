@@ -15,6 +15,16 @@ const arrayElementIsString = strArray => {
   return true;
 };
 
+const paramsIsNotNull = params => {
+  let objectVal = Object.values(params);
+  for (let e of objectVal) {
+    if (typeof e !== 'string') {
+      return false;
+    }
+  }
+  return true;
+};
+
 /**
  * @param {String} val
  * @param {number} min
@@ -103,18 +113,16 @@ const subPostValidation = ({ title, content }) => {
   return true;
 };
 
-const paramsIsNotNull = params => {
-  let objectVal = Object.values(params);
-  for (let e of objectVal) {
-    if (typeof e !== 'string') {
-      return false;
-    }
-  }
-  return true;
-};
-
-const solvingValidation = checkVal => {
-  if (!paramsIsNotNull(checkVal) || !isUINT(checkVal.category)) {
+/**
+ * @param {Object} params
+ * @param {String} params.title
+ * @param {String} params.scontent
+ * @param {String} params.resource
+ * @param {Number} params.category
+ * @returns {Boolean}
+ */
+const solvingValidation = params => {
+  if (!paramsIsNotNull(params) || !isUINT(params.category)) {
     return false;
   }
 

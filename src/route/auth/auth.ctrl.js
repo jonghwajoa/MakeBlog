@@ -5,7 +5,7 @@ const validation = require('../../lib/validation');
 const bcrypt = require('bcrypt');
 
 const loginView = (req, res, next) => {
-  res.render('noauth/login');
+  res.render('noauth/auth/login');
 };
 
 const login = async (req, res, next) => {
@@ -52,7 +52,7 @@ const login = async (req, res, next) => {
 };
 
 const registerView = (req, res) => {
-  return res.render('noauth/register');
+  return res.render('noauth/auth/register');
 };
 
 const register = async (req, res, next) => {

@@ -1,9 +1,9 @@
 let postRead = (() => {
-  let content = document.getElementById('postContent');
-  let viewCount = document.getElementById('viewCount');
-  let date = document.getElementById('createDate');
-  let postTitle = document.getElementById('title');
-  let headTitle = document.getElementById('headTitle');
+  const content = document.getElementById('postContent');
+  const viewCount = document.getElementById('viewCount');
+  const date = document.getElementById('createDate');
+  const postTitle = document.getElementById('title');
+  const headTitle = document.getElementById('headTitle');
   let editor;
   let module = {};
 

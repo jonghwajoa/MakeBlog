@@ -1,14 +1,16 @@
 let solving = (() => {
-  const postTitle = document.getElementById('title');
-  const postResource = document.getElementById('resource');
+  let postTitle = document.getElementById('title');
+  let postUrl = document.getElementById('url');
+  const postProblemNum = document.getElementById('problemNum');
   const postCategorySelect = document.getElementById('category-select');
   const postCategoryDelete = document.getElementById('category-delete');
+
   let editor;
   let module = {};
 
   module.editorInit = () => {
     editor = new tui.Editor({
-      el: document.getElementById('content'),
+      el: document.getElementById('content-input'),
       initialEditType: 'markdown',
       previewStyle: 'vertical',
       height: '100vh',
@@ -40,19 +42,26 @@ let solving = (() => {
   };
 
   module.write = async () => {
-    let result;
     const title = postTitle.value;
     const content = editor.getMarkdown().trim();
     const category = postCategorySelect.value;
-    const resource = postResource.value;
+    let url = postUrl.value.trim();
+    const problemNum = postProblemNum.value;
+
+    if (!url) {
+      url = `https://www.acmicpc.net/problem/${problemNum}`;
+    }
+
     let params = {
       title,
       content,
       category,
-      resource,
+      url,
+      problemNum,
     };
     try {
       await ajaxUtil.sendPostAjax('/solving', params);
+      location.href = '/solving';
     } catch (e) {
       alert(e.message);
     }

@@ -1,8 +1,14 @@
-const { CategoryCote } = require('../../db');
+const { CategoryCote, Solving } = require('../../db');
 
 const findAllList = () => {
   return CategoryCote.findAll({
     order: [['order']],
+    include: [
+      {
+        model: Solving,
+        attributes: ['no', 'problemNum'],
+      },
+    ],
   });
 };
 

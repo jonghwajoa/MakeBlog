@@ -18,7 +18,12 @@ module.exports = (sequelize, DataTypes) => {
         defaultValue: 0,
         allowNull: false,
       },
-      resource: {
+      problemNum: {
+        type: DataTypes.STRING(50),
+        allowNull: false,
+        unique: true,
+      },
+      url: {
         type: DataTypes.STRING(300),
         allowNull: false,
       },

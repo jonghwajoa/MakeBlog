@@ -23,7 +23,7 @@
 }
 
 .flex .side h3 {
-  font-size: 20px;
+  font-size: 1.5rem;
   font-weight: bold;
   font-family: 'Do Hyeon', sans-serif;
 }
@@ -44,6 +44,8 @@
 }
 .category .category-content a {
   display: block;
+  font-weight: 600;
+  font-size: 1.2rem;
   margin-top: 5px;
 }
 
@@ -65,7 +67,7 @@
   width: 95%;
   box-sizing: border-box;
   box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.3);
-  border-radius: 2%;
+  border-radius: 10px;
   position: relative;
 }
 

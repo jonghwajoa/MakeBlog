@@ -5,11 +5,10 @@ const categoryDB = require('../../db/repository/categories');
 const paging = require('../../lib/paging');
 const paramCheck = require('../../lib/validation');
 
-
 const createView = async (req, res) => {
   try {
     const category = await categoryDB.findAll();
-    return res.render('team/postWrite', { category });
+    return res.render('team/post/postWrite', { category });
   } catch (e) {
     next(e);
   }
@@ -27,7 +26,7 @@ const createSubView = async (req, res, next) => {
     return res.status(404).end();
   }
 
-  return res.render('team/subPostWrite', { no: req.params.id });
+  return res.render('team/subpost/subPostWrite', { no: req.params.id });
 };
 
 const create = async (req, res, next) => {
@@ -99,9 +98,9 @@ const list = async (req, res, next) => {
     today: req.today,
   };
 
-  let path = 'noauth/postList';
+  let path = 'noauth/post/postList';
   if (req.session.isLogin) {
-    path = 'team/postList';
+    path = 'team/post/postList';
   }
 
   return res.render(path, { ...returnObj });
@@ -126,9 +125,9 @@ const show = async (req, res, next) => {
     return res.json({ post, subPost });
   }
 
-  let path = 'noauth/postRead';
+  let path = 'noauth/post/postRead';
   if (req.session.isLogin) {
-    path = 'team/postRead';
+    path = 'team/post/postRead';
   }
 
   return res.render(path, { post, subPost });
@@ -161,9 +160,9 @@ const showSubPost = async (req, res, next) => {
   }
 
   if (req.session.isLogin) {
-    return res.render('team/subPostRead', { post, subPost, home: id });
+    return res.render('team/subpost/subPostRead', { post, subPost, home: id });
   }
-  return res.render('noauth/subPostRead', { post, subPost, home: id });
+  return res.render('noauth/subpost/subPostRead', { post, subPost, home: id });
 };
 
 const getContent = async (req, res, next) => {
@@ -203,7 +202,7 @@ const updateView = async (req, res, next) => {
     err.status = 404;
     return next(err);
   }
-  return res.render('team/postUpdate', { post, category });
+  return res.render('team/post/postUpdate', { post, category });
 };
 
 const update = async (req, res, next) => {
@@ -238,7 +237,7 @@ const updateSubView = async (req, res, next) => {
     return next(e);
   }
 
-  return res.render('team/subPostUpdate', { home: id, post });
+  return res.render('team/subpost/subPostUpdate', { home: id, post });
 };
 
 const updateSubPost = async (req, res, next) => {

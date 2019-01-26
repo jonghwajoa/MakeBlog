@@ -1,18 +1,21 @@
-<!DOCTYPE html5>
+<!DOCTYPE html>
 <html lang="ko">
   <head>
     <title>WeKnowJS</title>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <% include ../../partials/noauth/essentialCss.ejs %>
+    <% include ../../../partials/team/essentialCss.ejs %>
     <link rel="stylesheet" href="/css/common/postList.css" />
   </head>
 
   <body>
-    <% include ../../partials/noauth/header.ejs %>
+    <% include ../../../partials/team/header.ejs %>
     <div class="postArea">
       <article>
         <section>
+          <div class="addButton">
+            <a href="/post/new"> <input type="button" value="글등록" /> </a>
+          </div>
           <% postList.forEach((item,index) => { %>
           <div class="post">
             <p class="tag"><%= item.tag %></p>
@@ -57,6 +60,15 @@
           <div class="gridItem"><%=today%></div>
         </section>
 
+        <section div="categories">
+          <h2>카테고리 -미구현-</h2>
+          <ul>
+            <li>1 Team Study</li>
+            <li>2 Person Study</li>
+            <li>3 Sub Project</li>
+          </ul>
+        </section>
+
         <section class="hotPost">
           <h2>Post TOP5</h2>
           <ul>
@@ -85,6 +97,6 @@
       </aside>
     </div>
 
-    <% include ../../partials/footer.ejs %>
+    <% include ../../../partials/footer.ejs %>
   </body>
 </html>

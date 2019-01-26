@@ -4,9 +4,9 @@
     <title>Solving 작성중</title>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <% include ../../../partials/team/essentialCss.ejs %>
     <link rel="stylesheet" href="/css/common/solving/new.css" />
-    <% include ../../../partials/team/editorWrite.ejs %>
+    <% include ../../../partials/team/essentialCss.ejs %> <% include
+    ../../../partials/team/editorWrite.ejs %>
   </head>
 
   <body>
@@ -24,13 +24,23 @@
           />
         </div>
 
-        <div class="resource">
+        <div class="problemNum">
           <input
             class="input"
             type="text"
-            id="resource"
-            name="resource"
-            placeholder="resource Number or URL"
+            id="problemNum"
+            name="problemNum"
+            placeholder="problemNum"
+          />
+        </div>
+
+        <div class="url">
+          <input
+            class="input"
+            type="text"
+            id="url"
+            name="url"
+            placeholder="URL"
           />
         </div>
 
@@ -61,7 +71,7 @@
           </div>
         </div>
 
-        <div id="content" name="content"></div>
+        <div id="content-input" name="content"></div>
         <div class="btn">
           <button class="custom" id="submit" onclick="solving.write();">
             작성하기
