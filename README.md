@@ -24,11 +24,9 @@ https://www.weknowjs.xyz/
 | /post/:id/:subId/edit | GET    | 서브 포스트 수정 form |
 | /post/category        | POST   | 카테고리 추가         |
 | /post/file            | POST   | 사진 저장             |
-
-## 데이터 형식
-
-ID : LEN[5,20] (5 부터 20 까지) lower (대소문자 구분 x)  
-PW : LEN[5,20] (5 부터 20 까지) lower (대소문자 구분 x)
+| /solving              | GET    | solving home          |
+| /solving              | POST   | solving 생성          |
+| /solving/new          | GET    | 문제 생성 form        |
 
 <br>
   
@@ -52,9 +50,10 @@ PW : LEN[5,20] (5 부터 20 까지) lower (대소문자 구분 x)
 ### v1 오류 수정
 
 - 본글 삭제시 서브글 미삭제
-- postNo 와 subNo 의 불일치 요청시 post 와 subPostList 혼합 응답 수정
+- postNo 와 subNo 의 불일치 요청시 post 와 subPost 혼합 응답 수정
 
-<br>  
+<br>
+
 # v2 (완료사항 - 미배포)
 
 개발기간 : 19.01.17 ~ continue

@@ -5,7 +5,43 @@ const models = require('../../db');
 
 let agent = request.agent(app);
 
+const categoryBulk = [
+  {
+    title: 'Stack',
+    order: 1,
+  },
+  {
+    title: 'Queue',
+    order: 2,
+  },
+  {
+    title: 'DP',
+    order: 3,
+  },
+];
+
+async function dbInit() {
+  try {
+    await models.CategoryCote.bulkCreate(categoryBulk);
+  } catch (e) {
+    console.log(e);
+  }
+}
+
+let deleteNo;
+
 describe('/solving은 *********************', () => {
+  before(done => {
+    dbInit();
+    agent
+      .post('/auth/login')
+      .send({
+        id: 'jonghwa',
+        pw: 'jonghwapw',
+      })
+      .end(done);
+  });
+
   /**  GET /solving
    *   success case: 상태코드200과 html을 반환한다.
    *   fail case :
@@ -28,16 +64,6 @@ describe('/solving은 *********************', () => {
    */
   describe('GET /solving/new 요청시...', () => {
     describe('성공시.....', () => {
-      before(done => {
-        agent
-          .post('/auth/login')
-          .send({
-            id: 'jonghwa',
-            pw: 'jonghwapw',
-          })
-          .end(done);
-      });
-
       it('성공시 상태코드200과 html을 반환한다.', done => {
         agent
           .get('/solving/new')
@@ -53,6 +79,110 @@ describe('/solving은 *********************', () => {
           .expect(401)
           .expect('Content-Type', /html/)
           .end(done);
+      });
+    });
+  });
+
+  /**  POST /solving
+   *   success : 201과 생성된 no값을 반환한다.
+   *   fail : 입력값 오류시 400반환
+   *          인증없을시 401을 반환한다.
+   */
+  describe('POST /solving 요청시...', () => {
+    describe('실패시.....', () => {
+      it('비로그인시 401을과 json을 응답한다.', done => {
+        request(app)
+          .post('/solving')
+          .send({
+            title: '타이틀입니다.',
+            content: '컨텐츠입니다.',
+            category: '1',
+            resource: '11252',
+          })
+          .expect(401)
+          .expect('Content-Type', /json/)
+          .end(done);
+      });
+
+      it('title이 null이면 400을 반환한다.', done => {
+        agent
+          .post('/solving')
+          .send({
+            title: null,
+            content: '컨텐츠입니다.',
+            category: '1',
+            resource: '11252',
+          })
+          .expect(400)
+          .expect('Content-Type', /json/)
+          .end(done);
+      });
+
+      it('content null이면 400을 반환한다.', done => {
+        agent
+          .post('/solving')
+          .send({
+            title: '타이틀 입니다.',
+            content: null,
+            category: '1',
+            resource: '11252',
+          })
+          .expect(400)
+          .expect('Content-Type', /json/)
+          .end(done);
+      });
+
+      it('category가 null이면 400을 반환한다.', done => {
+        agent
+          .post('/solving')
+          .send({
+            title: '타이틀 입니다.',
+            content: '컨텐츠입니다.',
+            category: null,
+            resource: '11252',
+          })
+          .expect(400)
+          .expect('Content-Type', /json/)
+          .end(done);
+      });
+
+      it('resource가 null이면 400을 반환한다.', done => {
+        agent
+          .post('/solving')
+          .send({
+            title: '타이틀 입니다.',
+            content: '컨텐츠입니다.',
+            category: '1',
+            resource: null,
+          })
+          .expect(400)
+          .expect('Content-Type', /json/)
+          .end(done);
+      });
+    });
+
+    describe('성공시....', () => {
+      let body;
+      it('201을 응답한다....', done => {
+        agent
+          .post('/solving')
+          .send({
+            title: '타이틀 입니다.',
+            content: '컨텐츠입니다.',
+            category: '1',
+            resource: '111155',
+          })
+          .expect(201)
+          .expect('Content-Type', /json/)
+          .end((err, res) => {
+            body = res.body;
+            deleteNo = body.no;
+            done();
+          });
+      });
+
+      it('생성된 포스트의 no를 반환한다.', () => {
+        body.should.have.property('no');
       });
     });
   });

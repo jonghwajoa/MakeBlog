@@ -44,7 +44,7 @@ let solving = (() => {
     const title = postTitle.value;
     const content = editor.getMarkdown().trim();
     const category = postCategorySelect.value;
-    const resource = postResource;
+    const resource = postResource.value;
     let params = {
       title,
       content,
@@ -63,5 +63,4 @@ let solving = (() => {
 
 document.addEventListener('DOMContentLoaded', function() {
   solving.editorInit();
-  console.log('흐음...?');
 });

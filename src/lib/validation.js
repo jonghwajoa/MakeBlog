@@ -6,7 +6,7 @@ const isString = str => {
 };
 
 const arrayElementIsString = strArray => {
-  for (value of strArray) {
+  for (let value of strArray) {
     if (typeof value !== 'string') {
       return false;
     }
@@ -56,7 +56,7 @@ const paramIsINT = (req, res, next) => {
       return next(err);
     }
   }
-  next();
+  return next();
 };
 
 const isLogin = (req, res, next) => {
@@ -103,6 +103,24 @@ const subPostValidation = ({ title, content }) => {
   return true;
 };
 
+const paramsIsNotNull = params => {
+  let objectVal = Object.values(params);
+  for (let e of objectVal) {
+    if (typeof e !== 'string') {
+      return false;
+    }
+  }
+  return true;
+};
+
+const solvingValidation = checkVal => {
+  if (!paramsIsNotNull(checkVal) || !isUINT(checkVal.category)) {
+    return false;
+  }
+
+  return true;
+};
+
 module.exports = {
   isString,
   arrayElementIsString,
@@ -113,4 +131,5 @@ module.exports = {
   isEdit,
   postValidation,
   subPostValidation,
+  solvingValidation,
 };

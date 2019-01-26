@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
-  const CategoriesCote = sequelize.define(
-    'CategoriesCote',
+  const CategoryCote = sequelize.define(
+    'CategoryCote',
     {
       no: {
         type: DataTypes.INTEGER,
@@ -24,14 +24,14 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       freezeTableName: true,
-      tableName: 'tbl_categories_cote',
+      tableName: 'tbl_category_cote',
       underscored: true,
       timestamps: false,
     },
   );
 
-  // CategoriesCote.associate = function(models) {
-  //   CategoriesCote.hasMany(models.Posts);
-  // };
-  return CategoriesCote;
+  CategoryCote.associate = function(models) {
+    CategoryCote.hasMany(models.Solving);
+  };
+  return CategoryCote;
 };
