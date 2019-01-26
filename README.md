@@ -27,6 +27,7 @@ https://www.weknowjs.xyz/
 | /solving              | GET    | solving home          |
 | /solving              | POST   | solving 생성          |
 | /solving/new          | GET    | 문제 생성 form        |
+| /solving/:id          | GET    | solving 보기          |
 
 <br>
   
@@ -51,6 +52,7 @@ https://www.weknowjs.xyz/
 
 - 본글 삭제시 서브글 미삭제
 - postNo 와 subNo 의 불일치 요청시 post 와 subPost 혼합 응답 수정
+- post subpost view 분리
 
 <br>
 
@@ -63,13 +65,13 @@ https://www.weknowjs.xyz/
 - 카테고리 추가 기능
 - js 파일 분리
 - post route 파라미터 정리 (공통 검증 분리)
+- Solving HTML,css 구현
 
 ## v2 (진행사항)
 
 - 테스트 코드작성
 - 오류수정..
 - Solving 기능구현
-- Solving HTML,css 구현
 
 ### v2 목표까지 남은 기능 (미진행)
 

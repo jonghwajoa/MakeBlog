@@ -121,8 +121,12 @@ const subPostValidation = ({ title, content }) => {
  * @param {Number} params.category
  * @returns {Boolean}
  */
-const solvingValidation = params => {
-  if (!paramsIsNotNull(params) || !isUINT(params.category)) {
+const solvingValidation = ({ title, content, url, problemNum, category }) => {
+  if (!arrayElementIsString([title, content, url, problemNum, category])) {
+    return false;
+  }
+
+  if (!isUINT(category)) {
     return false;
   }
 

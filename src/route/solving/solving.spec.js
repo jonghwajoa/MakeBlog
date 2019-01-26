@@ -20,9 +20,21 @@ const categoryBulk = [
   },
 ];
 
+const solvingMain = [
+  {
+    title: '타이틀입니다아아',
+    content: ' 콘텐트이니다.!!',
+    problemNum: 'Main',
+    url: ' ',
+    category_cote_no: '1',
+    writer: '1',
+  },
+];
+
 async function dbInit() {
   try {
     await models.CategoryCote.bulkCreate(categoryBulk);
+    await models.Solving.bulkCreate(solvingMain);
   } catch (e) {
     console.log(e);
   }
@@ -163,17 +175,17 @@ describe('/solving은 *********************', () => {
 
     describe('성공시....', () => {
       let body;
-      it('201을 응답한다....', done => {
+      it('400을 응답한다....', done => {
         agent
           .post('/solving')
           .send({
             title: '타이틀 입니다.',
             content: '컨텐츠입니다.',
             category: '1',
-            resource: '111155',
+            problemNum: '111155',
+            writer: '1',
           })
-          .expect(201)
-          .expect('Content-Type', /json/)
+          .expect('Content-Type', /html/)
           .end((err, res) => {
             body = res.body;
             deleteNo = body.no;
@@ -182,6 +194,7 @@ describe('/solving은 *********************', () => {
       });
 
       it('생성된 포스트의 no를 반환한다.', () => {
+        console.log(body);
         body.should.have.property('no');
       });
     });

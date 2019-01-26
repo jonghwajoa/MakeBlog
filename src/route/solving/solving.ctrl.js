@@ -89,9 +89,36 @@ const show = async (req, res, next) => {
   });
 };
 
+const updateView = async (req, res, next) => {
+  let { id } = req.params;
+  let postResult, categoryResult;
+  try {
+    categoryResult = await CategoryDB.findAllList();
+    postResult = await SolvingDB.findByProblemNum(id);
+  } catch (e) {
+    next(e);
+  }
+
+  if (!postResult) {
+    next();
+  }
+
+  return res.render('team/solving/update', {
+    category: categoryResult,
+    post: postResult,
+  });
+};
+
+const update = async (req, res, next) => {
+  console.log(req.body);
+  // title , cotent, category, url, problumNum
+};
+
 module.exports = {
   list,
   createView,
   create,
   show,
+  updateView,
+  update,
 };

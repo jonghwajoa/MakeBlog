@@ -5,9 +5,11 @@ const { isLogin, paramIsINT } = require('../../lib/validation');
 router
   .route('/')
   .get(ctrl.list)
-  .post(ctrl.create);
+  .post(isLogin, ctrl.create)
+  .put(ctrl.update)
 
-router.route('/new').get(ctrl.createView);
-router.route("/:id").get(ctrl.show)
+router.route('/new').get(isLogin, ctrl.createView);
+router.route('/:id').get(ctrl.show);
+router.route('/:id/edit').get(ctrl.updateView);
 
 module.exports = router;

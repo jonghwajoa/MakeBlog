@@ -4,7 +4,6 @@ let solving = (() => {
   const postProblemNum = document.getElementById('problemNum');
   const postCategorySelect = document.getElementById('category-select');
   const postCategoryDelete = document.getElementById('category-delete');
-
   let editor;
   let module = {};
 
@@ -39,9 +38,11 @@ let solving = (() => {
         },
       },
     });
+    const hiddenContent = document.getElementById('content-hidden').value;
+    editor.setMarkdown(hiddenContent.trim());
   };
 
-  module.write = async () => {
+  module.update = async () => {
     const title = postTitle.value;
     const content = editor.getMarkdown().trim();
     const category = postCategorySelect.value;
@@ -60,16 +61,12 @@ let solving = (() => {
       problemNum,
     };
     try {
-      await ajaxUtil.sendPostAjax('/solving', params);
+      await ajaxUtil.sendPutAjax('/solving', params);
       location.href = '/solving';
     } catch (e) {
       alert(e.message);
     }
   };
-
-  module.updateInit = () => {
-    
-  }
 
   return module;
 })();

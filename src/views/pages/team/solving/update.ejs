@@ -21,6 +21,7 @@
             name="title"
             class="input"
             placeholder="Title"
+            value="<%=post.title%>"
           />
         </div>
 
@@ -31,6 +32,7 @@
             id="problemNum"
             name="problemNum"
             placeholder="problemNum"
+            value="<%=post.problemNum%>"
           />
         </div>
 
@@ -41,6 +43,7 @@
             id="url"
             name="url"
             placeholder="URL"
+            value="<%=post.url%>"
           />
         </div>
 
@@ -48,9 +51,12 @@
           <div class="category-select">
             <label for="category-select">카테고리 선택</label>
             <select name="category-select" id="category-select">
-              <% category.forEach((e,i) => { %>
+              <% category.forEach((e,i) => { if( post.category_cote_no === e.no)
+              { %>
+              <option value="<%=e.no%>" selected> <%=e.title %> </option>
+              <% } else { %>
               <option value="<%=e.no%>"> <%=e.title %> </option>
-              <% }) %>
+              <% }}) %>
             </select>
           </div>
 
@@ -71,9 +77,15 @@
           </div>
         </div>
 
-        <div id="content-input" name="content"></div>
+        <div id="content-input" name="content">
+          <input
+            type="hidden"
+            id="content-hidden"
+            value="<%= post.content %>"
+          />
+        </div>
         <div class="btn">
-          <button class="custom" id="submit" onclick="solving.write();">
+          <button class="custom" id="submit" onclick="solving.update();">
             작성하기
           </button>
           <button class="custom" onclick="back()">뒤로가기</button>
@@ -83,6 +95,6 @@
 
     <% include ../../../partials/footer.ejs %>
     <script src="/js/util/ajaxUtil.js"></script>
-    <script src="/js/solving/write.js"></script>
+    <script src="/js/solving/update.js"></script>
   </body>
 </html>

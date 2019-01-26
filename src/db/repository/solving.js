@@ -41,6 +41,7 @@ const findByProblemNum = problemNum => {
       'content',
       'count',
       'problemNum',
+      'category_cote_no',
       'url',
       [
         Solving.sequelize.fn(

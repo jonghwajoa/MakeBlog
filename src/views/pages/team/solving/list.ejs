@@ -5,7 +5,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="/css/reset.css" />
-    <link rel="stylesheet" href="/css/common/solving/list.css" />
+    <link rel="stylesheet" href="/css/solving/list.css" />
   </head>
   <body>
     <% include ../../../partials/noauth/essentialCss.ejs %>
@@ -17,15 +17,14 @@
         <div class="side">
           <% category.forEach((outerE,i) => { %>
           <div class="category">
-            <a href="#">
+            <h2>
               <h3>- <%= outerE.title %> ( <%=outerE.count%> )</h3>
-              
               <% outerE.Solvings.forEach((innerE,j) => { %>
                 <div class="category-content" id='category-content<%=i%>'>
                   <a href="#" onclick="solving.read('<%=innerE.dataValues.problemNum %>')">└ <%=innerE.dataValues.problemNum %> </a>
                 </div>
               <% }) %>
-            </a>
+              </h2>
           </div>
           <% }) %>
         </div>
@@ -36,19 +35,21 @@
                   <a href='/solving/new'>
                     <input type="button" value='글등록' id='update' />
                   </a>
-                  <input type="button" value='삭제하기' id='delete' onclick="" />
-                  <a href='#'>
+                  <a href='/solving/<%=post.problemNum%>/edit' id="updateTag">
                       <input type="button" value='수정하기' id='update' />
                     </a>
+                  <input type="button" value='삭제하기' id='delete' onclick="" />
+
               </div>
 
             <div class="content-title">
+              
               <h1 id='content-title'><%= post.title %></h1>
               <dl>
                   <dt><dd id='createDate'><%= post.created_at %> |</dd></dt>
                   <dt><dd id='count'>View <%= post.count %></dd></dt>
               </dl>
-              <h3><a href="#" id='showProblem'></a></h3>
+              <h3><a href="<%= post.url%>" id='showProblem' target="_blank"><%= post.url %></a></h3>
             </div>
             <!-- content-title -->
             <div class="content-content" id="content-content">

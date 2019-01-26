@@ -2,6 +2,8 @@ let solving = (() => {
   const readTitle = document.getElementById('content-title');
   const showProblem = document.getElementById('showProblem');
   const count = document.getElementById('count');
+  let updateAtag = document.getElementById('updateTag');
+
   let editor;
   let module = {};
 
@@ -57,6 +59,8 @@ let solving = (() => {
     showProblem.innerHTML = result.url;
     editor.setMarkdown(result.content);
     window.history.replaceState(null, '', `/solving/${problemNum}`);
+
+    updateAtag.href = `/solving/${problemNum}/edit`;
   };
 
   return module;
