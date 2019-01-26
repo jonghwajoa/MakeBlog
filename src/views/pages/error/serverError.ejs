@@ -5,16 +5,18 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <% include ../../partials/noauth/essentialCss.ejs %>
-    <link rel="stylesheet" href="/css/404.css" />
+    <link rel="stylesheet" href="/css/common/404.css" />
   </head>
 
   <body>
     <% include ../../partials/noauth/header.ejs %>
 
-    <article>
-      <h1>500 Server Error</h1>
-      <p>서버오류입니다.. 잠시 후 다시 시도해주세요..</p>
-    </article>
+    <div id="wrap">
+      <div class="container">
+        <h1>500 Server Error</h1>
+        <p>서버오류입니다.. 잠시 후 다시 시도해주세요..</p>
+      </div>
+    </div>
     <% include ../../partials/footer.ejs %>
   </body>
 </html>

@@ -2,11 +2,10 @@ module.exports = (sequelize, DataTypes) => {
   const Solving = sequelize.define(
     'Solving',
     {
-      no: {
-        type: DataTypes.INTEGER,
+      problemNum: {
+        type: DataTypes.STRING(50),
         primaryKey: true,
         allowNull: false,
-        autoIncrement: true,
       },
       title: { type: DataTypes.STRING(100), allowNull: false },
       content: {
@@ -17,11 +16,6 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER.UNSIGNED,
         defaultValue: 0,
         allowNull: false,
-      },
-      problemNum: {
-        type: DataTypes.STRING(50),
-        allowNull: false,
-        unique: true,
       },
       url: {
         type: DataTypes.STRING(300),

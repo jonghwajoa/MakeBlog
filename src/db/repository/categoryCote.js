@@ -6,7 +6,7 @@ const findAllList = () => {
     include: [
       {
         model: Solving,
-        attributes: ['no', 'problemNum'],
+        attributes: ['problemNum'],
       },
     ],
   });

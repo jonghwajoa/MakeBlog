@@ -57,10 +57,12 @@ let solving = (() => {
     createDate.innerHTML = result.created_at;
     count.innerHTML = `| view ${result.count}`;
     showProblem.innerHTML = result.url;
+    showProblem.href = result.url;
     editor.setMarkdown(result.content);
     window.history.replaceState(null, '', `/solving/${problemNum}`);
-
-    updateAtag.href = `/solving/${problemNum}/edit`;
+    if (updateAtag) {
+      updateAtag.href = `/solving/${problemNum}/edit`;
+    }
   };
 
   return module;

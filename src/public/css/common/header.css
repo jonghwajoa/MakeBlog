@@ -1,0 +1,90 @@
+header {
+  margin-bottom: 80px;
+}
+
+header::after {
+  clear: both;
+}
+
+nav {
+  width: 100%;
+  height: 70px;
+  overflow: hidden;
+  position: fixed;
+  top: 0;
+  background-color: white;
+  font-family: 'Nanum Gothic', sans-serif;
+  box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.12);
+  z-index: 999;
+}
+
+nav .nav-container {
+  width: 90%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: row;
+  line-height: 70px;
+}
+
+nav .nav-container .brand {
+  flex: 0 0 250px;
+}
+
+nav .nav-container .menu {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+.nav-container .menu > div {
+  flex: 0 0 auto;
+  margin-left: 20px;
+}
+
+.nav-container .menu a:hover {
+  color: #d9480f;
+}
+
+.nav-container .brand span {
+  font-size: 2.5rem;
+}
+
+.nav-container .menu span {
+  font-size: 1.5rem;
+  color: #cccccc;
+  font-weight: bold;
+}
+
+.nav-container .brand span a {
+  color: black;
+  font-family: 'Do Hyeon', sans-serif;
+}
+
+@media (max-width: 600px) {
+  nav .nav-container {
+    width: 98%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: row;
+    line-height: 70px;
+  }
+
+  nav .nav-container .brand {
+    flex: 0 0 180px;
+  }
+
+  .nav-container .brand span {
+    font-size: 2rem;
+  }
+
+  .nav-container .menu span {
+    font-size: 1.2rem;
+    color: #cccccc;
+    font-weight: bold;
+  }
+
+  .nav-container .menu > div {
+    flex: 0 0 70px;
+  }
+}

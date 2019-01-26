@@ -5,14 +5,20 @@ const { solvingValidation } = require('../../lib/validation');
 const list = async (req, res, next) => {
   let categoryResult;
   let homePost;
+
   try {
     categoryResult = await CategoryDB.findAllList();
-    homePost = await SolvingDB.findById(1);
+    homePost = await SolvingDB.findById('Main');
   } catch (e) {
     return next(e);
   }
 
-  return res.render('team/solving/list', {
+  let path = 'noauth/solving/list';
+  if (req.session.isLogin) {
+    path = 'team/solving/list';
+  }
+
+  return res.render(path, {
     category: categoryResult,
     post: homePost,
   });
@@ -57,7 +63,7 @@ const create = async (req, res, next) => {
     next(e);
   }
 
-  return res.status(201).json({ no: solvingResult.dataValues.no });
+  return res.status(201).json({ no: solvingResult.dataValues.problemNum });
 };
 
 const show = async (req, res, next) => {
@@ -65,7 +71,10 @@ const show = async (req, res, next) => {
   let postResult;
 
   try {
-    postResult = await SolvingDB.findByProblemNum(id);
+    postResult = await SolvingDB.findById(id);
+    if (!postResult) {
+      return next();
+    }
     postResult.updateAttributes({
       count: postResult.dataValues.count + 1,
     });
@@ -83,7 +92,12 @@ const show = async (req, res, next) => {
     return next(e);
   }
 
-  return res.render('team/solving/list', {
+  let path = 'noauth/solving/list';
+  if (req.session.isLogin) {
+    path = 'team/solving/list';
+  }
+
+  return res.render(path, {
     category: categoryResult,
     post: postResult,
   });
@@ -94,7 +108,7 @@ const updateView = async (req, res, next) => {
   let postResult, categoryResult;
   try {
     categoryResult = await CategoryDB.findAllList();
-    postResult = await SolvingDB.findByProblemNum(id);
+    postResult = await SolvingDB.findById(id);
   } catch (e) {
     next(e);
   }
@@ -110,8 +124,18 @@ const updateView = async (req, res, next) => {
 };
 
 const update = async (req, res, next) => {
-  console.log(req.body);
-  // title , cotent, category, url, problumNum
+  let { title, content, category, url, problemNum } = req.body;
+
+  const updateVal = { title, content, category, url };
+  try {
+    let solving = await SolvingDB.findById(problemNum);
+    if (!solving) next(e);
+    updateResult = await solving.update(updateVal);
+  } catch (e) {
+    next(e);
+  }
+
+  return res.status(204).end();
 };
 
 module.exports = {

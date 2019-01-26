@@ -8,9 +8,9 @@
     <link rel="stylesheet" href="/css/solving/list.css" />
   </head>
   <body>
-    <% include ../../../partials/team/essentialCss.ejs %>
+    <% include ../../../partials/noauth/essentialCss.ejs %>
     <% include ../../../partials/editorViewer.ejs %>
-    <% include ../../../partials/team/header.ejs %>
+    <% include ../../../partials/noauth/header.ejs %>
 
     <div class="wrap">
       <div class="flex">
@@ -31,17 +31,6 @@
 
         <div class="content">
           <div class="container">
-              <div class="content-admin">
-                  <a href='/solving/new'>
-                    <input type="button" value='글등록' id='update' />
-                  </a>
-                  <a href='/solving/<%=post.problemNum%>/edit' id="updateTag">
-                      <input type="button" value='수정하기' id='update' />
-                    </a>
-                  <input type="button" value='삭제하기' id='delete' onclick="" />
-
-              </div>
-
             <div class="content-title">
               
               <h1 id='content-title'><%= post.title %></h1>

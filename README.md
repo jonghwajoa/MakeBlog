@@ -28,6 +28,8 @@ https://www.weknowjs.xyz/
 | /solving              | POST   | solving 생성          |
 | /solving/new          | GET    | 문제 생성 form        |
 | /solving/:id          | GET    | solving 보기          |
+| /solving/:id/edit     | GET    | solving 수정 form     |
+| /solving              | put    | solving 수정          |
 
 <br>
   

@@ -2,9 +2,9 @@ const { Solving } = require('../../db');
 
 const create = ({ title, url, problemNum, content, category }, writer) => {
   return Solving.create({
+    problemNum,
     title,
     url,
-    problemNum,
     content,
     category_cote_no: category,
     writer,
@@ -12,37 +12,14 @@ const create = ({ title, url, problemNum, content, category }, writer) => {
 };
 
 const findById = id => {
-  return Solving.findById(1, {
+  return Solving.findById(id, {
     attributes: [
-      'no',
+      'problemNum',
       'title',
       'content',
       'count',
-      'problemNum',
       'url',
-      [
-        Solving.sequelize.fn(
-          'date_format',
-          Solving.sequelize.col('created_at'),
-          '%Y-%m-%d',
-        ),
-        'created_at',
-      ],
-    ],
-  });
-};
-
-const findByProblemNum = problemNum => {
-  return Solving.findOne({
-    where: { problemNum },
-    attributes: [
-      'no',
-      'title',
-      'content',
-      'count',
-      'problemNum',
       'category_cote_no',
-      'url',
       [
         Solving.sequelize.fn(
           'date_format',
@@ -58,5 +35,4 @@ const findByProblemNum = problemNum => {
 module.exports = {
   create,
   findById,
-  findByProblemNum,
 };

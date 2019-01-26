@@ -5,16 +5,18 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <% include ../../partials/noauth/essentialCss.ejs %>
-    <link rel="stylesheet" href="/css/404.css" />
+    <link rel="stylesheet" href="/css/common/404.css" />
   </head>
 
   <body>
     <% include ../../partials/noauth/header.ejs %>
 
-    <article>
-      <h1>400 BadRequest</h1>
-      <p>잘못된 요청입니다.</p>
-    </article>
+    <div id="wrap">
+      <div class="container">
+        <h1>400 BadRequest</h1>
+        <p>잘못된 요청입니다.</p>
+      </div>
+    </div>
     <% include ../../partials/footer.ejs %>
   </body>
 </html>
