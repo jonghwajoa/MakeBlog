@@ -2,13 +2,14 @@ const postDB = require('../../db/repository/post');
 const subPostDB = require('../../db/repository/subPost');
 const visitDB = require('../../db/repository/visitCount');
 const categoryDB = require('../../db/repository/categories');
+const db = require('../../db');
 const paging = require('../../lib/paging');
 const paramCheck = require('../../lib/validation');
 
 const createView = async (req, res) => {
   try {
     const category = await categoryDB.findAll();
-    return res.render('team/post/postWrite', { category });
+    return res.render('team/post/write', { category });
   } catch (e) {
     next(e);
   }
@@ -98,9 +99,9 @@ const list = async (req, res, next) => {
     today: req.today,
   };
 
-  let path = 'noauth/post/postList';
+  let path = 'noauth/post/list';
   if (req.session.isLogin) {
-    path = 'team/post/postList';
+    path = 'team/post/list';
   }
 
   return res.render(path, { ...returnObj });
@@ -125,9 +126,9 @@ const show = async (req, res, next) => {
     return res.json({ post, subPost });
   }
 
-  let path = 'noauth/post/postRead';
+  let path = 'noauth/post/read';
   if (req.session.isLogin) {
-    path = 'team/post/postRead';
+    path = 'team/post/read';
   }
 
   return res.render(path, { post, subPost });
@@ -202,7 +203,7 @@ const updateView = async (req, res, next) => {
     err.status = 404;
     return next(err);
   }
-  return res.render('team/post/postUpdate', { post, category });
+  return res.render('team/post/update', { post, category });
 };
 
 const update = async (req, res, next) => {
@@ -263,12 +264,17 @@ const updateSubPost = async (req, res, next) => {
 
 const remove = async (req, res, next) => {
   let { id } = req.params;
-  let result;
+  let result, transaction;
+
   try {
     result = await postDB.findById(id);
     if (!result) return next();
-    await result.destroy(id);
+    transaction = await db.sequelize.transaction();
+    await subPostDB.deleteByForeignkey(id, transaction);
+    await result.destroy();
+    await transaction.commit();
   } catch (e) {
+    await transaction.rollback();
     return next(e);
   }
 
@@ -295,6 +301,7 @@ const uploadImage = (req, res) => {
 const categoryAdd = async (req, res, next) => {
   const { categoryName } = req.body;
   let result;
+
   try {
     result = await categoryDB.find(categoryName);
     if (result !== null) {

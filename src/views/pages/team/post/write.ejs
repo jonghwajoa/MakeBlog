@@ -5,19 +5,19 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <% include ../../../partials/essentialCss.ejs %>
-    <link rel="stylesheet" href="/css/post/postWrite.css" />
+    <link rel="stylesheet" href="/css/post/write.css" />
   </head>
 
   <body>
     <% include ../../../partials/headerTeam.ejs %> <% include
     ../../../partials/editorWrite.ejs %>
 
-    <article>
-      <section>
-        <div class="custom title">
+    <div class="wrap">
+      <div class="container">
+        <div class="title">
           <input type="text" id="title" name="title" placeholder="Title" />
         </div>
-        <div class="custom tag">
+        <div class="tag">
           <input type="text" id="tag" name="tag" placeholder="Tag" />
         </div>
         <div class="category">
@@ -45,8 +45,8 @@
         <button class="custom" id="submit" onclick="postWrite.submit()">
           작성하기
         </button>
-      </section>
-    </article>
+      </div>
+    </div>
 
     <% include ../../../partials/footer.ejs %>
     <script src="/js/util/ajaxUtil.js"></script>

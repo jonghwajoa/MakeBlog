@@ -1,4 +1,4 @@
-article {
+.content-wrap {
   min-height: 80vh;
   max-width: 1700px;
   margin: 10px auto 50px;
@@ -6,16 +6,18 @@ article {
   padding: 30px 50px;
 }
 
-section.title {
+/* content-header */
+
+.content-header {
   margin-bottom: 20px;
 }
 
-.title .manageArea {
+.content-header .manageArea {
   text-align: right;
   height: 0;
 }
 
-.title .manageArea input[type='button'] {
+.content-header .manageArea input[type='button'] {
   position: relative;
   bottom: 50px;
   color: white;
@@ -26,50 +28,52 @@ section.title {
   font-size: 1.5rem;
 }
 
-section.title::after {
+.content-header::after {
   display: block;
   content: '';
   margin-top: 20px;
-  border-bottom: 1px solid #e6ebf1;
+  border-bottom: 2px solid #e6ebf1;
 }
 
-section .intro {
+.content-header .post-intro {
   box-sizing: border-box;
   font-family: 'Do Hyeon', sans-serif;
 }
 
-section .intro h1 {
+.content-header .post-intro h1 {
   font-size: 2rem;
   color: black;
   margin-bottom: 10px;
 }
 
-section .intro dl {
+.content-header .post-intro dl {
   display: block;
 }
 
-section .intro dt {
+.content-header .post-intro dt {
   display: inline-block;
 }
 
-section .intro dd {
+.content-header .post-intro dd {
   display: inline-block;
 }
 
-article section.content {
+/* content-content */
+
+.content-content {
   display: flex;
   flex-direction: row;
   margin-bottom: 100px;
 }
 
-article section.content #content {
-  flex-basis: 100%;
+.content-content .content-text {
+  flex-grow: 1;
+  flex-shrink: 1;
   font-size: 1.5rem;
 }
 
-article section.content .side {
-  flex-basis: 250px;
-  flex-shrink: 0;
+.content-content .content-side {
+  flex: 0 0 250px;
   margin-left: 50px;
 }
 
@@ -79,7 +83,7 @@ article section.content .side {
 }
 
 .sidepost .sideTop {
-  background-color: #c9add8;
+  background-color: #cccccc;
 }
 
 .sidepost .sideTop h2 {
@@ -99,18 +103,6 @@ article section.content .side {
 
 .sidepost .subpost a {
   cursor: pointer;
-}
-
-@media (min-width: 801px) {
-  .sidepost .subpost a {
-    display: block;
-    overflow: hidden;
-    width: inherit;
-    max-width: 250px;
-    padding: 10px 10px;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-  }
 }
 
 .sidepost .subpost a:hover {
@@ -133,26 +125,39 @@ a + a {
   font-size: 1.3rem;
 }
 
+/* 미디어 쿼리 */
+@media (min-width: 801px) {
+  .sidepost .subpost a {
+    display: block;
+    overflow: hidden;
+    width: inherit;
+    max-width: 250px;
+    padding: 10px 10px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+}
+
 @media (max-width: 800px) {
-  article {
+  .content-wrap {
     min-height: 80vh;
     margin: 10px 10px;
     box-sizing: border-box;
     padding: 10px;
   }
 
-  article section.content {
+  .content-wrap section.content {
     display: flex;
     flex-direction: column-reverse;
   }
 
-  article section.content .side {
+  .content-wrap section.content .side {
     flex-shrink: 0;
     flex-basis: 0;
     margin: 0;
   }
 
-  article section.content .side::after {
+  .content-wrap section.content .side::after {
     display: block;
     content: '';
     margin-top: 20px;

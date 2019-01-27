@@ -1,24 +1,29 @@
 <!DOCTYPE html5>
 <html lang="ko">
   <head>
-    <title>WeKnowJS</title>
+    <title>WeKnowJS-PostList</title>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <% include ../../../partials/essentialCss.ejs %>
-    <link rel="stylesheet" href="/css/post/postList.css" />
+    <link rel="stylesheet" href="/css/post/list.css" />
   </head>
 
   <body>
-    <% include ../../../partials/header.ejs %>
+    <% include ../../../partials/headerTeam.ejs %>
 
-    <div class="postArea">
-      <article>
-        <section>
+    <div class="content-wrap">
+      <div class="flex-container">
+        <div class='post-area'>
+          <div class="create-btn">
+            <a href="/post/new"> <input type="button" value="글등록" /> </a>
+          </div>
+
+
           <% postList.forEach((item,index) => { %>
           <div class="post">
-            <p class="tag"><%= item.tag %></p>
+            <span class="post-tag"><%= item.tag %></span>
 
-            <h2><a href="/post/<%=item.no %>"><%= item.title %></a></h2>
+            <h3><a href="/post/<%=item.no %>"><%= item.title %></a></h3>
 
             <div class="postInfo">
               <span><%= item.created_at %> | view <%= item.count %> </span>
@@ -46,32 +51,34 @@
             <% } %>
           </div>
         </section>
-      </article>
+      </div>
 
       <aside>
-        <section class="NumberOfVisitor">
+        <div class="aside-container"> 
+
+        <div class="visit-count">
           <div class="gridItem title">total</div>
           <div class="gridItem title">monthly</div>
           <div class="gridItem title">today</div>
           <div class="gridItem"><%= totalCount %></div>
           <div class="gridItem"><%= monthCount %></div>
           <div class="gridItem"><%=today%></div>
-        </section>
-
-        <section class="hotPost">
+        </div>
+        
+        <div class="hotPost">
           <h2>Post TOP5</h2>
           <ul>
             <% hotPost.forEach((item,index) => { %>
             <li>
               <a href="/post/<%=item.no%>">
-                <span><%= index+1 %></span> <span><%= item.title %></span>
+                <span><%= index+1 %> <%= item.title %></span>
               </a>
             </li>
             <% }) %>
           </ul>
-        </section>
+        </div>
 
-        <section class="hotSubPost">
+        <div class="hotSubPost">
           <h2>SubPost TOP5</h2>
           <ul>
             <% hotSubPost.forEach((item,index) => { %>
@@ -82,7 +89,8 @@
             </li>
             <% }) %>
           </ul>
-        </section>
+        </div> 
+      </div>
       </aside>
     </div>
 

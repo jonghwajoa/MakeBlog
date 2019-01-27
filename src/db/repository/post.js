@@ -6,6 +6,10 @@ const findById = id => {
   });
 };
 
+const findTransactionById = (id, transaction) => {
+  return Posts.findById(id, { transaction });
+};
+
 const findHotPost = () => {
   return Posts.findAll({
     limit: 5,
@@ -66,6 +70,10 @@ const postFindById = id => {
   });
 };
 
+/**
+ * @deprecated
+ * use instance destroy instead of this function
+ */
 const deleteById = id => {
   return Posts.destroy({
     where: {
@@ -98,4 +106,5 @@ module.exports = {
   updateById,
   totalCount,
   findHotPost,
+  findTransactionById,
 };

@@ -33,7 +33,6 @@ router.use((err, req, res, next) => {
     );
   }
 
-  console.log(err);
   if (req.headers['content-type'] === 'application/json') {
     return res.status(err.status).json({ message: err.message });
   }

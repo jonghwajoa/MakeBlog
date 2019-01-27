@@ -32,7 +32,11 @@ module.exports = (sequelize, DataTypes) => {
   Posts.associate = function(models) {
     Posts.belongsTo(models.Users, { foreignKey: 'writer' });
     Posts.belongsTo(models.Categories);
-    Posts.hasMany(models.SubPosts, { onDelete: 'cascade', hooks: true });
+    Posts.hasMany(models.SubPosts, {
+      onDelete: 'cascade',
+      hooks: true,
+      individualHooks: true,
+    });
   };
 
   return Posts;

@@ -9,7 +9,7 @@ let postRead = (() => {
 
   module.init = () => {
     editor = new tui.Editor({
-      el: document.querySelector('#content'),
+      el: document.getElementById('content-text'),
       exts: [
         'table',
         'uml',

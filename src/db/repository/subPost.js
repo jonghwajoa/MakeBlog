@@ -66,6 +66,14 @@ const findNextNo = postNo => {
   });
 };
 
+const deleteByForeignkey = id => {
+  return SubPosts.destroy({
+    where: {
+      post_no: id,
+    },
+  });
+};
+
 module.exports = {
   create,
   findByPostNo,
@@ -74,4 +82,5 @@ module.exports = {
   findById,
   findNextNo,
   findByNo,
+  deleteByForeignkey,
 };

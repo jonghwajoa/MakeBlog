@@ -111,13 +111,14 @@ let postWrite = {
     const categoryName = this.categoryName.value;
     const selectBox = this.category;
     let result;
-
+    console.log('에드 위');
     try {
       result = await ajaxUtil.sendPostAjax('/post/category/', categoryName);
     } catch (e) {
       alert(`${e.responseText}`);
       return;
     }
+    console.log('에드 아래');
 
     let select = document.createElement('option');
     let { no, message } = JSON.parse(result.responseText);

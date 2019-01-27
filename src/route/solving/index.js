@@ -6,10 +6,10 @@ router
   .route('/')
   .get(ctrl.list)
   .post(isLogin, ctrl.create)
-  .put(ctrl.update)
+  .put(isLogin,ctrl.update)
 
 router.route('/new').get(isLogin, ctrl.createView);
 router.route('/:id').get(ctrl.show);
-router.route('/:id/edit').get(ctrl.updateView);
+router.route('/:id/edit').get(isLogin,ctrl.updateView);
 
 module.exports = router;

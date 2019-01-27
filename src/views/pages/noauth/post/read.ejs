@@ -1,34 +1,34 @@
-<!DOCTYPE html>
+<!DOCTYPE html5>
 <html lang="ko">
 
 <head>
-    <title>WeKnowJS</title>
+    <title id="headTitle">WeKnowJS-<%=post.title%></title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <% include ../../../partials/essentialCss.ejs %>
-    <link rel='stylesheet' href='/css/post/postRead.css' />
     <% include ../../../partials/editorViewer.ejs %>
-<!-- essentialcss과 postread 명칭 충돌있음 -->
+    <link rel='stylesheet' href='/css/post/read.css' />
+    
 </head>
 
 <body>
-        <% include ../../../partials/headerTeam.ejs %>
+        <% include ../../../partials/header.ejs %>
 
 
-    <article class="post">
-        <section class='title'>
-            <div class='intro'>
-                <h1>
+    <div class="content-wrap">
+        <div class='content-header'>
+            <div class='post-intro'>
+                <h1 id="title">
                     <%= post.title %>
                 </h1>
-                <dl class='postInfo'>
+                <dl class=postInfo>
                     <dt>
-                    <dd>
+                    <dd id="createDate">
                         <%= post.created_at %> |
                     </dd>
                     </dt>
                     <dt>
-                    <dd>
+                    <dd id="viewCount">
                         View
                         <%= post.count %>
                     </dd>
@@ -36,49 +36,41 @@
                 </dl>
             </div>
 
-            <div class="manageArea">
-            <a href='/post/<%= post.no%>/edit'>
-                    <input type="button" value='수정하기' id='update' />
-                </a>
-                <input type="button" value='삭제하기' id='delete' onclick="postRead.deletePost('<%= post.no%>')" />
-            </div>
-        </section>
+            
+        </div>
+        <!-- /content-header -->
 
 
-        <section class='content'>
-            <div id="content">
-                    <input type="hidden" id="postContent" value="<%= post.content %>" />
+        <div class='content-content'>
+            <div class="content-text" id ='content-text'>
+                <input type="hidden" id="postContent" value="<%= post.content %>" />
             </div>
-            <div class="side">
+            <!-- /content-text -->
+            
+            <div class="content-side">
                 <div class='sidepost'>
                     <div class='sideTop'>
                         <h2>Sub post</h2>
                     </div>
-
                     <div class='subpost'>
-                        <a href='/post/<%=post.no%>'>Home</a>
+                        <a onclick="postRead.getContent('<%=post.no%>')">Home</a>
                         <% subPost.forEach((item,index) => { %>
-                        <a href='/post/<%=post.no%>/<%=item.sub_no %>'>
+                        <a onclick="postRead.getContent('<%=post.no%>','<%=item.sub_no %>')" >
                             <%=item.title %></a>
                         <% }) %>
                     </div>
                 </div>
+             </div>
+             <!-- /cotentside -->
+        </div>
+        <!-- /content-content -->
 
-                <div class='subPostAdd'>
-                    <a href="/post/<%=post.no%>/new">
-                        <input type="button" value='add subPage' />
-                    </a>
-
-                </div>
-            </div>
-
-        </section>
-
-
-        <section>
+        <div>
             <div id="disqus_thread"></div>
-        </section>
-    </article>
+        </div>
+
+        
+    </div>
 
 
     <% include ../../../partials/footer.ejs %>
@@ -86,11 +78,12 @@
     <noscript>Please enable JavaScript</noscript>
     <script src="/js/util/ajaxUtil.js"></script>
     <script src="/js/post/postRead.js"></script>
+    
     <script>
         window.onload = function () {
             const disqus_config = function () {
-                this.page.url = '/post/<%=post.no%>';  // Replace PAGE_URL with your page's canonical URL variable
-                this.page.identifier = `<%=post.no%>`; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+                this.page.url = '/post/<%=post.no%>';
+                this.page.identifier = `<%=post.no%>`;
             };
 
             (function () { // DON'T EDIT BELOW THIS LINE

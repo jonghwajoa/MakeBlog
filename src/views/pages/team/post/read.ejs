@@ -7,20 +7,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <% include ../../../partials/essentialCss.ejs %>
     <% include ../../../partials/editorViewer.ejs %>
-    <link rel='stylesheet' href='/css/post/postRead.css' />
+    <link rel='stylesheet' href='/css/post/read.css' />
     
-    <!-- 이거 지워도 되는거같은데? -->
-    <!-- <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script> -->
-
 </head>
 
 <body>
-        <% include ../../../partials/header.ejs %>
+    <% include ../../../partials/headerTeam.ejs %>
 
-
-    <article class="post">
-        <section class='title'>
-            <div class='intro'>
+    <div class="content-wrap">
+        <div class='content-header'>
+            <div class='post-intro'>
                 <h1 id="title">
                     <%= post.title %>
                 </h1>
@@ -38,19 +34,31 @@
                     </dt>
                 </dl>
             </div>
-        </section>
+
+            <div class="manageArea">
+                <a href="/post/<%=post.no%>/new">
+                    <input type="button" value='서브글 작성' />
+                </a>
+                <a href='/post/<%= post.no%>/edit'>
+                    <input type="button" value='수정하기' id='update' />
+                </a>
+                <input type="button" value='삭제하기' id='delete' onclick="postRead.deletePost('<%= post.no%>')" />
+            </div>
+        </div>
+        <!-- /content-header -->
 
 
-        <section class='content'>
-            <div id="content">
+        <div class='content-content'>
+            <div class="content-text" id ='content-text'>
                 <input type="hidden" id="postContent" value="<%= post.content %>" />
             </div>
-            <div class="side">
+            <!-- /content-text -->
+            
+            <div class="content-side">
                 <div class='sidepost'>
                     <div class='sideTop'>
                         <h2>Sub post</h2>
                     </div>
-
                     <div class='subpost'>
                         <a onclick="postRead.getContent('<%=post.no%>')">Home</a>
                         <% subPost.forEach((item,index) => { %>
@@ -59,19 +67,17 @@
                         <% }) %>
                     </div>
                 </div>
+             </div>
+             <!-- /cotentside -->
+        </div>
+        <!-- /content-content -->
 
-
-            </div>
-
-        </section>
-
-
-        <section>
+        <div>
             <div id="disqus_thread"></div>
-        </section>
+        </div>
 
         
-    </article>
+    </div>
 
 
     <% include ../../../partials/footer.ejs %>

@@ -5,16 +5,16 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <% include ../../../partials/essentialCss.ejs %>
-    <link rel="stylesheet" href="/css/post/postWrite.css" />
+    <link rel="stylesheet" href="/css/post/write.css" />
   </head>
 
   <body>
     <% include ../../../partials/headerTeam.ejs %> <% include
     ../../../partials/editorWrite.ejs %>
 
-    <article>
-      <section>
-        <div class="custom title">
+    <div class="wrap">
+      <div class="container">
+        <div class="title">
           <input
             type="text"
             id="title"
@@ -22,9 +22,11 @@
             value="<%= post.title %>"
           />
         </div>
-        <div class="custom tag">
+
+        <div class="tag">
           <input type="text" id="tag" name="tag" value="<%= post.tag %>" />
         </div>
+
         <div class="category">
           <label for="category">category</label>
           <select name="category" id="category">
@@ -36,6 +38,7 @@
             <% } }) %>
           </select>
         </div>
+
         <div id="editSection" id="content" name="content">
           <p hidden id="hiddenContent"><%- post.content %></p>
         </div>
@@ -44,8 +47,8 @@
         <button class="custom" onclick="postUpdate.update('<%=post.no%>')">
           수정하기
         </button>
-      </section>
-    </article>
+      </div>
+    </div>
 
     <% include ../../../partials/footer.ejs %>
     <script src="/js/util/ajaxUtil.js"></script>

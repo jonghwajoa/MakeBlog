@@ -4,19 +4,18 @@
     <title>WeKnowJS</title>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <% include ../../../partials/team/essentialCss.ejs %>
-    <link rel="stylesheet" href="/css/auth/register.css" />
+    <% include ../../../partials/essentialCss.ejs %>
+    <link rel="stylesheet" href="/css/auth/login.css" />
   </head>
 
   <body>
     <% include ../../../partials/header.ejs %>
 
-    <article>
-      <section>
-        <label>회원가입</label>
+    <div class="content-wrap">
+      <div class="content-container">
+        <h1>회원가입</h1>
 
-        <div class="formArea">
-          <!-- <form method='post' action='/auth/register'> -->
+        <div class="input-form">
           <input
             type="text"
             id="id"
@@ -44,13 +43,14 @@
             minlength="2"
             autocomplete="off"
           />
-
           <button type="submit" onclick="registerAjax()">회원가입</button>
-          <!-- </form> -->
-          <button onclick="location.href='/'">취소</button>
+          <button onclick="location.href='/auth/login'">취소</button>
         </div>
-      </section>
-    </article>
+        <!-- /input form -->
+      </div>
+      <!-- /container-content -->
+    </div>
+    <!-- / wrap -->
     <% include ../../../partials/footer.ejs %>
 
     <script>

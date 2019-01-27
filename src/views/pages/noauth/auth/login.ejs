@@ -11,11 +11,11 @@
   <body>
     <% include ../../../partials/header.ejs %>
 
-    <article>
-      <section>
-        <label>로그인</label>
+    <div class="content-wrap">
+      <div class="content-container">
+        <h1>로그인</h1>
 
-        <div class="formArea">
+        <div class="input-form">
           <input
             type="text"
             id="id"
@@ -34,51 +34,14 @@
             minlength="5"
             autocomplete="off"
           />
-          <button type="submit" onclick="loginAjax()">로그인</button>
+          <button type="submit" onclick="login.login()">로그인</button>
           <button onclick="location.href='/auth/register'">회원가입</button>
         </div>
-      </section>
-    </article>
+      </div>
+    </div>
 
     <% include ../../../partials/footer.ejs %>
-
-    <script>
-      function loginAjax() {
-        const xhr = new XMLHttpRequest();
-        const id = document.getElementById('id').value;
-        const pw = document.getElementById('pw').value;
-
-        if (!validation(id, pw)) {
-          return false;
-        }
-
-        const params = {
-          id,
-          pw,
-        };
-        xhr.onload = function() {
-          if (xhr.status === 200) {
-            location.href = '/post/';
-          } else {
-            alert(`${xhr.responseText}`);
-          }
-        };
-        xhr.open('POST', '/auth/login', true);
-        xhr.setRequestHeader('Content-type', 'application/json');
-        xhr.send(JSON.stringify(params));
-      }
-
-      function validation(id, pw) {
-        if (id.length < 5 || id.length > 20 || typeof id !== 'string') {
-          alert('아이디 형식이 올바르지 않습니다.');
-          return false;
-        }
-        if (pw.length < 5 || pw.length > 20 || typeof id !== 'string') {
-          alert('비밀번호 형식이 올바르지 않습니다.');
-          return false;
-        }
-        return true;
-      }
-    </script>
+    <script src="/js/util/ajaxUtil.js"></script>
+    <script src="/js/auth/login.js"></script>
   </body>
 </html>

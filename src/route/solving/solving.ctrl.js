@@ -45,6 +45,10 @@ const create = async (req, res, next) => {
 
   try {
     categoryResult = await CategoryDB.findById(category);
+    let result = await SolvingDB.findById(problemNum);
+    if (result) {
+      return res.status(400).json({ message: '이미 작성한 문제입니다.' });
+    }
   } catch (e) {
     next(e);
   }
@@ -63,7 +67,7 @@ const create = async (req, res, next) => {
     next(e);
   }
 
-  return res.status(201).json({ no: solvingResult.dataValues.problemNum });
+  return res.status(204).end();
 };
 
 const show = async (req, res, next) => {
@@ -126,6 +130,10 @@ const updateView = async (req, res, next) => {
 const update = async (req, res, next) => {
   let { title, content, category, url, problemNum } = req.body;
 
+  if (!solvingValidation(req.body)) {
+    return res.status(400).json({ messege: 'Null값이 존재하면 안됩니다.' });
+  }
+
   const updateVal = { title, content, category, url };
   try {
     let solving = await SolvingDB.findById(problemNum);
@@ -146,3 +154,5 @@ module.exports = {
   updateView,
   update,
 };
+
+

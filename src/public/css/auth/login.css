@@ -1,41 +1,55 @@
-article {
+.content-wrap {
   min-height: 80vh;
+  overflow: hidden;
 }
 
-article section {
-  margin: 50px auto 0;
+.content-wrap .content-container {
+  margin: 5rem auto 0;
   box-sizing: border-box;
   padding: 30px;
   width: 500px;
   box-shadow: 0px 0px 5px 1px #e9ecef;
 }
 
-article section label {
+.content-wrap .content-container h1 {
   font-size: 2rem;
   text-align: center;
   display: block;
+  font-weight: bold;
 }
 
-.formArea {
+.input-form{
   width: 60%;
   margin: 40px auto 0;
 }
 
-input {
+.input-form> input {
   display: block;
-  margin: 0 auto 50px;
+  margin: 0 auto 30px;
   border: none;
-  outline: none;
-  width: 100%;
-  padding: 10px 0;
+  padding: 10px 7px;
   font-size: 1.3rem;
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid #cccccc;
 }
 
-button {
+.input-form> input:hover {
+  border-bottom: 2px solid #da77f2;
+}
+
+.input-form> input:focus {
+  outline-color: #da77f2;
+}
+
+.input-form> button {
   width: 100%;
   height: 40px;
   margin-bottom: 20px;
   font-weight: bold;
   font-size: 1rem;
+  outline: none;
+  cursor: pointer;
+}
+
+.input-form> button:hover {
+  color: #da77f2;
 }
