@@ -9,29 +9,20 @@
   </head>
 
   <body>
-    <% include ../../../partials/headerTeam.ejs %> <% include
-    ../../../partials/editorWrite.ejs %>
+    <% include ../../../partials/headerTeam.ejs %> <% include ../../../partials/editorWrite.ejs %>
 
     <div class="wrap">
       <div class="container">
         <div class="title">
-          <input
-            type="text"
-            id="title"
-            name="title"
-            value="<%= post.title %>"
-          />
+          <input type="text" id="title" name="title" value="<%= post.title %>" />
         </div>
 
-        <div class="tag">
-          <input type="text" id="tag" name="tag" value="<%= post.tag %>" />
-        </div>
+        <div class="tag"><input type="text" id="tag" name="tag" value="<%= post.tag %>" /></div>
 
         <div class="category">
           <label for="category">category</label>
           <select name="category" id="category">
-            <% category.forEach((item,idx) => { if(item.no == post.category_no)
-            { %>
+            <% category.forEach((item,idx) => { if(item.no == post.category_no) { %>
             <option value="<%=item.no%>" selected><%=item.explain %> </option>
             <% } else { %>
             <option value="<%=item.no%>"><%=item.explain %> </option>
@@ -44,14 +35,16 @@
         </div>
 
         <button class="custom" onclick="back()">뒤로가기</button>
-        <button class="custom" onclick="postUpdate.update('<%=post.no%>')">
-          수정하기
-        </button>
+        <button class="custom" onclick="postUpdate.update('<%=post.no%>')">수정하기</button>
       </div>
     </div>
 
     <% include ../../../partials/footer.ejs %>
     <script src="/js/util/ajaxUtil.js"></script>
-    <script src="/js/post/postUpdate.js"></script>
+    <script src="/js/post/post.js"></script>
+    <script>
+      const postUpdate = new Post();
+      postUpdate.updateInit();
+    </script>
   </body>
 </html>

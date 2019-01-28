@@ -3,44 +3,6 @@ const request = require('supertest');
 const app = require('../../app');
 const models = require('../../db');
 
-const category = [
-  {
-    no: 1,
-    explain: 'number1',
-  },
-  {
-    no: 2,
-    explain: 'number2',
-  },
-  {
-    no: 3,
-    explain: 'number3',
-  },
-];
-const post = [
-  {
-    title: '1번글 입니다.',
-    tag: '#아무거나 #갑시다 #히히',
-    content: '1번글 content입니다.',
-    category_no: 1,
-    writer: 1,
-  },
-  {
-    title: '2번글 입니다.',
-    tag: '#아무거나 #갑시다 #히히',
-    content: '2번글 content입니다.',
-    category_no: 1,
-    writer: 1,
-  },
-  {
-    title: '3번글 입니다.',
-    tag: '#아무거나 #갑시다 #히히',
-    content: '3번글 content입니다.',
-    category_no: 1,
-    writer: 1,
-  },
-];
-
 const WritePostVal = {
   title: '5번글 입니다.',
   tag: '#아무거나 #갑시다 #히히',
@@ -61,21 +23,8 @@ let deleteNo;
  * 업데이터
  * 제거
  */
-async function dbInit() {
-  try {
-    await models.Categories.bulkCreate(category);
-    await models.Posts.bulkCreate(post);
-  } catch (e) {
-    console.log(e);
-  }
-}
 
 describe('/Post는********************************', () => {
-  before(done => {
-    dbInit();
-    done();
-  });
-
   describe('GET / 요청시.....', () => {
     let body;
     it('302와 /post 를 반환한다.', done => {
@@ -119,6 +68,28 @@ describe('/Post는********************************', () => {
             .expect('Content-Type', /html/)
             .end(done);
         });
+
+      it('page가 자연수가 아니면 400을 반환한다.', done => {
+        request(app)
+          .get('/post?page=-1')
+          .expect('Content-Type', /html/)
+          .expect(400)
+          .end((err, res) => {
+            body = res.body;
+            done();
+          });
+      });
+
+      it('page가 자연수가 아니면 400을 반환한다.', done => {
+        request(app)
+          .get('/post?page=dasa')
+          .expect('Content-Type', /html/)
+          .expect(400)
+          .end((err, res) => {
+            body = res.body;
+            done();
+          });
+      });
     });
   });
 

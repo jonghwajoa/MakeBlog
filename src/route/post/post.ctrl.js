@@ -66,17 +66,22 @@ const createSubPost = async (req, res, next) => {
 const list = async (req, res, next) => {
   let postList, totalCnt, pagingInfo;
   let hotPost, hotSubPost, monthCount, totalCount;
+  let requestPage = req.query.page || 1;
+
+  if (!paramCheck.isUINT(requestPage)) {
+    const err = new Error('Bad Request');
+    err.status = 400;
+    return next(err);
+  }
 
   try {
-    [totalCnt, hotPost, hotSubPost, monthCount, totalCount] = await Promise.all(
-      [
-        postDB.totalCount(),
-        postDB.findHotPost(),
-        subPostDB.findHotPost(),
-        visitDB.findMonthCount(req.year, req.month),
-        visitDB.findToalCount(),
-      ],
-    );
+    [totalCnt, hotPost, hotSubPost, monthCount, totalCount] = await Promise.all([
+      postDB.totalCount(),
+      postDB.findHotPost(),
+      subPostDB.findHotPost(),
+      visitDB.findMonthCount(req.year, req.month),
+      visitDB.findToalCount(),
+    ]);
   } catch (e) {
     return next(e);
   }
@@ -172,9 +177,7 @@ const getContent = async (req, res, next) => {
 
   try {
     post =
-      subId === '1'
-        ? await postDB.postFindById(id)
-        : await subPostDB.findDetailByPostNo(id, subId);
+      subId === '1' ? await postDB.postFindById(id) : await subPostDB.findDetailByPostNo(id, subId);
 
     if (!post) {
       return next();

@@ -8,9 +8,9 @@
     "start": "set NODE_ENV=production&&node ./src/bin/www",
     "dev": "set NODE_ENV=development&&nodemon -w ./src src/bin/www",
     "product": "port=80 ssl_port=443 node ./src/bin/www",
-    "test": "set NODE_ENV=test&&mocha -w src/route/solving/solving.spec.js",
+    "test": "set NODE_ENV=test&&mocha -w src/route/post/post.spec.js",
     "testall": "set NODE_ENV=test&&mocha -w src/test/index.spec.js",
-    "test3": "set NODE_ENV=test&&mocha -w src/test/validation.spec.js"
+    "test2": "set NODE_ENV=test&&mocha -w src/test/validation.spec.js"
   },
   "keywords": [],
   "author": "",

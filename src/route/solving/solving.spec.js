@@ -4,42 +4,6 @@ const app = require('../../app');
 const models = require('../../db');
 
 let agent = request.agent(app);
-
-const categoryBulk = [
-  {
-    title: 'Stack',
-    order: 1,
-  },
-  {
-    title: 'Queue',
-    order: 2,
-  },
-  {
-    title: 'DP',
-    order: 3,
-  },
-];
-
-const solvingMain = [
-  {
-    title: '타이틀입니다아아',
-    content: ' 콘텐트이니다.!!',
-    problemNum: 'Main',
-    url: ' ',
-    category_cote_no: '1',
-    writer: '1',
-  },
-];
-
-async function dbInit() {
-  try {
-    await models.CategoryCote.bulkCreate(categoryBulk);
-    await models.Solving.bulkCreate(solvingMain);
-  } catch (e) {
-    console.log(e);
-  }
-}
-
 let deleteNo;
 
 /**
@@ -53,7 +17,6 @@ let deleteNo;
 
 describe('/solving은 *********************', () => {
   before(done => {
-    // dbInit();
     agent
       .post('/auth/login')
       .send({

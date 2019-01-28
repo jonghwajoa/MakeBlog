@@ -35,7 +35,6 @@ module.exports = (sequelize, DataTypes) => {
     Posts.hasMany(models.SubPosts, {
       onDelete: 'cascade',
       hooks: true,
-      individualHooks: true,
     });
   };
 

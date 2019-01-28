@@ -61,7 +61,7 @@ let solving = (() => {
     };
     try {
       await ajaxUtil.sendPostAjax('/solving', params);
-      location.href = '/solving';
+      location.href = `/solving/${problemNum}`;
     } catch (e) {
       alert(e.message);
     }

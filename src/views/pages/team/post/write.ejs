@@ -9,17 +9,12 @@
   </head>
 
   <body>
-    <% include ../../../partials/headerTeam.ejs %> <% include
-    ../../../partials/editorWrite.ejs %>
+    <% include ../../../partials/headerTeam.ejs %> <% include ../../../partials/editorWrite.ejs %>
 
     <div class="wrap">
       <div class="container">
-        <div class="title">
-          <input type="text" id="title" name="title" placeholder="Title" />
-        </div>
-        <div class="tag">
-          <input type="text" id="tag" name="tag" placeholder="Tag" />
-        </div>
+        <div class="title"><input type="text" id="title" name="title" placeholder="Title" /></div>
+        <div class="tag"><input type="text" id="tag" name="tag" placeholder="Tag" /></div>
         <div class="category">
           <label for="category">category</label>
           <select name="category" id="category">
@@ -30,26 +25,23 @@
         </div>
 
         <div>
-          <input
-            type="text"
-            id="addCategory"
-            name="addCategory"
-            placeholder="Category add name"
-          />
+          <input type="text" id="addCategory" name="addCategory" placeholder="Category add name" />
           <button onclick="postWrite.addCategory()">추가하기</button>
         </div>
 
         <div id="editSection" id="content" name="content"></div>
 
         <button class="custom" onclick="back()">뒤로가기</button>
-        <button class="custom" id="submit" onclick="postWrite.submit()">
-          작성하기
-        </button>
+        <button class="custom" id="submit" onclick="postWrite.submit()">작성하기</button>
       </div>
     </div>
 
     <% include ../../../partials/footer.ejs %>
     <script src="/js/util/ajaxUtil.js"></script>
-    <script src="/js/post/postWrite.js"></script>
+    <script src="/js/post/post.js"></script>
+    <script>
+      const postRead = new Post();
+      postRead.readInit();
+    </script>
   </body>
 </html>

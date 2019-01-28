@@ -5,15 +5,14 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <% include ../../../partials/essentialCss.ejs %>
-    <link rel="stylesheet" href="/css/post/postWrite.css" />
+    <link rel="stylesheet" href="/css/post/write.css" />
   </head>
 
   <body>
-    <% include ../../../partials/headerTeam.ejs %> <% include
-    ../../../partials/editorWrite.ejs %>
+    <% include ../../../partials/headerTeam.ejs %> <% include ../../../partials/editorWrite.ejs %>
 
-    <article>
-      <section>
+    <div class="wrap">
+      <div class="container">
         <div class="custom title">
           <input type="text" id="title" name="title" placeholder="Title" />
         </div>
@@ -21,15 +20,11 @@
         <div id="editSection" id="content" name="content"></div>
 
         <button class="custom" onclick="back()">뒤로가기</button>
-        <button
-          class="custom"
-          id="submit"
-          onclick="postWrite.submitSub('<%=no%>')"
-        >
+        <button class="custom" id="submit" onclick="postWrite.submitSub('<%=no%>')">
           작성하기
         </button>
-      </section>
-    </article>
+      </div>
+    </div>
 
     <% include ../../../partials/footer.ejs %>
     <script src="/js/util/ajaxUtil.js"></script>

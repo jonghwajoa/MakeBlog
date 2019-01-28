@@ -39,6 +39,7 @@ let postUpdate = {
         },
       },
     });
+    
     this.editor.setMarkdown(this.content.innerHTML.trim());
 
     if (this.tag) {
@@ -91,6 +92,9 @@ let postUpdate = {
     }
   },
 
+
+
+  // 여기서부터
   async updateSub(postNo, subNo) {
     const title = this.postTitle.value;
     const content = this.editor.getMarkdown().trim();

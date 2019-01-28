@@ -80,6 +80,7 @@ let postWrite = {
     }
   },
 
+  // 여기서부터 작업
   async submitSub(postNo) {
     const title = this.postTitle.value;
     const content = this.editor.getMarkdown().trim();

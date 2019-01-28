@@ -2,7 +2,8 @@ const router = require('express').Router();
 const multer = require('multer');
 const bcrypt = require('bcrypt');
 const ctrl = require('./post.ctrl');
-const { isLogin, paramIsINT } = require('../../lib/validation');
+const { paramIsINT } = require('../../lib/middleware/checkParam');
+const needsAuth = require('../../lib/middleware/needsAuth');
 
 const storage = multer.diskStorage({
   destination: function(req, file, cb) {
@@ -17,10 +18,7 @@ const storage = multer.diskStorage({
     } catch (e) {
       cb(null, false);
     }
-    let finalName = `${reName}.${fileName[fileName.length - 1]}`.replace(
-      /\//g,
-      'v',
-    );
+    let finalName = `${reName}.${fileName[fileName.length - 1]}`.replace(/\//g, 'v');
     cb(null, finalName);
   },
 });
@@ -42,11 +40,11 @@ const upload = multer({
 
 router
   .route('*')
-  .post(isLogin)
-  .put(isLogin)
-  .delete(isLogin);
+  .post(needsAuth)
+  .put(needsAuth)
+  .delete(needsAuth);
 
-router.get(['/new', '/:id/new', '/:id/edit', '/:id/:subId/edit'], isLogin);
+router.get(['/new', '/:id/new', '/:id/edit', '/:id/:subId/edit'], needsAuth);
 router.route('/:id').all(paramIsINT);
 
 /* post route */

@@ -138,7 +138,7 @@ const update = async (req, res, next) => {
   try {
     let solving = await SolvingDB.findById(problemNum);
     if (!solving) next(e);
-    updateResult = await solving.update(updateVal);
+    await solving.update(updateVal);
   } catch (e) {
     next(e);
   }
@@ -154,5 +154,3 @@ module.exports = {
   updateView,
   update,
 };
-
-

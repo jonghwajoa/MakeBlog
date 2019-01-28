@@ -30,7 +30,7 @@ const ajaxUtil = {
     return new Promise((resolve, reject) => {
       const xhr = new XMLHttpRequest();
       xhr.onload = function() {
-        if (xhr.status === 200 || xhr.status === 201) {
+        if (xhr.status >= 200 && xhr.status <= 210) {
           resolve(xhr.responseText);
         } else {
           reject({ status: xhr.status, message: xhr.responseText });

@@ -77,7 +77,7 @@
 
     <noscript>Please enable JavaScript</noscript>
     <script src="/js/util/ajaxUtil.js"></script>
-    <script src="/js/post/postRead.js"></script>
+    <script src="/js/post/post.js"></script>
     
     <script>
         window.onload = function () {
@@ -93,6 +93,10 @@
                 (d.head || d.body).appendChild(s);
             })();
         }
+
+        const postRead = new Post();
+        postRead.readInit();
+
     </script>
 
 
