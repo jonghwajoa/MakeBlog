@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <title>WeKnowJS</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <% include ../../../partials/essentialCss.ejs %>
+    <link rel='stylesheet' href='/css/post/write.css' />
+</head>
+
+<body>
+        <% include ../../../partials/headerTeam.ejs %>
+    <% include ../../../partials/editorWrite.ejs %>
+
+    <div class="wrap">
+        <!-- container -->
+        <div class="container">
+            <div class='custom title'>
+                <input type='text' id='title' name='title' value="<%=post.title %>" /> 
+            </div>
+            
+            <div id="editSection" id="content" name="content">
+                <p hidden id="hiddenContent"><%- post.content %></p>
+            </div>
+            <button class='custom' onclick='back()'>뒤로가기 </button>
+            <button class='custom' onclick='postUpdate.updateSub("<%=home%>","<%=post.sub_no%>")'>수정하기</button>
+        </div>
+    </div>
+
+    <% include ../../../partials/footer.ejs %>
+    <script src="/js/util/ajaxUtil.js"></script>
+    <script src="/js/post/post.js"></script>
+    <script>
+          const postUpdate = new Post();
+          postUpdate.updateInit();
+    </script>
+
+</body>
+</html>

@@ -5,21 +5,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <% include ../../../partials/essentialCss.ejs %>
-    <link rel='stylesheet' href='/css/post/postRead.css' />
+    <link rel='stylesheet' href='/css/post/read.css' />
     
 </head>
 
 <body>
     <% include ../../../partials/editorViewer.ejs %>
-    <% include ../../../partials/header.ejs %>
+    <% include ../../../partials/headerTeam.ejs %>
 
 
-        <article class="post">
-            <section class='title'>
-                <div class='intro'>
-                    <h1 id="title">
-                        <%= post.title %>
-                    </h1>
+    <div class="content-wrap">
+        <div class='content-header'>
+            <div class='post-intro'>
+                <h1 id="title"><%= post.title %></h1>
                     <dl class=postInfo>
                         <dt>
                             <dd id="createDate">
@@ -28,20 +26,30 @@
                         </dt>
                         <dt>
                             <dd id="viewCount">
-                                View
-                                <%= post.count %>
+                                View <%= post.count %>
                             </dd>
                         </dt>
                     </dl>
                 </div>
-            </section>
+                <div class="manageArea">
+                        <a href="/post/<%=post.no%>/new">
+                            <input type="button" value='서브글 작성' />
+                        </a>
+                            <input type="button" value='수정하기' id='update' onclick='postRead.updateView("<%=home%>")' />
+                        <input type="button" value='삭제하기' id='delete' onclick='postRead.deletePost("<%=home%>","<%=post.sub_no%>")' />
+                    </div>
+            </div>
 
-
-            <section class='content'>
-                <div id="content">
-                        <input type="hidden" id="postContent" value="<%= post.content %>" />
+            <!-- content-content -->
+            <div class='content-content'>
+                <!-- content-text -->
+                <div class="content-text" id ='content-text'>
+                    <input type="hidden" id="postContent" value="<%= post.content %>" />
                 </div>
-                <div class="side">
+                <!--  //content-text -->
+                
+                <!-- content-side -->
+                <div class="content-side">
                     <div class='sidepost'>
                         <div class='sideTop'>
                             <h2>Sub post</h2>
@@ -55,25 +63,23 @@
                             <% }) %>
                         </div>
                     </div>
-
-
                 </div>
+                <!-- //content-side -->
+            </div>
+            <!-- //content-content -->
 
-            </section>
-
-
-            <section>
+            <div>
                 <div id="disqus_thread"></div>
-            </section>
+            </div>
 
-        </article>
+        </div>
 
 
         <% include ../../../partials/footer.ejs %>
 
             <noscript>Please enable JavaScript</noscript>
             <script src="/js/util/ajaxUtil.js"></script>
-            <script src="/js/post/postRead.js"></script>
+            <script src="/js/post/post.js"></script>
             <script>
                 window.onload = function () {
                     const disqus_config = function () {
@@ -87,7 +93,11 @@
                         s.setAttribute('data-timestamp', +new Date());
                         (d.head || d.body).appendChild(s);
                     })();
+
+                    
                 }
+                const postRead = new Post();
+                postRead.readInit();
             </script>
 
 

@@ -45,7 +45,7 @@ app.use(bodyParser.json({ limit: '50mb' }));
 app.use(cookieParser());
 app.use(hpp());
 
-app.use(cors.checkCors);
+// app.use(cors.checkCors);
 app.use(visitMiddle.visit);
 app.use('/', require('./route'));
 

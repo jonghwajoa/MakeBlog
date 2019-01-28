@@ -39,9 +39,7 @@
                 <a href="/post/<%=post.no%>/new">
                     <input type="button" value='서브글 작성' />
                 </a>
-                <a href='/post/<%= post.no%>/edit'>
-                    <input type="button" value='수정하기' id='update' />
-                </a>
+                <input type="button" value='수정하기' id='update' onclick="postRead.updateView('<%= post.no%>')"/>
                 <input type="button" value='삭제하기' id='delete' onclick="postRead.deletePost('<%= post.no%>')" />
             </div>
         </div>

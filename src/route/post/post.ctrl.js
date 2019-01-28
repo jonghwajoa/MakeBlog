@@ -27,7 +27,7 @@ const createSubView = async (req, res, next) => {
     return res.status(404).end();
   }
 
-  return res.render('team/subpost/subPostWrite', { no: req.params.id });
+  return res.render('team/subpost/write', { no: req.params.id });
 };
 
 const create = async (req, res, next) => {
@@ -166,9 +166,9 @@ const showSubPost = async (req, res, next) => {
   }
 
   if (req.session.isLogin) {
-    return res.render('team/subpost/subPostRead', { post, subPost, home: id });
+    return res.render('team/subpost/read', { post, subPost, home: id });
   }
-  return res.render('noauth/subpost/subPostRead', { post, subPost, home: id });
+  return res.render('noauth/subpost/read', { post, subPost, home: id });
 };
 
 const getContent = async (req, res, next) => {
@@ -241,7 +241,7 @@ const updateSubView = async (req, res, next) => {
     return next(e);
   }
 
-  return res.render('team/subpost/subPostUpdate', { home: id, post });
+  return res.render('team/subpost/update', { home: id, post });
 };
 
 const updateSubPost = async (req, res, next) => {

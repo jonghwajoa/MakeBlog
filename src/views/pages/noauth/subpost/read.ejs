@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <title id="headTitle">WeKnowJS-<%=post.title%></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <% include ../../../partials/essentialCss.ejs %>
+    <link rel='stylesheet' href='/css/post/read.css' />
+    
+</head>
+
+<body>
+    <% include ../../../partials/editorViewer.ejs %>
+    <% include ../../../partials/header.ejs %>
+
+
+    <div class="content-wrap">
+        <div class='content-header'>
+            <div class='post-intro'>
+                <h1 id="title"><%= post.title %></h1>
+                    <dl class=postInfo>
+                        <dt>
+                            <dd id="createDate">
+                                <%= post.created_at %> |
+                            </dd>
+                        </dt>
+                        <dt>
+                            <dd id="viewCount">
+                                View <%= post.count %>
+                                <input type="hidden" id='cur' value="<%=home%>/<%=post.sub_no %>" />
+                            </dd>
+                        </dt>
+                    </dl>
+                </div>
+                
+            </div>
+
+            <!-- content-content -->
+            <div class='content-content'>
+                <!-- content-text -->
+                <div class="content-text" id ='content-text'>
+                    <input type="hidden" id="postContent" value="<%= post.content %>" />
+                </div>
+                <!--  //content-text -->
+                
+                <!-- content-side -->
+                <div class="content-side">
+                    <div class='sidepost'>
+                        <div class='sideTop'>
+                            <h2>Sub post</h2>
+                        </div>
+
+                        <div class='subpost'>
+                            <a onclick="postRead.getContent('<%=home%>')">Home</a>
+                            <% subPost.forEach((item,index) => { %>
+                            <a onclick="postRead.getContent('<%=home%>','<%=item.sub_no %>')" >
+                                <%=item.title %></a>
+                            <% }) %>
+                        </div>
+                    </div>
+                </div>
+                <!-- //content-side -->
+            </div>
+            <!-- //content-content -->
+
+            <div>
+                <div id="disqus_thread"></div>
+            </div>
+
+        </div>
+
+
+        <% include ../../../partials/footer.ejs %>
+
+            <noscript>Please enable JavaScript</noscript>
+            <script src="/js/util/ajaxUtil.js"></script>
+            <script src="/js/post/post.js"></script>
+            <script>
+                window.onload = function () {
+                    const disqus_config = function () {
+                        this.page.url = '/post/<%=home%>/<%= post.no %>';  // Replace PAGE_URL with your page's canonical URL variable
+                        this.page.identifier = `<%=home%>/<%= post.no %>`;; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+                    };
+
+                    (function () { // DON'T EDIT BELOW THIS LINE
+                        var d = document, s = d.createElement('script');
+                        s.src = 'https://weknowjs-xyz.disqus.com/embed.js';
+                        s.setAttribute('data-timestamp', +new Date());
+                        (d.head || d.body).appendChild(s);
+                    })();
+
+                    
+                }
+                const postRead = new Post();
+                postRead.readInit();
+            </script>
+
+
+</body>
+
+</html>

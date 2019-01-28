@@ -34,18 +34,13 @@ const upload = multer({
   },
 });
 
-/** 입력값 검증
- * 로그인확인 -> 파라미터 확인
- * */
 
 router
   .route('*')
   .post(needsAuth)
   .put(needsAuth)
   .delete(needsAuth);
-
 router.get(['/new', '/:id/new', '/:id/edit', '/:id/:subId/edit'], needsAuth);
-router.route('/:id').all(paramIsINT);
 
 /* post route */
 router
@@ -54,10 +49,10 @@ router
   .post(ctrl.create);
 
 router.get('/new', ctrl.createView);
-
 router.post('/file', upload.array('photo'), ctrl.uploadImage);
 router.post('/category', ctrl.categoryAdd);
 
+router.route('/:id').all(paramIsINT);
 router
   .route('/:id')
   .get(ctrl.show)

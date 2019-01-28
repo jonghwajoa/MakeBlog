@@ -12,6 +12,7 @@
     <% include ../../../partials/headerTeam.ejs %> <% include ../../../partials/editorWrite.ejs %>
 
     <div class="wrap">
+      <!-- container -->
       <div class="container">
         <div class="title">
           <input type="text" id="title" name="title" value="<%= post.title %>" />
@@ -19,6 +20,7 @@
 
         <div class="tag"><input type="text" id="tag" name="tag" value="<%= post.tag %>" /></div>
 
+        <!-- category -->
         <div class="category">
           <label for="category">category</label>
           <select name="category" id="category">
@@ -29,14 +31,18 @@
             <% } }) %>
           </select>
         </div>
+        <!-- //category -->
 
+        <!-- editsection -->
         <div id="editSection" id="content" name="content">
           <p hidden id="hiddenContent"><%- post.content %></p>
         </div>
+        <!-- //editsection -->
 
         <button class="custom" onclick="back()">뒤로가기</button>
         <button class="custom" onclick="postUpdate.update('<%=post.no%>')">수정하기</button>
       </div>
+      <!-- //container -->
     </div>
 
     <% include ../../../partials/footer.ejs %>
