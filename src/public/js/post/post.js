@@ -14,12 +14,11 @@ const Post = (() => {
     let trimContent = this.content.value.trim();
     this.editor.setMarkdown(trimContent);
 
-    this.mapSavePost.set('1', {
-      content: this.content.value.trim(),
-      title: this.postTitle.innerHTML.trim(),
-      count: this.viewCount.innerHTML.trim(),
-      created_at: this.date.innerHTML.trim(),
-    });
+    let subPostLength = document.getElementsByClassName('subpost_element').length;
+
+    if (!subPostLength) {
+      document.getElementsByClassName('content-side')[0].style.display = 'none';
+    }
   };
 
   Post.prototype.writeInit = function() {
@@ -91,7 +90,6 @@ const Post = (() => {
     let result;
     if (this.mapSavePost.has(subNo)) {
       result = this.mapSavePost.get(subNo);
-      console.log('응 여기실행');
     } else {
       try {
         result = await ajaxUtil.sendGetAjax(`/post/${postNo}/${subNo}`);
@@ -103,17 +101,17 @@ const Post = (() => {
     }
     let { content, title, count, created_at } = result;
 
-    this.date.innerHTML = `${created_at} |`;
-    this.viewCount.innerHTML = `View ${count}`;
+    this.date.innerHTML = `${created_at}`;
+    this.viewCount.innerHTML = `${count}`;
     this.postTitle.innerHTML = title;
-    this.headTitle.innerHTML = `WeKnowJS-${title}`;
+    this.headTitle.innerHTML = `WeKnowJS ${title}`;
     this.editor.setValue(content.trim());
     window.history.replaceState(null, '', `/post/${postNo}/${subNo}`);
     this.curSubNo = subNo;
 
     if (!this.mapSavePost.has(subNo)) {
       this.mapSavePost.set(subNo, {
-        content: this.content.value.trim(),
+        content: content.trim(),
         title: this.postTitle.innerHTML.trim(),
         count: this.viewCount.innerHTML.trim(),
         created_at: this.date.innerHTML.trim(),
@@ -260,7 +258,6 @@ const Post = (() => {
         {
           name: 'chart',
           minWidth: 100,
-          maxWidth: 600,
           minHeight: 100,
           maxHeight: 300,
         },

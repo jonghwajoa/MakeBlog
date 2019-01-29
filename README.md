@@ -68,15 +68,22 @@ https://www.weknowjs.xyz/
 - js 파일 분리
 - post route 파라미터 정리 (공통 검증 분리)
 - Solving HTML,css 구현
+- Solving 기능구현
+- 테스트 코드작성 ( auth, solving, post, validation,)
 
 ## v2 (진행사항)
 
-- 테스트 코드작성
 - 오류수정..
-- Solving 기능구현
+- html 다시 작성하기.. (3 월중 시작이었으나.. 진행중...)
+- SubPost map 에 저장
 
 ### v2 목표까지 남은 기능 (미진행)
 
-- html 다시 작성하기.. (3 월중 시작)
+- 카테고리 추가 삭제 기능
+- disqus reload
 
 <br>
+
+# v3 ( 그냥 나중에 해볼것 )
+
+- 웹 코딩 지원 ( Codit class 연동)

@@ -2,6 +2,7 @@
   min-height: 100vh;
   margin-top: -10px;
   margin-bottom: -20px;
+  background: #f1f1f1;
 }
 
 /* flex container */
@@ -14,8 +15,8 @@
 .flex .side {
   flex: 0 0 230px;
   padding-left: 20px;
-  overflow-y: scroll;
-  background-color: #f3d9fa;
+  overflow-y: auto;
+  background-color: #fff;
 }
 
 .flex .content {
@@ -62,13 +63,14 @@
 }
 
 .flex .content .container {
-  margin: 5px auto;
+  margin: 5px auto 20px;
   padding: 50px 30px;
   width: 95%;
   box-sizing: border-box;
-  box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.15);
   border-radius: 10px;
   position: relative;
+  background: white;
 }
 
 .content-admin {

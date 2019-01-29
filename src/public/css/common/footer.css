@@ -1,13 +1,7 @@
 footer {
   overflow: hidden;
-  background-color: #fff;
-}
-
-footer .footer-content::before {
-  display: block;
-  content: '';
-  margin: 20px auto 0;
-  border-top: 1px solid rgba(200, 200, 200, 1);
+  margin-top: 20px;
+  background: white;
 }
 
 footer .footer-content {

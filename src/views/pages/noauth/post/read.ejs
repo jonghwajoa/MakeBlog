@@ -2,7 +2,7 @@
 <html lang="ko">
 
 <head>
-    <title id="headTitle">WeKnowJS-<%=post.title%></title>
+    <title id="headTitle">WeKnowJS <%=post.title%></title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <% include ../../../partials/essentialCss.ejs %>
@@ -14,7 +14,7 @@
 <body>
         <% include ../../../partials/header.ejs %>
 
-
+    
     <div class="content-wrap">
         <div class='content-header'>
             <div class='post-intro'>
@@ -24,12 +24,14 @@
                 <dl class=postInfo>
                     <dt>
                     <dd id="createDate">
-                        <%= post.created_at %> |
+                        <%= post.created_at %>
+                    </dd>
+                    <dd>
+                        | view
                     </dd>
                     </dt>
                     <dt>
                     <dd id="viewCount">
-                        View
                         <%= post.count %>
                     </dd>
                     </dt>
@@ -55,7 +57,7 @@
                     <div class='subpost'>
                         <a onclick="postRead.getContent('<%=post.no%>')">Home</a>
                         <% subPost.forEach((item,index) => { %>
-                        <a onclick="postRead.getContent('<%=post.no%>','<%=item.sub_no %>')" >
+                        <a onclick="postRead.getContent('<%=post.no%>','<%=item.sub_no %>')" class="subpost_element">
                             <%=item.title %></a>
                         <% }) %>
                     </div>
