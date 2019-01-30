@@ -1,17 +1,59 @@
-let solving = (() => {
-  const readTitle = document.getElementById('content-title');
-  const showProblem = document.getElementById('showProblem');
-  const count = document.getElementById('count');
-  let updateAtag = document.getElementById('updateTag');
-  let curPage = 1;
+class Solving {
+  constructor() {}
 
-  let editor;
-  let module = {};
+  solvingList() {
+    this.readTitle = document.getElementById('content-title');
+    this.showProblem = document.getElementById('showProblem');
+    this.count = document.getElementById('count');
+    this.updateAtag = document.getElementById('updateTag');
+    this.createDate = document.getElementById('createDate');
+    this.curPage = 1;
+    this.listEditorInit();
+  }
 
-  module.editorInit = () => {
+  solvingWrite() {
+    this.postTitle = document.getElementById('title');
+    this.postUrl = document.getElementById('url');
+    this.postProblemNum = document.getElementById('problemNum');
+    this.postCategorySelect = document.getElementById('category-select');
+    this.postCategoryDelete = document.getElementById('category-delete');
+    this.writeEditorInit();
+  }
+
+  solvingUpdate() {
+    this.postTitle = document.getElementById('title');
+    this.postUrl = document.getElementById('url');
+    this.postProblemNum = document.getElementById('problemNum');
+    this.postCategorySelect = document.getElementById('category-select');
+    this.postCategoryDelete = document.getElementById('category-delete');
+    this.writeEditorInit();
+    const hiddenContent = document.getElementById('content-hidden').value;
+    this.editor.setMarkdown(hiddenContent.trim());
+  }
+
+  listEditorInit() {
     const content = document.getElementById('content-input').value;
-    editor = new tui.Editor({
+    this.editor = new tui.Editor({
       el: document.getElementById('content-content'),
+      height: '100vh',
+      exts: [
+        'table',
+        'uml',
+        {
+          name: 'chart',
+          minWidth: 100,
+          minHeight: 100,
+          maxHeight: 300,
+        },
+      ],
+    });
+
+    this.editor.setMarkdown(content.trim());
+  }
+
+  writeEditorInit() {
+    this.editor = new tui.Editor({
+      el: document.getElementById('content-input'),
       initialEditType: 'markdown',
       previewStyle: 'vertical',
       height: '100vh',
@@ -22,6 +64,7 @@ let solving = (() => {
         {
           name: 'chart',
           minWidth: 100,
+          maxWidth: 600,
           minHeight: 100,
           maxHeight: 300,
         },
@@ -39,11 +82,9 @@ let solving = (() => {
         },
       },
     });
+  }
 
-    editor.setMarkdown(content.trim());
-  };
-
-  module.read = async problemNum => {
+  async read(problemNum) {
     let result;
     try {
       result = await ajaxUtil.sendGetAjax(`/solving/${problemNum}`);
@@ -53,31 +94,79 @@ let solving = (() => {
     }
 
     result = JSON.parse(result);
-    readTitle.innerHTML = result.title;
-    createDate.innerHTML = result.created_at;
-    count.innerHTML = `| view ${result.count}`;
-    showProblem.innerHTML = result.url;
-    showProblem.href = result.url;
-    editor.setMarkdown(result.content);
-    curPage = problemNum;
-    window.history.replaceState(null, '', `/solving/${problemNum}`);
-    if (updateAtag) {
-      updateAtag.href = `/solving/${problemNum}/edit`;
-    }
-  };
 
-  module.delete = async () => {
+    this.readTitle.innerHTML = result.title;
+    this.createDate.innerHTML = result.created_at;
+    this.count.innerHTML = `| view ${result.count}`;
+    this.showProblem.innerHTML = result.url;
+    this.showProblem.href = result.url;
+    this.editor.setMarkdown(result.content);
+    this.curPage = problemNum;
+    window.history.replaceState(null, '', `/solving/${problemNum}`);
+    if (this.updateAtag) {
+      this.updateAtag.href = `/solving/${problemNum}/edit`;
+    }
+  }
+
+  async write() {
+    const title = this.postTitle.value;
+    const content = this.editor.getMarkdown().trim();
+    const category = this.postCategorySelect.value;
+    let url = this.postUrl.value.trim();
+    const problemNum = this.postProblemNum.value;
+
+    if (!url) {
+      url = `https://www.acmicpc.net/problem/${problemNum}`;
+    }
+
+    let params = {
+      title,
+      content,
+      category,
+      url,
+      problemNum,
+    };
     try {
-      await ajaxUtil.sendDeleteAjax(`/solving/${curPage}`);
+      await ajaxUtil.sendPostAjax('/solving', params);
+      location.href = `/solving/${problemNum}`;
+    } catch (e) {
+      alert(e.message);
+    }
+  }
+
+  async update() {
+    const title = this.postTitle.value;
+    const content = this.editor.getMarkdown().trim();
+    const category = this.postCategorySelect.value;
+    let url = this.postUrl.value.trim();
+    const problemNum = this.postProblemNum.value;
+
+    if (!url) {
+      url = `https://www.acmicpc.net/problem/${problemNum}`;
+    }
+
+    let params = {
+      title,
+      content,
+      category,
+      url,
+      problemNum,
+    };
+    try {
+      await ajaxUtil.sendPutAjax('/solving', params);
+      location.href = `/solving/${problemNum}`;
+    } catch (e) {
+      alert(e.message);
+    }
+  }
+
+  async delete() {
+    try {
+      await ajaxUtil.sendDeleteAjax(`/solving/${this.curPage}`);
       alert('삭제 성공');
     } catch (e) {
       alert(`삭제실패\n${e.message}`);
     }
     location.href = '/solving';
-  };
-  return module;
-})();
-
-document.addEventListener('DOMContentLoaded', function() {
-  solving.editorInit();
-});
+  }
+}

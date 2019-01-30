@@ -325,16 +325,21 @@ const addCategory = async (req, res, next) => {
 const removeCategory = async (req, res, next) => {
   let { id } = req.params;
 
-  let result;
+  let categoryResult, postResult;
 
   try {
-    result = await categoryDB.findById(id);
-    if (!result) {
+    categoryResult = await categoryDB.findById(id);
+    if (!categoryResult) {
       return res.status(404).json({ message: '없는 카테고리 입니다.' });
     }
-    result.destroy();
+    postResult = await postDB.findByCategoryId(id);
+    if (postResult) {
+      return res.status(409).json({ message: '사용중인 카테고리는 삭제할 수 없습니다.' });
+    }
+
+    await categoryResult.destroy();
   } catch (e) {
-    next(e);
+    return next(e);
   }
 
   return res.status(204).end();

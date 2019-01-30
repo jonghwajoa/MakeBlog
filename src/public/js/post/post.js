@@ -50,7 +50,7 @@ const Post = (() => {
   Post.prototype.submit = async function submit() {
     const title = this.postTitle.value;
     const content = this.editor.getMarkdown().trim();
-    const category = this.category;
+    const category = this.categorySelect;
     const categoryText = '#' + category[category.selectedIndex].text;
     let tag = this.tag.value.trim().replace(/\s*,+\s*|\s+/g, ' #');
 
@@ -263,12 +263,12 @@ const Post = (() => {
     let newSelect = document.createElement('option');
     let newSelect2 = document.createElement('option');
     let { no, message } = JSON.parse(result);
-    //TODO 하나생성만으로도 수정할 수 있도록 찾아보기
+
     newSelect.text = requestCategoryName;
     newSelect.value = no;
     newSelect2.text = requestCategoryName;
     newSelect2.value = no;
-    this.categorySelect.options.add(newSelect2);
+    this.categorySelect.options.add(newSelect);
     this.deleteSelect.options.add(newSelect2);
     alert(message);
   };
@@ -281,7 +281,7 @@ const Post = (() => {
     try {
       await ajaxUtil.sendDeleteAjax(`/post/category/${reqeustDeleteCategoryName}`);
     } catch (e) {
-      alert(`${e.message}\n${e.status}`);
+      alert(`${e.message}`);
       return;
     }
 

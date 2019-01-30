@@ -18,6 +18,14 @@ const findHotPost = () => {
   });
 };
 
+const findByCategoryId = id => {
+  return Posts.findOne({
+    where: {
+      category_no: id,
+    },
+  });
+};
+
 const findAll = (pageNum = 10, offset = 0) => {
   return Posts.findAll({
     limit: pageNum,
@@ -28,11 +36,7 @@ const findAll = (pageNum = 10, offset = 0) => {
       'tag',
       'count',
       [
-        Posts.sequelize.fn(
-          'date_format',
-          Posts.sequelize.col('created_at'),
-          '%Y.%m.%d',
-        ),
+        Posts.sequelize.fn('date_format', Posts.sequelize.col('created_at'), '%Y.%m.%d'),
         'created_at',
       ],
     ],
@@ -59,11 +63,7 @@ const postFindById = id => {
       'content',
       'count',
       [
-        Posts.sequelize.fn(
-          'date_format',
-          Posts.sequelize.col('created_at'),
-          '%Y-%m-%d',
-        ),
+        Posts.sequelize.fn('date_format', Posts.sequelize.col('created_at'), '%Y-%m-%d'),
         'created_at',
       ],
     ],
@@ -107,4 +107,5 @@ module.exports = {
   totalCount,
   findHotPost,
   findTransactionById,
+  findByCategoryId,
 };

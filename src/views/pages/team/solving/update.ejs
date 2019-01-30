@@ -9,8 +9,7 @@
   </head>
 
   <body>
-    <% include ../../../partials/editorWrite.ejs %> 
-    <% include ../../../partials/headerTeam.ejs %>
+    <% include ../../../partials/editorWrite.ejs %> <% include ../../../partials/headerTeam.ejs %>
 
     <div id="wrap">
       <div class="container">
@@ -51,8 +50,7 @@
           <div class="category-select">
             <label for="category-select">카테고리 선택</label>
             <select name="category-select" id="category-select">
-              <% category.forEach((e,i) => { if( post.category_cote_no === e.no)
-              { %>
+              <% category.forEach((e,i) => { if( post.category_cote_no === e.no) { %>
               <option value="<%=e.no%>" selected> <%=e.title %> </option>
               <% } else { %>
               <option value="<%=e.no%>"> <%=e.title %> </option>
@@ -62,8 +60,7 @@
 
           <div class="category-add">
             <label for="category-add">카테고리 추가</label>
-            <input type="text" class="category-input" id="category-add" />
-            <button>추가</button>
+            <input type="text" class="category-input" id="category-add" /> <button>추가</button>
           </div>
 
           <div class="category-delete">
@@ -78,16 +75,10 @@
         </div>
 
         <div id="content-input" name="content">
-          <input
-            type="hidden"
-            id="content-hidden"
-            value="<%= post.content %>"
-          />
+          <input type="hidden" id="content-hidden" value="<%= post.content %>" />
         </div>
         <div class="btn">
-          <button class="custom" id="submit" onclick="solving.update();">
-            작성하기
-          </button>
+          <button class="custom" id="submit" onclick="solving.update();">작성하기</button>
           <button class="custom" onclick="back()">뒤로가기</button>
         </div>
       </div>
@@ -95,6 +86,10 @@
 
     <% include ../../../partials/footer.ejs %>
     <script src="/js/util/ajaxUtil.js"></script>
-    <script src="/js/solving/update.js"></script>
+    <script src="/js/solving/solving.js"></script>
+    <script>
+      let solving = new Solving();
+      solving.solvingUpdate();
+    </script>
   </body>
 </html>

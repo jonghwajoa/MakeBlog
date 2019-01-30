@@ -1,12 +1,17 @@
-class test {
-  constructor() {
-    let num = '핳하하';
-    this.hoo = '호호호';
-    console.log(num);
-    console.log(this.hoo);
+let hmm = (() => {
+  function temp() {
+    this.hoho = 'hoho';
   }
-}
 
-let aaa = new test();
+  temp.prototype.print = () => {
+    console.log(this.hoho);
+  };
 
-console.log(aaa.num);
+  return temp;
+})();
+
+console.log(hmm);
+
+let test = new hmm();
+
+console.log(test.hoho);

@@ -22,7 +22,7 @@ module.exports = (sequelize, DataTypes) => {
   );
 
   Categories.associate = function(models) {
-    Categories.hasMany(models.Posts);
+    Categories.hasMany(models.Posts, { onDelete: 'restrict' });
   };
   return Categories;
 };
