@@ -20,7 +20,7 @@
               <h3>- <%= outerE.title %> ( <%= outerE.Solvings.length %> )</h3>
               <% outerE.Solvings.forEach((innerE,j) => { %>
                 <div class="category-content" id='category-content<%=i%>'>
-                  <a href="#" onclick="solving.read('<%=innerE.dataValues.problemNum %>')">
+                  <a onclick="solving.read('<%=innerE.dataValues.problemNum %>')">
                     <% if(innerE.dataValues.problemNum == 1) { %> └ Main 
                     <%} else {  %>
                       └ <%=innerE.dataValues.problemNum %> </a>

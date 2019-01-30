@@ -9,6 +9,7 @@ class Solving {
     this.createDate = document.getElementById('createDate');
     this.curPage = 1;
     this.listEditorInit();
+    this.mapSaveSolving = new Map();
   }
 
   solvingWrite() {
@@ -21,12 +22,7 @@ class Solving {
   }
 
   solvingUpdate() {
-    this.postTitle = document.getElementById('title');
-    this.postUrl = document.getElementById('url');
-    this.postProblemNum = document.getElementById('problemNum');
-    this.postCategorySelect = document.getElementById('category-select');
-    this.postCategoryDelete = document.getElementById('category-delete');
-    this.writeEditorInit();
+    this.solvingWrite();
     const hiddenContent = document.getElementById('content-hidden').value;
     this.editor.setMarkdown(hiddenContent.trim());
   }
@@ -86,14 +82,18 @@ class Solving {
 
   async read(problemNum) {
     let result;
-    try {
-      result = await ajaxUtil.sendGetAjax(`/solving/${problemNum}`);
-    } catch (e) {
-      alert(`Server Error(${e.status})`);
-      return;
-    }
 
-    result = JSON.parse(result);
+    if (this.mapSaveSolving.has(problemNum)) {
+      result = this.mapSaveSolving.get(problemNum);
+    } else {
+      try {
+        result = await ajaxUtil.sendGetAjax(`/solving/${problemNum}`);
+        result = JSON.parse(result);
+      } catch (e) {
+        alert(`Server Error(${e.status})`);
+        return;
+      }
+    }
 
     this.readTitle.innerHTML = result.title;
     this.createDate.innerHTML = result.created_at;
@@ -105,6 +105,17 @@ class Solving {
     window.history.replaceState(null, '', `/solving/${problemNum}`);
     if (this.updateAtag) {
       this.updateAtag.href = `/solving/${problemNum}/edit`;
+    }
+
+    if (!this.mapSaveSolving.has(problemNum)) {
+      this.mapSaveSolving.set(problemNum, result);
+      // let param = {
+      //   title : this.readTitle.innerHTML.trim(),
+      //   createDate : this.createDate.innerHTML,
+      //   count : this.count.innerHTML,
+      //   url : this.showProblem,
+      //   content : this.
+      // }
     }
   }
 

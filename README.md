@@ -32,7 +32,7 @@ https://www.weknowjs.xyz/
 | /solving              | put    | solving 수정          |
 
 <br>
-  
+
 # v1 (배포버전)
 
 개발기간 : 180814 ~ 180901
@@ -52,7 +52,7 @@ https://www.weknowjs.xyz/
 
 ### v1 오류 수정
 
-- 본글 삭제시 서브글 미삭제
+- 본글 삭제시 서브글 미삭제 (cascade 미적용)
 - postNo 와 subNo 의 불일치 요청시 post 와 subPost 혼합 응답 수정
 - post subpost view 분리
 
@@ -63,28 +63,30 @@ https://www.weknowjs.xyz/
 개발기간 : 19.01.17 ~ continue
 
 - 방문로그 추가
-- 게시글 컬럼 추가
+- 게시글 컬럼 추가 (sub_no)
 - 카테고리 추가 기능
 - js 파일 분리
 - post route 파라미터 정리 (공통 검증 분리)
 - Solving HTML,css 구현
 - Solving 기능구현
-- 테스트 코드작성 ( auth, solving, post, validation,)
+- 카테고리 추가 삭제 기능 (POST 페이지)
+- solving js 재작성, map 저장
 
 ## v2 (진행사항)
 
-- 오류수정..
-- html 다시 작성하기.. (3 월중 시작이었으나.. 진행중...)
-- SubPost map 에 저장
+- html 다시 작성하기.. (3 월중 시작이었으나.. 진행중... 매우 천천히 하기)
+- 테스트 코드작성 ( auth, solving, post, validation,)
 
 ### v2 목표까지 남은 기능 (미진행)
 
-- 카테고리 추가 삭제 기능
 - disqus reload
-- solving js 재작성, map 저장
 
+## 발견된 오류
+
+- page 파라미터 오류 500 error 에러 점검
+- ~~수정하기,삭제하기 id 값 미변경~~
 
 ## 수정
 
-- ~~solving category count 컬럼 삭제~~
-
+- solving category count 컬럼 삭제 (length 로 대체)
+- 카테고리 Set null 설정 -> RESTRICT 변경
