@@ -3,6 +3,7 @@ let solving = (() => {
   const showProblem = document.getElementById('showProblem');
   const count = document.getElementById('count');
   let updateAtag = document.getElementById('updateTag');
+  let curPage = 1;
 
   let editor;
   let module = {};
@@ -21,7 +22,6 @@ let solving = (() => {
         {
           name: 'chart',
           minWidth: 100,
-          maxWidth: 600,
           minHeight: 100,
           maxHeight: 300,
         },
@@ -59,12 +59,22 @@ let solving = (() => {
     showProblem.innerHTML = result.url;
     showProblem.href = result.url;
     editor.setMarkdown(result.content);
+    curPage = problemNum;
     window.history.replaceState(null, '', `/solving/${problemNum}`);
     if (updateAtag) {
       updateAtag.href = `/solving/${problemNum}/edit`;
     }
   };
 
+  module.delete = async () => {
+    try {
+      await ajaxUtil.sendDeleteAjax(`/solving/${curPage}`);
+      alert('삭제 성공');
+    } catch (e) {
+      alert(`삭제실패\n${e.message}`);
+    }
+    location.href = '/solving';
+  };
   return module;
 })();
 

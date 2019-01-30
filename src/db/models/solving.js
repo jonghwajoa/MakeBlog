@@ -3,7 +3,7 @@ module.exports = (sequelize, DataTypes) => {
     'Solving',
     {
       problemNum: {
-        type: DataTypes.STRING(50),
+        type: DataTypes.INTEGER,
         primaryKey: true,
         allowNull: false,
       },

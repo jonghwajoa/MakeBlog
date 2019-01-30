@@ -1,6 +1,7 @@
 const CategoryDB = require('../../db/repository/categoryCote');
 const SolvingDB = require('../../db/repository/solving');
 const { solvingValidation } = require('../../lib/validation');
+const db = require('../../db');
 
 const list = async (req, res, next) => {
   let categoryResult;
@@ -8,7 +9,7 @@ const list = async (req, res, next) => {
 
   try {
     categoryResult = await CategoryDB.findAllList();
-    homePost = await SolvingDB.findById('Main');
+    homePost = await SolvingDB.findById(1);
   } catch (e) {
     return next(e);
   }
@@ -146,6 +147,37 @@ const update = async (req, res, next) => {
   return res.status(204).end();
 };
 
+const remove = async (req, res, next) => {
+  const { id } = req.params;
+  let transaction;
+  try {
+    let solvingResult = await SolvingDB.findById(id);
+    if (!solvingResult) next();
+    let categoryResult = await CategoryDB.findById(solvingResult.dataValues.category_cote_no);
+
+    transaction = await db.sequelize.transaction();
+    await solvingResult.destroy({ transaction });
+
+    await categoryResult.updateAttributes(
+      { count: categoryResult.dataValues.count - 1 },
+      { transaction },
+    );
+
+    // await Promise.all([
+    //   categoryResult.updateAttributes(
+    //     { count: categoryResult.dataValues.count - 1 },
+    //     { transaction },
+    //   ),
+    //   solvingResult.destroy({ transaction }),
+    // ]);
+    await transaction.commit();
+    return res.status(204).end();
+  } catch (e) {
+    await transaction.rollback();
+    return next(e);
+  }
+};
+
 module.exports = {
   list,
   createView,
@@ -153,4 +185,5 @@ module.exports = {
   show,
   updateView,
   update,
+  remove,
 };

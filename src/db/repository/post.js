@@ -18,7 +18,7 @@ const findHotPost = () => {
   });
 };
 
-const findAllList = (pageNum = 10, offset = 0) => {
+const findAll = (pageNum = 10, offset = 0) => {
   return Posts.findAll({
     limit: pageNum,
     offset,
@@ -101,7 +101,7 @@ module.exports = {
   findById,
   postFindById,
   deleteById,
-  findAllList,
+  findAll,
   creatPost,
   updateById,
   totalCount,

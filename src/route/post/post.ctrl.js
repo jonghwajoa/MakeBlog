@@ -89,7 +89,7 @@ const list = async (req, res, next) => {
   pagingInfo = paging(totalCnt, req.query);
   const offset = (pagingInfo.page - 1) * pagingInfo.perPageNum;
   try {
-    postList = await postDB.findAllList(pagingInfo.perPageNum, offset);
+    postList = await postDB.findAll(pagingInfo.perPageNum, offset);
   } catch (e) {
     return next(e);
   }

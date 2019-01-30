@@ -10,7 +10,7 @@ router
   .put(needsAuth, ctrl.update);
 
 router.route('/new').get(needsAuth, ctrl.createView);
-router.route('/:id').get(ctrl.show);
+router.route('/:id').get(ctrl.show).delete(ctrl.remove)
 router.route('/:id/edit').get(needsAuth, ctrl.updateView);
 
 module.exports = router;
