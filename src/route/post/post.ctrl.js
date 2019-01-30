@@ -301,16 +301,16 @@ const uploadImage = (req, res) => {
   return res.end(req.files[0].filename);
 };
 
-const categoryAdd = async (req, res, next) => {
-  const { categoryName } = req.body;
+const addCategory = async (req, res, next) => {
+  const { requestCategoryName } = req.body;
   let result;
 
   try {
-    result = await categoryDB.find(categoryName);
+    result = await categoryDB.find(requestCategoryName);
     if (result !== null) {
       return res.status(400).json('이미 존재하는 카테고리 입니다.');
     }
-    result = await categoryDB.create(categoryName);
+    result = await categoryDB.create(requestCategoryName);
   } catch (e) {
     e.message = '카테고리 추가 실패';
     next(e);
@@ -320,6 +320,24 @@ const categoryAdd = async (req, res, next) => {
     message: '카테고리 추가 성공',
     no: result.dataValues.no,
   });
+};
+
+const removeCategory = async (req, res, next) => {
+  let { id } = req.params;
+
+  let result;
+
+  try {
+    result = await categoryDB.findById(id);
+    if (!result) {
+      return res.status(404).json({ message: '없는 카테고리 입니다.' });
+    }
+    result.destroy();
+  } catch (e) {
+    next(e);
+  }
+
+  return res.status(204).end();
 };
 
 module.exports = {
@@ -337,7 +355,8 @@ module.exports = {
   updateSubPost,
   removeSubPost,
   uploadImage,
-  categoryAdd,
+  addCategory,
+  removeCategory,
 };
 
 /**

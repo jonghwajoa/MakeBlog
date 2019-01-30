@@ -37,7 +37,6 @@ const createView = async (req, res) => {
 
 const create = async (req, res, next) => {
   const { title, content, category, url, problemNum } = req.body;
-  let solvingResult;
   let categoryResult;
 
   if (!solvingValidation(req.body)) {
@@ -60,10 +59,7 @@ const create = async (req, res, next) => {
 
   try {
     //req.session.userid
-    solvingResult = await SolvingDB.create(req.body, 1);
-    categoryResult.updateAttributes({
-      count: categoryResult.dataValues.count + 1,
-    });
+    await SolvingDB.create(req.body, 1);
   } catch (e) {
     next(e);
   }
@@ -86,6 +82,7 @@ const show = async (req, res, next) => {
   } catch (e) {
     return next(e);
   }
+
   if (req.headers['content-type'] === 'application/json') {
     return res.json(postResult);
   }
@@ -130,16 +127,20 @@ const updateView = async (req, res, next) => {
 
 const update = async (req, res, next) => {
   let { title, content, category, url, problemNum } = req.body;
-
   if (!solvingValidation(req.body)) {
     return res.status(400).json({ messege: 'Null값이 존재하면 안됩니다.' });
   }
 
-  const updateVal = { title, content, category, url };
+  const updateVal = { title, content, category_cote_no: category, url };
   try {
-    let solving = await SolvingDB.findById(problemNum);
-    if (!solving) next(e);
-    await solving.update(updateVal);
+    let solvingResult = await SolvingDB.findById(problemNum);
+    if (!solvingResult) next(e);
+    let categoryResult = await CategoryDB.findById(category);
+
+    if (!categoryResult) {
+      return res.status(400).json({ message: '없는 카테고리 입니다..' });
+    }
+    await solvingResult.update(updateVal);
   } catch (e) {
     next(e);
   }
@@ -149,31 +150,13 @@ const update = async (req, res, next) => {
 
 const remove = async (req, res, next) => {
   const { id } = req.params;
-  let transaction;
   try {
     let solvingResult = await SolvingDB.findById(id);
     if (!solvingResult) next();
-    let categoryResult = await CategoryDB.findById(solvingResult.dataValues.category_cote_no);
 
-    transaction = await db.sequelize.transaction();
-    await solvingResult.destroy({ transaction });
-
-    await categoryResult.updateAttributes(
-      { count: categoryResult.dataValues.count - 1 },
-      { transaction },
-    );
-
-    // await Promise.all([
-    //   categoryResult.updateAttributes(
-    //     { count: categoryResult.dataValues.count - 1 },
-    //     { transaction },
-    //   ),
-    //   solvingResult.destroy({ transaction }),
-    // ]);
-    await transaction.commit();
+    await solvingResult.destroy();
     return res.status(204).end();
   } catch (e) {
-    await transaction.rollback();
     return next(e);
   }
 };

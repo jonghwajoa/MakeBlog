@@ -20,9 +20,14 @@ const find = explain => {
   });
 };
 
+const findById = id => {
+  return Categories.findById(id);
+};
+
 module.exports = {
   find,
   findAll,
   create,
   findOrCreate,
+  findById,
 };

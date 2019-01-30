@@ -81,9 +81,10 @@ https://www.weknowjs.xyz/
 
 - 카테고리 추가 삭제 기능
 - disqus reload
+- solving js 재작성, map 저장
 
-<br>
 
-# v3 ( 그냥 나중에 해볼것 )
+## 수정
 
-- 웹 코딩 지원 ( Codit class 연동)
+- ~~solving category count 컬럼 삭제~~
+

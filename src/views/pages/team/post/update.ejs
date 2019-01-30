@@ -22,8 +22,8 @@
 
         <!-- category -->
         <div class="category">
-          <label for="category">category</label>
-          <select name="category" id="category">
+          <label for="category-select">category</label>
+          <select name="category" id="category-select">
             <% category.forEach((item,idx) => { if(item.no == post.category_no) { %>
             <option value="<%=item.no%>" selected><%=item.explain %> </option>
             <% } else { %>

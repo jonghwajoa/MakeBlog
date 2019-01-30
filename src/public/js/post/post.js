@@ -23,9 +23,9 @@ const Post = (() => {
 
   Post.prototype.writeInit = function() {
     this.postTitle = document.getElementById('title');
-    this.category = document.getElementById('category');
-    this.categoryName = document.getElementById('addCategory');
-    this.selectBox = document.getElementById('category');
+    this.categorySelect = document.getElementById('category-select');
+    this.deleteSelect = document.getElementById('category-delete');
+    this.categoryAdd = document.getElementById('category-add');
     this.tag = document.getElementById('tag');
     this.editor = writeEditor();
   };
@@ -34,7 +34,7 @@ const Post = (() => {
     this.content = document.getElementById('hiddenContent');
     this.postTitle = document.getElementById('title');
     this.tag = document.getElementById('tag');
-    this.category = document.getElementById('category');
+    this.categorySelect = document.getElementById('category-select');
     this.editor = writeEditor();
     this.editor.setMarkdown(this.content.innerHTML.trim());
 
@@ -183,7 +183,7 @@ const Post = (() => {
   Post.prototype.update = async function(postNo) {
     const title = this.postTitle.value;
     const content = this.editor.getMarkdown().trim();
-    const category = this.category;
+    const category = this.categorySelect;
     const categoryText = '#' + category[category.selectedIndex].text;
     let tag = this.tag.value.trim().replace(/\s*,+\s*|\s+/g, ' #');
 
@@ -249,6 +249,52 @@ const Post = (() => {
     }
   };
 
+  Post.prototype.addCategory = async function() {
+    let requestCategoryName = this.categoryAdd.value;
+
+    let result;
+    try {
+      result = await ajaxUtil.sendPostAjax('/post/category/', { requestCategoryName });
+    } catch (e) {
+      alert(`${e.message}\n${e.status}`);
+      return;
+    }
+
+    let newSelect = document.createElement('option');
+    let newSelect2 = document.createElement('option');
+    let { no, message } = JSON.parse(result);
+    //TODO 하나생성만으로도 수정할 수 있도록 찾아보기
+    newSelect.text = requestCategoryName;
+    newSelect.value = no;
+    newSelect2.text = requestCategoryName;
+    newSelect2.value = no;
+    this.categorySelect.options.add(newSelect2);
+    this.deleteSelect.options.add(newSelect2);
+    alert(message);
+  };
+
+  Post.prototype.deleteCategory = async function() {
+    let deleteSelect = this.deleteSelect;
+
+    let reqeustDeleteCategoryName = deleteSelect.value;
+
+    try {
+      await ajaxUtil.sendDeleteAjax(`/post/category/${reqeustDeleteCategoryName}`);
+    } catch (e) {
+      alert(`${e.message}\n${e.status}`);
+      return;
+    }
+
+    for (let i = 0; i < deleteSelect.length; i++) {
+      if (deleteSelect.options[i].value == reqeustDeleteCategoryName) {
+        deleteSelect.remove(i);
+        this.categorySelect.remove(i);
+      }
+    }
+
+    alert('카테고리 삭제 성공');
+  };
+
   function readEditor() {
     return new tui.Editor({
       el: document.getElementById('content-text'),
@@ -300,43 +346,3 @@ const Post = (() => {
 
   return Post;
 })();
-
-/*
-async function addCategory() {
-  const categoryName = this.categoryName.value;
-  const selectBox = this.category;
-  let result;
-  try {
-    result = await ajaxUtil.sendPostAjax('/post/category/', categoryName);
-  } catch (e) {
-    alert(`${e.responseText}`);
-    return;
-  }
-
-  let select = document.createElement('option');
-  let { no, message } = JSON.parse(result.responseText);
-  select.text = categoryName;
-  select.value = no;
-  selectBox.options.add(select);
-  alert(message);
-}
-
-async function addCategory2() {
-  const categoryName = this.categoryName.value;
-  const selectBox = this.selectBox;
-  let result;
-  try {
-    result = await ajaxUtil.sendPostAjax('/post/category/', { categoryName });
-  } catch (e) {
-    alert(`${e.message}\n${e.status}`);
-    return;
-  }
-  let select = document.createElement('option');
-  let { no, message } = JSON.parse(result);
-  select.text = categoryName;
-  select.value = no;
-  selectBox.options.add(select);
-  alert(message);
-}
-
-*/
