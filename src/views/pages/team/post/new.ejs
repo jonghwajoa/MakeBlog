@@ -12,11 +12,14 @@
     <% include ../../../partials/headerTeam.ejs %> <% include ../../../partials/editorWrite.ejs %>
 
     <div class="wrap">
+      <!-- container -->
       <div class="container">
         <div class="title"><input type="text" id="title" name="title" placeholder="Title" /></div>
         <div class="tag"><input type="text" id="tag" name="tag" placeholder="Tag" /></div>
 
+        <!-- category -->
         <div class="category">
+          <!-- category-select -->
           <div class="category-select">
             <label for="category-select">카테고리 선택</label>
             <select name="category-select" id="category-select">
@@ -25,13 +28,17 @@
               <% }) %>
             </select>
           </div>
+          <!-- //category-select -->
 
+          <!-- category-add -->
           <div class="category-add">
             <label for="category-add">카테고리 추가</label>
             <input type="text" class="category-input" id="category-add" />
             <button onclick="postWrite.addCategory()">추가</button>
           </div>
+          <!-- //category-add -->
 
+          <!-- category-delete -->
           <div class="category-delete">
             <label for="category-delete">카테고리 삭제</label>
             <select name="category-delete" id="category-delete">
@@ -41,28 +48,16 @@
             </select>
             <button onclick="postWrite.deleteCategory()">삭제</button>
           </div>
+          <!-- //category-delete -->
         </div>
-
-        <!--         
-        <div class="category">        
-          <label for="category">category</label>
-          <select name="category" id="category">
-            <% category.forEach((item,idx) => { %>
-            <option value="<%=item.no%>"><%=item.explain %> </option>
-            <% }) %>
-          </select>
-        </div>
-
-        <div>
-          <input type="text" id="addCategory" name="addCategory" placeholder="Category add name" />
-          <button onclick="postWrite.addCategory()">추가하기</button>
-        </div> -->
+        <!-- //category -->
 
         <div id="editSection" id="content" name="content"></div>
 
         <button class="custom" onclick="back()">뒤로가기</button>
         <button class="custom" id="submit" onclick="postWrite.submit()">작성하기</button>
       </div>
+      <!-- //container -->
     </div>
 
     <% include ../../../partials/footer.ejs %>

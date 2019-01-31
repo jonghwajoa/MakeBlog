@@ -9,8 +9,14 @@ router
   .post(needsAuth, ctrl.create)
   .put(needsAuth, ctrl.update);
 
+router.route('/category').post(ctrl.addCategory);
+router.route('/category/:id').delete(ctrl.removeCategory);
+
 router.route('/new').get(needsAuth, ctrl.createView);
-router.route('/:id').get(ctrl.show).delete(ctrl.remove)
+router
+  .route('/:id')
+  .get(ctrl.show)
+  .delete(ctrl.remove);
 router.route('/:id/edit').get(needsAuth, ctrl.updateView);
 
 module.exports = router;

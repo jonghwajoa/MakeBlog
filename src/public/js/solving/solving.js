@@ -16,8 +16,9 @@ class Solving {
     this.postTitle = document.getElementById('title');
     this.postUrl = document.getElementById('url');
     this.postProblemNum = document.getElementById('problemNum');
-    this.postCategorySelect = document.getElementById('category-select');
-    this.postCategoryDelete = document.getElementById('category-delete');
+    this.categorySelect = document.getElementById('category-select');
+    this.deleteSelect = document.getElementById('category-delete');
+    this.categoryAdd = document.getElementById('category-add');
     this.writeEditorInit();
   }
 
@@ -109,20 +110,13 @@ class Solving {
 
     if (!this.mapSaveSolving.has(problemNum)) {
       this.mapSaveSolving.set(problemNum, result);
-      // let param = {
-      //   title : this.readTitle.innerHTML.trim(),
-      //   createDate : this.createDate.innerHTML,
-      //   count : this.count.innerHTML,
-      //   url : this.showProblem,
-      //   content : this.
-      // }
     }
   }
 
   async write() {
     const title = this.postTitle.value;
     const content = this.editor.getMarkdown().trim();
-    const category = this.postCategorySelect.value;
+    const category = this.categorySelect.value;
     let url = this.postUrl.value.trim();
     const problemNum = this.postProblemNum.value;
 
@@ -148,7 +142,7 @@ class Solving {
   async update() {
     const title = this.postTitle.value;
     const content = this.editor.getMarkdown().trim();
-    const category = this.postCategorySelect.value;
+    const category = this.categorySelect.value;
     let url = this.postUrl.value.trim();
     const problemNum = this.postProblemNum.value;
 
@@ -179,5 +173,50 @@ class Solving {
       alert(`삭제실패\n${e.message}`);
     }
     location.href = '/solving';
+  }
+
+  async addCategory() {
+    let requestCategoryName = this.categoryAdd.value;
+
+    let result;
+    try {
+      result = await ajaxUtil.sendPostAjax('/solving/category', { requestCategoryName });
+    } catch (e) {
+      alert(`${e.message}\n${e.status}`);
+      return;
+    }
+
+    let newSelect = document.createElement('option');
+    let newSelect2 = document.createElement('option');
+    let { no, message } = JSON.parse(result);
+
+    newSelect.text = requestCategoryName;
+    newSelect.value = no;
+    newSelect2.text = requestCategoryName;
+    newSelect2.value = no;
+    this.categorySelect.options.add(newSelect);
+    this.deleteSelect.options.add(newSelect2);
+    alert(message);
+  }
+
+  async deleteCategory() {
+    let deleteSelect = this.deleteSelect;
+    let reqeustDeleteCategoryName = deleteSelect.value;
+
+    try {
+      await ajaxUtil.sendDeleteAjax(`/solving/category/${reqeustDeleteCategoryName}`);
+    } catch (e) {
+      alert(`${e.message}`);
+      return;
+    }
+
+    for (let i = 0; i < deleteSelect.length; i++) {
+      if (deleteSelect.options[i].value == reqeustDeleteCategoryName) {
+        deleteSelect.remove(i);
+        this.categorySelect.remove(i);
+      }
+    }
+
+    alert('카테고리 삭제 성공');
   }
 }

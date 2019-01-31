@@ -23,6 +23,7 @@ https://www.weknowjs.xyz/
 | /post/:id/:subId      | DELETE | 서브 포스트 삭제      |
 | /post/:id/:subId/edit | GET    | 서브 포스트 수정 form |
 | /post/category        | POST   | 카테고리 추가         |
+| /post/category/:id    | DELETE | 카테고리 삭제         |
 | /post/file            | POST   | 사진 저장             |
 | /solving              | GET    | solving home          |
 | /solving              | POST   | solving 생성          |
@@ -89,4 +90,4 @@ https://www.weknowjs.xyz/
 ## 수정
 
 - solving category count 컬럼 삭제 (length 로 대체)
-- 카테고리 Set null 설정 -> RESTRICT 변경
+- 카테고리 Set null 설정 -> RESTRICT 변경 (삭제 실패시 상태코드 409 반환)

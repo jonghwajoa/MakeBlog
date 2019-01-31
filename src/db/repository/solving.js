@@ -21,18 +21,23 @@ const findById = id => {
       'url',
       'category_cote_no',
       [
-        Solving.sequelize.fn(
-          'date_format',
-          Solving.sequelize.col('created_at'),
-          '%Y-%m-%d',
-        ),
+        Solving.sequelize.fn('date_format', Solving.sequelize.col('created_at'), '%Y-%m-%d'),
         'created_at',
       ],
     ],
   });
 };
 
+const findByCategoryId = no => {
+  return Solving.findOne({
+    where: {
+      category_cote_no: no,
+    },
+  });
+};
+
 module.exports = {
   create,
   findById,
+  findByCategoryId,
 };

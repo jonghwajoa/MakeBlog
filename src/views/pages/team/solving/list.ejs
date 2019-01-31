@@ -4,15 +4,18 @@
     <title>WeKnowJS</title>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <% include ../../../partials/editorViewer.ejs %>
+
     <link rel="stylesheet" href="/css/solving/list.css" />
   </head>
   <body>
     <% include ../../../partials/essentialCss.ejs %>
     <% include ../../../partials/headerTeam.ejs %>
-
+    <% include ../../../partials/editorViewer.ejs %>
     <div class="wrap">
+      <!-- flex -->
       <div class="flex">
+
+        <!-- side -->
         <div class="side">
           <% category.forEach((outerE,i) => { %>
           <div class="category">
@@ -32,9 +35,12 @@
           </div>
           <% }) %>
         </div>
+        <!-- //side -->
 
+        <!-- content -->
         <div class="content">
           <div class="container">
+            <!-- content-admin -->
               <div class="content-admin">
                   <a href='/solving/new'>
                     <input type="button" value='글등록' id='update' />
@@ -45,6 +51,7 @@
                   <input type="button" value='삭제하기' id='delete' onclick="solving.delete()" />
 
               </div>
+              <!-- //content-admin -->
 
             <div class="content-title">
               
@@ -64,7 +71,9 @@
             <!-- // content-reply -->
           </div>
         </div>
+        <!-- //content -->
       </div>
+      <!-- //flex -->
     </div>
     <!-- //wrap -->
 

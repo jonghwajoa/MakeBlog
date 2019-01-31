@@ -12,6 +12,7 @@
     <% include ../../../partials/editorWrite.ejs %> <% include ../../../partials/headerTeam.ejs %>
 
     <div id="wrap">
+      <!-- container -->
       <div class="container">
         <div class="title">
           <input type="text" id="title" name="title" class="input" placeholder="Title" />
@@ -31,7 +32,9 @@
           <input class="input" type="text" id="url" name="url" placeholder="URL" />
         </div>
 
+        <!-- category -->
         <div class="category">
+          <!-- category-select -->
           <div class="category-select">
             <label for="category-select">카테고리 선택</label>
             <select name="category-select" id="category-select">
@@ -40,12 +43,17 @@
               <% }) %>
             </select>
           </div>
+          <!-- //category-select -->
 
+          <!-- category-add -->
           <div class="category-add">
             <label for="category-add">카테고리 추가</label>
-            <input type="text" class="category-input" id="category-add" /> <button>추가</button>
+            <input type="text" class="category-input" id="category-add" />
+            <button onclick="solving.addCategory()">추가</button>
           </div>
+          <!-- //category-add -->
 
+          <!-- category-delete -->
           <div class="category-delete">
             <label for="category-delete">카테고리 삭제</label>
             <select name="category-delete" id="category-delete">
@@ -53,9 +61,11 @@
               <option value="<%=e.no%>"> <%=e.title %> </option>
               <% }) %>
             </select>
-            <button>삭제</button>
+            <button onclick="solving.deleteCategory()">삭제</button>
           </div>
+          <!-- //category-delete -->
         </div>
+        <!-- //category -->
 
         <div id="content-input" name="content"></div>
         <div class="btn">
@@ -63,6 +73,7 @@
           <button class="custom" onclick="back()">뒤로가기</button>
         </div>
       </div>
+      <!-- //container -->
     </div>
 
     <% include ../../../partials/footer.ejs %>

@@ -9,7 +9,7 @@ const paramCheck = require('../../lib/validation');
 const createView = async (req, res) => {
   try {
     const category = await categoryDB.findAll();
-    return res.render('team/post/write', { category });
+    return res.render('team/post/new', { category });
   } catch (e) {
     next(e);
   }
