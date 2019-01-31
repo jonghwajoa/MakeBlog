@@ -3,9 +3,11 @@
   <head>
     <title>WeKnowJS</title>
     <meta charset="UTF-8" />
+    <meta name="author" content="JongHwa" />
+    <meta name="description" content="Register Page, 회원가입 페이지" />
+    <meta name="generator" content="Visual Studio Code" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <% include ../../../partials/essentialCss.ejs %>
-    <link rel="stylesheet" href="/css/auth/login.css" />
+    <meta name="robots" content="noindex,nofollow" />
   </head>
 
   <body>
@@ -91,11 +93,7 @@
           alert('비밀번호 형식이 올바르지 않습니다.');
           return false;
         }
-        if (
-          nickname.length < 2 ||
-          nickname.length > 20 ||
-          typeof nickname !== 'string'
-        ) {
+        if (nickname.length < 2 || nickname.length > 20 || typeof nickname !== 'string') {
           alert('닉네임 형식이 올바르지 않습니다.');
           return false;
         }

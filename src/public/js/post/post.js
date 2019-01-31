@@ -1,7 +1,8 @@
 const Post = (() => {
   function Post() {
     this.curSubNo = 1;
-    this.mapSavePost = new Map();
+    // this.mapSavePost = new Map();
+    this.savePost = [];
   }
 
   Post.prototype.readInit = function() {
@@ -86,10 +87,10 @@ const Post = (() => {
   };
 
   // read함수
-  Post.prototype.getContent = async function(postNo, subNo = '1') {
+  Post.prototype.getContent = async function(postNo, subNo = 1) {
     let result;
-    if (this.mapSavePost.has(subNo)) {
-      result = this.mapSavePost.get(subNo);
+    if (this.savePost[subNo]) {
+      result = this.savePost[subNo];
     } else {
       try {
         result = await ajaxUtil.sendGetAjax(`/post/${postNo}/${subNo}`);
@@ -109,13 +110,8 @@ const Post = (() => {
     window.history.replaceState(null, '', `/post/${postNo}/${subNo}`);
     this.curSubNo = subNo;
 
-    if (!this.mapSavePost.has(subNo)) {
-      this.mapSavePost.set(subNo, {
-        content: content.trim(),
-        title: this.postTitle.innerHTML.trim(),
-        count: this.viewCount.innerHTML.trim(),
-        created_at: this.date.innerHTML.trim(),
-      });
+    if (!this.savePost[subNo]) {
+      this.savePost[subNo] = { ...result };
     }
   };
 

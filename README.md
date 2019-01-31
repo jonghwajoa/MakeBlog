@@ -22,8 +22,8 @@ https://www.weknowjs.xyz/
 | /post/:id/:subId      | PUT    | 서브 포스트 수정      |
 | /post/:id/:subId      | DELETE | 서브 포스트 삭제      |
 | /post/:id/:subId/edit | GET    | 서브 포스트 수정 form |
-| /post/category        | POST   | 카테고리 추가         |
-| /post/category/:id    | DELETE | 카테고리 삭제         |
+| /post/category        | POST   | 포스트 카테고리 추가  |
+| /post/category/:id    | DELETE | 포스트 카테고리 삭제  |
 | /post/file            | POST   | 사진 저장             |
 | /solving              | GET    | solving home          |
 | /solving              | POST   | solving 생성          |
@@ -31,10 +31,26 @@ https://www.weknowjs.xyz/
 | /solving/:id          | GET    | solving 보기          |
 | /solving/:id/edit     | GET    | solving 수정 form     |
 | /solving              | put    | solving 수정          |
+| /solving/category     | POST   | solving 카테고리 추가 |
+| /solving/category/:id | DELETE | solving 카테고리 삭제 |
 
 <br>
 
-# v1 (배포버전)
+
+
+## 프로젝트 진행하면서 생긴 궁금증
+
+- 가독성 : ! or false 
+- 선언식 vs 표현식 
+- 반복적인 요청 ( Map vs Object )
+
+
+
+<br>  
+
+
+
+## v1 (배포버전)
 
 개발기간 : 180814 ~ 180901
 
@@ -59,7 +75,7 @@ https://www.weknowjs.xyz/
 
 <br>
 
-# v2 (완료사항 - 미배포)
+## v2 (완료사항 - 미배포)
 
 개발기간 : 19.01.17 ~ continue
 

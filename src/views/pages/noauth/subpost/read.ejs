@@ -2,8 +2,14 @@
 <html lang="ko">
 <head>
     <title id="headTitle">WeKnowJS-<%=post.title%></title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8" />
+    <meta name="author" content="JongHwa" />
+    <meta name="description" content="서브 포스트 읽기 , SubPost Read Page" />
+    <meta name="generator" content="Visual Studio Code" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="Cache-Control" content="no-cache" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    
     <% include ../../../partials/essentialCss.ejs %>
     <link rel='stylesheet' href='/css/post/read.css' />
     
@@ -53,7 +59,7 @@
                         <div class='subpost'>
                             <a onclick="postRead.getContent('<%=home%>')">Home</a>
                             <% subPost.forEach((item,index) => { %>
-                            <a onclick="postRead.getContent('<%=home%>','<%=item.sub_no %>')" >
+                            <a onclick="postRead.getContent('<%=home%>','<%=item.sub_no %>')" class="subpost_element">
                                 <%=item.title %></a>
                             <% }) %>
                         </div>
