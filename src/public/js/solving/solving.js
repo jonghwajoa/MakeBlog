@@ -120,6 +120,7 @@ class Solving {
     if (!this.mapSaveSolving.has(problemNum)) {
       this.mapSaveSolving.set(problemNum, result);
     }
+    disqus.reload(problemNum, `https://weknowjs-xyz/solving/${problemNum}`);
   }
 
   async write() {

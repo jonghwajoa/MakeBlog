@@ -66,29 +66,13 @@
     <% include ../../../partials/footer.ejs %>
     <!-- footer -->
 
+
+
+    <script src="/js/disqus/disqus.js"></script>
+    <script>let disqus = new Disqus("https://weknowjs-xyz/solving/<%=post.problemNum%>",'<%=post.problemNum%>') </script>
     <script src="/js/util/ajaxUtil.js"></script>
     <script src="/js/solving/solving.js"></script>
-
-
-    <script>
-        window.onload = function () {
-            // const disqus_config = function () {
-            //     this.page.url = '/solving/1';  // Replace PAGE_URL with your page's canonical URL variable
-            //     this.page.identifier = `1`; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
-            // };
-
-            // (function () { // DON'T EDIT BELOW THIS LINE
-            //     var d = document, s = d.createElement('script');
-            //     s.src = 'https://weknowjs-xyz.disqus.com/embed.js';
-            //     s.setAttribute('data-timestamp', +new Date());
-            //     (d.head || d.body).appendChild(s);
-            // })();
-
-        }
-
-        let solving = new Solving();
-solving.solvingList();
-    </script>
+    <script>let solving = new Solving();solving.solvingList();</script>
 
   </body>
 </html>

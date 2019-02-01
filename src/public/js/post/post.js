@@ -94,7 +94,6 @@ const Post = (() => {
     } else {
       try {
         reqeustPost = await ajaxUtil.sendGetAjax(`/post/${postNo}/${subNo}`);
-        console.log(reqeustPost);
         reqeustPost = JSON.parse(reqeustPost);
       } catch (e) {
         alert(`Server Error(${e.status})`);
@@ -114,6 +113,7 @@ const Post = (() => {
     if (!this.savePost[subNo]) {
       this.savePost[subNo] = { ...reqeustPost };
     }
+    disqus.reload(`${postNo}/${subNo}`, `https://weknowjs.xyz/post/${postNo}/${subNo}`);
   };
 
   // read 함수

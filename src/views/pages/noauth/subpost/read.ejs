@@ -77,31 +77,16 @@
 
 
         <% include ../../../partials/footer.ejs %>
-
-            <noscript>Please enable JavaScript</noscript>
-            <script src="/js/util/ajaxUtil.js"></script>
-            <script src="/js/post/post.js"></script>
-            <script>
-                window.onload = function () {
-                    const disqus_config = function () {
-                        this.page.url = '/post/<%=home%>/<%= post.no %>';  // Replace PAGE_URL with your page's canonical URL variable
-                        this.page.identifier = `<%=home%>/<%= post.no %>`;; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
-                    };
-
-                    (function () { // DON'T EDIT BELOW THIS LINE
-                        var d = document, s = d.createElement('script');
-                        s.src = 'https://weknowjs-xyz.disqus.com/embed.js';
-                        s.setAttribute('data-timestamp', +new Date());
-                        (d.head || d.body).appendChild(s);
-                    })();
-
-                    
-                }
-                const postRead = new Post();
-                postRead.readInit();
-            </script>
-
-
+        
+        <noscript>Please enable JavaScript</noscript>
+        <script src="/js/disqus/disqus.js"></script>
+        <script>let disqus = new Disqus("https://weknowjs.xyz/post/<%=home%>/<%=post.sub_no %>",'<%=home%>/<%=post.sub_no %>') </script>
+        <script src="/js/util/ajaxUtil.js"></script>
+        <script src="/js/post/post.js"></script>
+        <script>
+            const postRead = new Post();
+            postRead.readInit();
+        </script>
 </body>
 
 </html>

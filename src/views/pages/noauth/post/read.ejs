@@ -84,27 +84,13 @@
     <% include ../../../partials/footer.ejs %>
 
     <noscript>Please enable JavaScript</noscript>
+    <script src="/js/disqus/disqus.js"></script>
+    <script>let disqus = new Disqus("https://weknowjs.xyz/post/post<%=post.no%>sub1",'post<%=post.no%>sub1') </script>
     <script src="/js/util/ajaxUtil.js"></script>
     <script src="/js/post/post.js"></script>
-    
     <script>
-        window.onload = function () {
-            const disqus_config = function () {
-                this.page.url = '/post/<%=post.no%>';
-                this.page.identifier = `<%=post.no%>`;
-            };
-
-            (function () { // DON'T EDIT BELOW THIS LINE
-                var d = document, s = d.createElement('script');
-                s.src = 'https://weknowjs-xyz.disqus.com/embed.js';
-                s.setAttribute('data-timestamp', +new Date());
-                (d.head || d.body).appendChild(s);
-            })();
-        }
-
         const postRead = new Post();
         postRead.readInit();
-
     </script>
  
 

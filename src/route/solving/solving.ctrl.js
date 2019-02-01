@@ -172,7 +172,6 @@ const addCategory = async (req, res, next) => {
     }
     let nextOrder = await CategoryDB.findNextOrder();
     categoryResult = await CategoryDB.create(requestCategoryName, nextOrder + 1);
-    console.log(categoryResult.dataValues);
   } catch (e) {
     e.message = '카테고리 추가 실패';
     return next(e);
@@ -194,7 +193,7 @@ const removeCategory = async (req, res, next) => {
     if (!categoryResult) {
       return res.status(404).json({ message: '없는 카테고리 입니다.' });
     }
-    
+
     solvingResult = await SolvingDB.findByCategoryId(id);
     if (solvingResult) {
       return res.status(409).json({ message: '사용중인 카테고리는 삭제할 수 없습니다.' });
