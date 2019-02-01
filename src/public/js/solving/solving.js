@@ -10,6 +10,15 @@ class Solving {
     this.curPage = 1;
     this.listEditorInit();
     this.mapSaveSolving = new Map();
+
+    let category = document.getElementsByClassName('category');
+
+    for (let i = 1; i < category.length; i++) {
+      let e = category[i].getElementsByTagName('div')[0];
+      if (e) {
+        this.toggle(e.className.split(/\s+/)[1]);
+      }
+    }
   }
 
   solvingWrite() {
@@ -218,5 +227,22 @@ class Solving {
     }
 
     alert('카테고리 삭제 성공');
+  }
+
+  toggle(className) {
+    if (parseInt(className)) {
+      className = `category-content${className}`;
+    }
+    let id = document.getElementsByClassName(className);
+    if (!id[0]) return;
+    let statusCheck = 'none';
+
+    if (id[0].style.display == statusCheck) {
+      statusCheck = 'block';
+    }
+
+    for (let e of id) {
+      e.style.display = statusCheck;
+    }
   }
 }

@@ -10,6 +10,7 @@ router.use('/solving', require('./solving'));
 router.use('/auth', require('./auth'));
 router.use('/post', require('./post'));
 router.use('/about', require('./about'));
+router.use('/robots.txt', require('./robots'));
 
 router.use((req, res) => {
   if (req.headers['content-type'] === 'application/json') {
@@ -33,7 +34,6 @@ router.use((err, req, res, next) => {
     );
   }
 
-  console.log(err);
   if (req.headers['content-type'] === 'application/json') {
     return res.status(err.status).json({ message: err.message });
   }

@@ -27,6 +27,11 @@
   font-size: 1.3rem;
   font-weight: bold;
   font-family: 'Do Hyeon', sans-serif;
+  cursor: pointer;
+}
+
+.flex .side h3:hover {
+  color: #748ffc;
 }
 
 .flex .side .category {

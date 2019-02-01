@@ -21,13 +21,13 @@
       <div class="flex">
         <div class="side">
           <% category.forEach((outerE,i) => { %>
-          <div class="category">
+          <div class="category" id = 'category'>
             <h2>
-              <h3>- <%= outerE.title %> ( <%= outerE.Solvings.length %> )</h3>
+              <h3 onclick="solving.toggle(<%=i%>)"> <%= outerE.title %> ( <%= outerE.Solvings.length %> )</h3>
               <% outerE.Solvings.forEach((innerE,j) => { %>
-                <div class="category-content" id='category-content<%=i%>'>
+                <div class="category-content category-content<%=i%>">
                   <a onclick="solving.read('<%=innerE.dataValues.problemNum %>')">
-                    <% if(innerE.dataValues.problemNum == 1) { %> └ Main 
+                    <% if(innerE.dataValues.problemNum == 1) { %> └ Main </a>
                     <%} else {  %>
                       └ <%=innerE.dataValues.problemNum %> </a>
 

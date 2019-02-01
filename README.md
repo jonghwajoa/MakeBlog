@@ -40,9 +40,9 @@ https://www.weknowjs.xyz/
 
 ## 프로젝트 진행하면서 생긴 궁금증
 
-- 가독성 : ! or false 
-- 선언식 vs 표현식 
-- 반복적인 요청 ( Map vs Object )
+- [가독성 : ! or false](https://github.com/jonghwajoa/MakeBlog/blob/master/Memo/!%20or%20false.md)
+- [선언식 vs 표현식](https://github.com/jonghwajoa/MakeBlog/blob/master/Memo/%EC%84%A0%EC%96%B8%EC%8B%9Dvs%ED%91%9C%ED%98%84%EC%8B%9D.md)
+- [반복적인 요청 ( Map vs Object )](https://github.com/jonghwajoa/MakeBlog/blob/master/Memo/Map%20vs%20Object.md)
 
 
 

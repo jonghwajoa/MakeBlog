@@ -1,10 +1,10 @@
 ## 반복적인 요청
 
-Subpage 와 solving 페이지의 html 전체를 요청하는 것이 아니라 바뀌는 Content 만 JSON 타입으로 요청하여 리소스 소모를 줄이고 새로고침(깜빡거림)을 없앴다.
+Subpage 와 solving 페이지의 html 전체를 요청하는 것이 아니라 바뀌는 Content 만 JSON 타입으로 요청한다.
 
 여기서 든 생각..
 
-> 동일한 리소스에 대한 반복적인 요청을 지속적으로 서버에 요청할 필요가 없다고 생각됐다.
+> 동일한 리소스를 반복적인 요청할때 지속적으로 서버에 요청할 필요가 없다고 생각됐다.
 
 한번 받은 리소스 정보를 저장함으로써 부하도 줄이고 반응속도도 향상시켜보자..
 
@@ -26,23 +26,23 @@ Subpage 와 solving 페이지의 html 전체를 요청하는 것이 아니라 �
 
 ```js
 Post.prototype.getContent = async function(postNo, subNo = '1') {
-  let result;
+  let reqeustPost;
   if (this.mapSavePost.has(subNo)) {
-    result = this.mapSavePost.get(subNo);
+    reqeustPost = this.mapSavePost.get(subNo);
   } else {
     try {
-      result = await ajaxUtil.sendGetAjax(`/post/${postNo}/${subNo}`);
-      result = JSON.parse(result).post;
+      reqeustPost = await ajaxUtil.sendGetAjax(`/post/${postNo}/${subNo}`);
+      reqeustPost = JSON.parse(result);
     } catch (e) {
       alert(`요청 실패 ${e.message}`);
       return;
     }
   }
 
-  /* 생략...... */
+  /* ************ 중략 ********** */
 
   if (!this.mapSavePost.has(subNo)) {
-    this.mapSavePost.set(subNo, { ...result });
+    this.mapSavePost.set(subNo, { ...reqeustPost });
   }
 };
 ```
@@ -154,13 +154,8 @@ object의 경우 모든요소를 지우는데 O(N)
 
 > https://medium.com/front-end-weekly/es6-map-vs-object-what-and-when-b80621932373
 >
->
 
 
-
-## 
-
-## 
 
 ## Map 을 쓸필요가 있을까?
 
@@ -168,7 +163,12 @@ SubPost 의 경우
 
 1. 보통 길이가 20 을 넘지 않는다. (넘어도 상관없음..)
 2. Sub_no 라는 INT 형을 사용한다.
-   즉 Map 을 사용할 이유가 없다.. idx 를 정수형으로 사용하고 있기 때문에 그냥 배열에 저장하면 된다..
+
+
+
+즉 Map 을 사용할 이유가 없다.. idx 를 정수형으로 사용하고 있기 때문에 그냥 배열에 저장하면 된다..  
+
+
 
 ### Map vs Array
 
@@ -177,20 +177,25 @@ SubPost 의 경우
 SubPost 갯수만큼의 길이를 할당시켜놓고 사용하면 더 효율적이다..
 
 ```js
-let result;
-if (this.savePost[subNo]) {
-  result = this.savePost[subNo];
-} else {
-  try {
-    result = await ajaxUtil.sendGetAjax(`/post/${postNo}/${subNo}`);
-    result = JSON.parse(result).post;
-  } catch (e) {
-    alert(`Server Error(${e.status})`);
-    return;
-  }
-}
+Post.prototype.getContent = async function(postNo, subNo = 1) {
+    let reqeustPost;
+    if (this.savePost[subNo]) {
+      reqeustPost = this.savePost[subNo];
+    } else {
+      try {
+        reqeustPost = await ajaxUtil.sendGetAjax(`/post/${postNo}/${subNo}`);
+        reqeustPost = JSON.parse(reqeustPost);
+      } catch (e) {
+        alert(`Server Error(${e.status})`);
+        return;
+      }
+    }
+    let { content, title, count, created_at } = reqeustPost;
 
-if (!this.savePost[subNo]) {
-  this.savePost[subNo] = { ...result };
-}
+   /* *********** 중략 *********** */
+
+    if (!this.savePost[subNo]) {
+      this.savePost[subNo] = { ...reqeustPost };
+    }
+  };
 ```

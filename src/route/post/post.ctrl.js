@@ -176,8 +176,11 @@ const getContent = async (req, res, next) => {
   let post;
 
   try {
-    post =
-      subId === '1' ? await postDB.postFindById(id) : await subPostDB.findDetailByPostNo(id, subId);
+    if (subId === '1') {
+      post = await postDB.postFindById(id);
+    } else {
+      post = await subPostDB.findDetailByPostNo(id, subId);
+    }
 
     if (!post) {
       return next();
@@ -187,7 +190,7 @@ const getContent = async (req, res, next) => {
     return next(e);
   }
 
-  return res.json({ post });
+  return res.json(post);
 };
 
 const updateView = async (req, res, next) => {

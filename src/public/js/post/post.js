@@ -88,19 +88,20 @@ const Post = (() => {
 
   // read함수
   Post.prototype.getContent = async function(postNo, subNo = 1) {
-    let result;
+    let reqeustPost;
     if (this.savePost[subNo]) {
-      result = this.savePost[subNo];
+      reqeustPost = this.savePost[subNo];
     } else {
       try {
-        result = await ajaxUtil.sendGetAjax(`/post/${postNo}/${subNo}`);
-        result = JSON.parse(result).post;
+        reqeustPost = await ajaxUtil.sendGetAjax(`/post/${postNo}/${subNo}`);
+        console.log(reqeustPost);
+        reqeustPost = JSON.parse(reqeustPost);
       } catch (e) {
         alert(`Server Error(${e.status})`);
         return;
       }
     }
-    let { content, title, count, created_at } = result;
+    let { content, title, count, created_at } = reqeustPost;
 
     this.date.innerHTML = `${created_at}`;
     this.viewCount.innerHTML = `${count}`;
@@ -111,7 +112,7 @@ const Post = (() => {
     this.curSubNo = subNo;
 
     if (!this.savePost[subNo]) {
-      this.savePost[subNo] = { ...result };
+      this.savePost[subNo] = { ...reqeustPost };
     }
   };
 
@@ -252,7 +253,7 @@ const Post = (() => {
     try {
       result = await ajaxUtil.sendPostAjax('/post/category/', { requestCategoryName });
     } catch (e) {
-      alert(`${e.message}\n${e.status}`);
+      alert(`${e.message}`);
       return;
     }
 
