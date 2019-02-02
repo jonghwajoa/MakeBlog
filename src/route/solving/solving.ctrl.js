@@ -64,7 +64,7 @@ const create = async (req, res, next) => {
     next(e);
   }
 
-  return res.status(204).end();
+  return res.status(201).end();
 };
 
 const show = async (req, res, next) => {

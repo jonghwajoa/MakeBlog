@@ -3,12 +3,12 @@ const router = express.Router();
 const errorDB = require('../db/repository/errorLog');
 
 router.get('/', async (req, res) => {
-  return res.status(301).redirect('/post');
+  return res.status(301).redirect('/posts');
 });
 
 router.use('/solving', require('./solving'));
 router.use('/auth', require('./auth'));
-router.use('/post', require('./post'));
+router.use('/posts', require('./posts'));
 router.use('/about', require('./about'));
 router.use('/robots.txt', require('./robots'));
 

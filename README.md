@@ -36,19 +36,13 @@ https://www.weknowjs.xyz/
 
 <br>
 
-
-
 ## 프로젝트 진행하면서 생긴 궁금증
 
 - [가독성 : ! or false](https://github.com/jonghwajoa/MakeBlog/blob/master/Memo/!%20or%20false.md)
 - [선언식 vs 표현식](https://github.com/jonghwajoa/MakeBlog/blob/master/Memo/%EC%84%A0%EC%96%B8%EC%8B%9Dvs%ED%91%9C%ED%98%84%EC%8B%9D.md)
 - [반복적인 요청 ( Map vs Object )](https://github.com/jonghwajoa/MakeBlog/blob/master/Memo/Map%20vs%20Object.md)
 
-
-
-<br>  
-
-
+<br>
 
 ## v1 (배포버전)
 
@@ -93,17 +87,16 @@ https://www.weknowjs.xyz/
 
 - html 다시 작성하기.. (3 월중 시작이었으나.. 진행중... 매우 천천히 하기)
 - 테스트 코드작성 ( auth, solving, post, validation,)
+- disqus reload
 
 ### v2 목표까지 남은 기능 (미진행)
-
-- disqus reload
 
 ## 발견된 오류
 
 - page 파라미터 오류 500 error 에러 점검
-- ~~수정하기,삭제하기 id 값 미변경~~
 
 ## 수정
 
 - solving category count 컬럼 삭제 (length 로 대체)
 - 카테고리 Set null 설정 -> RESTRICT 변경 (삭제 실패시 상태코드 409 반환)
+- 수정하기,삭제하기 id 값 미변경

@@ -153,22 +153,21 @@ describe('/solving은 *********************', () => {
     });
 
     // problemNum이 기본키이기 때문에 전체 테스트에서만 실행
-    // describe('성공시....', () => {
-    //   it('json과 201을 반환한다..', done => {
-    //     agent
-    //       .post('/solving')
-    //       .send({
-    //         title: '타이틀 입니다.',
-    //         content: '컨텐츠입니다.',
-    //         category: '1',
-    //         url: ' ',
-    //         problemNum: '34563456',
-    //       })
-    //       .expect(201)
-    //       .expect('Content-Type', /json/)
-    //       .end(done);
-    //   });
-    // });
+    describe('성공시....', () => {
+      it('201을 반환한다..', done => {
+        agent
+          .post('/solving')
+          .send({
+            title: '타이틀 입니다.',
+            content: '컨텐츠입니다.',
+            category: '1',
+            url: ' ',
+            problemNum: '64532',
+          })
+          .expect(201)
+          .end(done);
+      });
+    });
   });
 
   /**  GET /solving/:id
@@ -181,7 +180,7 @@ describe('/solving은 *********************', () => {
     describe('성공시...', () => {
       it('URL 요청시 상태코드 200과 html을 반환한다.', done => {
         request(app)
-          .get('/solving/Main')
+          .get('/solving/1')
           .expect(200)
           .expect('Content-Type', /html/)
           .end(done);
@@ -189,8 +188,8 @@ describe('/solving은 *********************', () => {
 
       it('json 요청시 상태코드 200과 json 반환한다.', done => {
         request(app)
-          .get('/solving/Main')
-          .send({ problemNum: 'Main' })
+          .get('/solving/1')
+          .send({ problemNum: '1' })
           .expect(200)
           .expect('Content-Type', /json/)
           .end(done);
@@ -205,7 +204,7 @@ describe('/solving은 *********************', () => {
           .end(done);
       });
 
-      it('json으로 없는 id요청시 404를 json으로 반환한다....', done => {
+      it('없는 id요청시를 json으로 요청시  404를 json으로 반환한다....', done => {
         request(app)
           .get('/solving/asdlqwd532')
           .send({})
@@ -221,7 +220,7 @@ describe('/solving은 *********************', () => {
     describe('실패시....', () => {
       it('비로그인시 401과 html페이지를 반환한다', done => {
         request(app)
-          .get('/solving/Main/edit')
+          .get('/solving/1/edit')
           .expect(401)
           .expect('Content-Type', /html/)
           .end(done);
@@ -237,7 +236,7 @@ describe('/solving은 *********************', () => {
 
       it('성공시 200과 html을 반환한다..', done => {
         agent
-          .get('/solving/Main/edit')
+          .get('/solving/1/edit')
           .expect(200)
           .expect('Content-Type', /html/)
           .end(done);
@@ -316,7 +315,7 @@ describe('/solving은 *********************', () => {
             content: '컨텐츠입니다.',
             category: '1',
             url: ' ',
-            problemNum: 'Main',
+            problemNum: '1',
           })
           .expect(204)
           .end(done);

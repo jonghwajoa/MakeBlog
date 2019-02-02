@@ -78,9 +78,10 @@ const Post = (() => {
       category: category.value,
     };
 
+    let createResult;
     try {
-      await ajaxUtil.sendPostAjax('/post/', params);
-      location.href = '/post/';
+      createResult = await ajaxUtil.sendPostAjax('/posts/', params);
+      location.href = `/posts/${JSON.parse(createResult).no}`;
     } catch (e) {
       alert(`작성 실패\n${e.responseText}`);
     }
@@ -93,7 +94,7 @@ const Post = (() => {
       reqeustPost = this.savePost[subNo];
     } else {
       try {
-        reqeustPost = await ajaxUtil.sendGetAjax(`/post/${postNo}/${subNo}`);
+        reqeustPost = await ajaxUtil.sendGetAjax(`/posts/${postNo}/${subNo}`);
         reqeustPost = JSON.parse(reqeustPost);
       } catch (e) {
         alert(`Server Error(${e.status})`);
@@ -107,25 +108,25 @@ const Post = (() => {
     this.postTitle.innerHTML = title;
     this.headTitle.innerHTML = `WeKnowJS ${title}`;
     this.editor.setValue(content.trim());
-    window.history.replaceState(null, '', `/post/${postNo}/${subNo}`);
+    window.history.replaceState(null, '', `/posts/${postNo}/${subNo}`);
     this.curSubNo = subNo;
 
     if (!this.savePost[subNo]) {
       this.savePost[subNo] = { ...reqeustPost };
     }
-    disqus.reload(`${postNo}/${subNo}`, `https://weknowjs.xyz/post/${postNo}/${subNo}`);
+    disqus.reload(`${postNo}/${subNo}`, `https://weknowjs.xyz/posts/${postNo}/${subNo}`);
   };
 
   // read 함수
   Post.prototype.deletePost = async function(postNo) {
     let message = '서브게시글을 삭제하시겠습니까?';
-    let url = `/post/${postNo}/${this.curSubNo}`;
-    let redirect = `/post/${postNo}`;
+    let url = `/posts/${postNo}/${this.curSubNo}`;
+    let redirect = `/posts/${postNo}`;
 
     if (this.curSubNo === 1) {
       message = '게시글을 삭제하시겠습니까..??\n서브게시글도 전부 삭제됩니다.';
-      url = `/post/${postNo}`;
-      redirect = '/post';
+      url = `/posts/${postNo}`;
+      redirect = '/posts';
     }
 
     let confirmflag = confirm(message);
@@ -143,9 +144,9 @@ const Post = (() => {
   };
 
   Post.prototype.updateView = async function(postNo) {
-    let path = `/post/${postNo}/${this.curSubNo}/edit`;
+    let path = `/posts/${postNo}/${this.curSubNo}/edit`;
     if (this.curSubNo === 1) {
-      path = `/post/${postNo}/edit`;
+      path = `/posts/${postNo}/edit`;
     }
     location.href = path;
   };
@@ -153,7 +154,6 @@ const Post = (() => {
   Post.prototype.submitSub = async function(postNo) {
     const title = this.postTitle.value;
     const content = this.editor.getMarkdown().trim();
-
     if (!title) {
       alert('제목을 입력하세요..');
       return false;
@@ -170,8 +170,8 @@ const Post = (() => {
     };
 
     try {
-      await ajaxUtil.sendPostAjax(`/post/${postNo}`, params);
-      location.href = `/post/${postNo}`;
+      await ajaxUtil.sendPostAjax(`/posts/${postNo}`, params);
+      location.href = `/posts/${postNo}`;
     } catch (e) {
       alert(`작성 실패\n${e.responseText}`);
     }
@@ -207,11 +207,11 @@ const Post = (() => {
       category: category.value,
     };
 
-    let url = `/post/${postNo}`;
+    let url = `/posts/${postNo}`;
 
     try {
       await ajaxUtil.sendPutAjax(url, params);
-      location.href = `/post/${postNo}`;
+      location.href = `/posts/${postNo}`;
     } catch (e) {
       alert(`업데이트 실패\n${e.responseText}`);
     }
@@ -236,11 +236,11 @@ const Post = (() => {
       content,
     };
 
-    let url = `/post/${postNo}/${subNo}`;
+    let url = `/posts/${postNo}/${subNo}`;
 
     try {
       await ajaxUtil.sendPutAjax(url, params);
-      location.href = `/post/${postNo}/${subNo}`;
+      location.href = `/posts/${postNo}/${subNo}`;
     } catch (e) {
       alert(`업데이트 실패\n${e.responseText}`);
     }
@@ -251,7 +251,7 @@ const Post = (() => {
 
     let result;
     try {
-      result = await ajaxUtil.sendPostAjax('/post/category/', { requestCategoryName });
+      result = await ajaxUtil.sendPostAjax('/posts/category/', { requestCategoryName });
     } catch (e) {
       alert(`${e.message}`);
       return;
@@ -276,7 +276,7 @@ const Post = (() => {
     let reqeustDeleteCategoryName = deleteSelect.value;
 
     try {
-      await ajaxUtil.sendDeleteAjax(`/post/category/${reqeustDeleteCategoryName}`);
+      await ajaxUtil.sendDeleteAjax(`/posts/category/${reqeustDeleteCategoryName}`);
     } catch (e) {
       alert(`${e.message}`);
       return;

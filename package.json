@@ -6,7 +6,7 @@
   "main": "index.js",
   "scripts": {
     "start": "set NODE_ENV=production&&node ./src/bin/www",
-    "dev": "set NODE_ENV=development&&nodemon -w ./src src/bin/www",
+    "dev": "set NODE_ENV=development&&nodemon -w ./src src/bin/www -i ./src/public",
     "product": "port=80 ssl_port=443 node ./src/bin/www",
     "test": "set NODE_ENV=test&&mocha -w src/route/post/post.spec.js",
     "testall": "set NODE_ENV=test&&mocha -w src/test/index.spec.js",

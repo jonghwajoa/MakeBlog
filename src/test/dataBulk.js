@@ -23,7 +23,7 @@ const solvingMain = [
   {
     title: '타이틀입니다아아',
     content: ' 콘텐트이니다.!!',
-    problemNum: 'Main',
+    problemNum: '1',
     url: ' ',
     category_cote_no: '1',
     writer: '1',
@@ -75,7 +75,7 @@ async function dbInit() {
     await models.CategoryCote.bulkCreate(categoryBulk);
     await models.Solving.bulkCreate(solvingMain);
   } catch (e) {
-    console.log(e);
+    console.error(e);
   }
 }
 

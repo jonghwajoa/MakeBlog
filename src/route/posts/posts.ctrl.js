@@ -9,7 +9,7 @@ const paramCheck = require('../../lib/validation');
 const createView = async (req, res) => {
   try {
     const category = await categoryDB.findAll();
-    return res.render('team/post/new', { category });
+    return res.render('team/posts/new', { category });
   } catch (e) {
     next(e);
   }
@@ -104,9 +104,9 @@ const list = async (req, res, next) => {
     today: req.today,
   };
 
-  let path = 'noauth/post/list';
+  let path = 'noauth/posts/list';
   if (req.session.isLogin) {
-    path = 'team/post/list';
+    path = 'team/posts/list';
   }
 
   return res.render(path, { ...returnObj });
@@ -131,9 +131,9 @@ const show = async (req, res, next) => {
     return res.json({ post, subPost });
   }
 
-  let path = 'noauth/post/read';
+  let path = 'noauth/posts/read';
   if (req.session.isLogin) {
-    path = 'team/post/read';
+    path = 'team/posts/read';
   }
 
   return res.render(path, { post, subPost });
@@ -209,7 +209,7 @@ const updateView = async (req, res, next) => {
     err.status = 404;
     return next(err);
   }
-  return res.render('team/post/update', { post, category });
+  return res.render('team/posts/update', { post, category });
 };
 
 const update = async (req, res, next) => {

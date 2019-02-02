@@ -25,7 +25,7 @@ let login = (() => {
 
     try {
       await ajaxUtil.sendPostAjax('/auth/login', { id, pw });
-      location.href = '/post/';
+      location.href = '/posts/';
     } catch (e) {
       return alert(e.message);
     }

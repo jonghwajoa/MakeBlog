@@ -24,27 +24,39 @@ let deleteNo;
  * 제거
  */
 
-describe('/Post는********************************', () => {
+let agent = request.agent(app);
+
+describe('/Posts는********************************', () => {
+  before(done => {
+    agent
+      .post('/auth/login')
+      .send({
+        id: 'jonghwa',
+        pw: 'jonghwapw',
+      })
+      .end(done);
+  });
+
   describe('GET / 요청시.....', () => {
     let body;
-    it('302와 /post 를 반환한다.', done => {
+    it('302와 반환한다.', done => {
       request(app)
         .get('/')
         .expect(302)
         .end((err, res) => {
-          res.header.should.have.property('location', '/post');
+          res.header.should.have.property('location', '/posts');
           done();
         });
     });
   });
 
-  /** GET /post
+  /** GET /posts
    *  success : html과 200을 반환한다.
    */
-  describe('GET /post 요청시.....', () => {
+  describe('GET /posts 요청시.....', () => {
     it('비로그인시 list page html로 200을 응답한다.', done => {
       request(app)
-        .get('/post')
+        .get('/posts')
         .expect('Content-Type', /html/)
         .expect(200)
         .end((err, res) => {
@@ -54,54 +66,45 @@ describe('/Post는********************************', () => {
     });
 
     it('로그인하고 list page요청시 html로 200을 응답한다.', done => {
-      let agent = request.agent(app);
       agent
-        .post('/auth/login')
-        .send({
-          id: 'jonghwa',
-          pw: 'jonghwapw',
-        })
+        .get('/posts')
+        .expect(200)
+        .expect('Content-Type', /html/)
+        .end(done);
+    });
+
+    it('page가 자연수가 아니면 400을 반환한다.', done => {
+      request(app)
+        .get('/posts?page=-1')
+        .expect('Content-Type', /html/)
+        .expect(400)
         .end((err, res) => {
-          agent
-            .get('/post')
-            .expect(200)
-            .expect('Content-Type', /html/)
-            .end(done);
+          body = res.body;
+          done();
         });
+    });
 
-      it('page가 자연수가 아니면 400을 반환한다.', done => {
-        request(app)
-          .get('/post?page=-1')
-          .expect('Content-Type', /html/)
-          .expect(400)
-          .end((err, res) => {
-            body = res.body;
-            done();
-          });
-      });
-
-      it('page가 자연수가 아니면 400을 반환한다.', done => {
-        request(app)
-          .get('/post?page=dasa')
-          .expect('Content-Type', /html/)
-          .expect(400)
-          .end((err, res) => {
-            body = res.body;
-            done();
-          });
-      });
+    it('page가 자연수가 아니면 400을 반환한다.', done => {
+      request(app)
+        .get('/posts?page=dasa')
+        .expect('Content-Type', /html/)
+        .expect(400)
+        .end((err, res) => {
+          body = res.body;
+          done();
+        });
     });
   });
 
-  /** GET /post/new
+  /** GET /posts/new
    * success : 로그인 상태에서 html과 200을 응답한다.
    * fail : 비로그인 상태 401을 반환한다.
    */
-  describe('GET /post/new 요청시...', () => {
+  describe('GET /posts/new 요청시...', () => {
     describe('실패시...', () => {
       it('비로그인상태에서 401과 html을 반환한다.', done => {
         request(app)
-          .get('/post/new')
+          .get('/posts/new')
           .expect('Content-Type', /html/)
           .expect(401)
           .end(done);
@@ -109,7 +112,7 @@ describe('/Post는********************************', () => {
 
       it('비로그인 상태에서 JSON으로 요청하면 401과 JSON을 응답한다.', done => {
         request(app)
-          .get('/post/new')
+          .get('/posts/new')
           .expect(401)
           .expect('Content-Type', /json/)
           .send({})
@@ -119,63 +122,54 @@ describe('/Post는********************************', () => {
 
     describe('성공시...', () => {
       it('로그인 상태에서 200과 html을 반환한다.', done => {
-        let agent = request.agent(app);
         agent
-          .post('/auth/login')
-          .send({
-            id: 'jonghwa',
-            pw: 'jonghwapw',
-          })
-          .end((err, res) => {
-            agent
-              .get('/post/new')
-              .expect(200)
-              .expect('Content-Type', /html/)
-              .end(done);
-          });
+          .get('/posts/new')
+          .expect(200)
+          .expect('Content-Type', /html/)
+          .end(done);
       });
     });
   });
 
-  /** GET /post/:id
+  /** GET /posts/:id
    *  success : 200으로 html을 반환한다. ,, JSON으로 요청한경우 JSON으로 응답한다
    *  fail : id는 자연수, 존재해야하는 자원
    */
-  describe('GET /post/:id', () => {
+  describe('GET /posts/:id', () => {
     describe('비로그인 상태에서....', () => {
       describe('실패시...', () => {
         describe('url로 요청한경우', () => {
           it('id가 자연수 아닌경우 400으로 응답한다', done => {
             request(app)
-              .get('/post/a')
+              .get('/posts/a')
               .expect(400)
               .end(done);
           });
 
           it('id가 자연수 아닌경우 400으로 응답한다', done => {
             request(app)
-              .get('/post/-')
+              .get('/posts/-')
               .expect(400)
               .end(done);
           });
 
           it('id가 음수인경우 400로 응답한다.', done => {
             request(app)
-              .get('/post/-10000')
+              .get('/posts/-10000')
               .expect(400)
               .end(done);
           });
 
           it('id가 0 인경우 400로 응답한다.', done => {
             request(app)
-              .get('/post/0')
+              .get('/posts/0')
               .expect(400)
               .end(done);
           });
 
           it('id가 없을경우 404로 응답한다.', done => {
             request(app)
-              .get('/post/99999')
+              .get('/posts/99999')
               .expect(404)
               .end(done);
           });
@@ -184,7 +178,7 @@ describe('/Post는********************************', () => {
         describe('JSON으로 요청한경우', () => {
           it('id가 없을 경우 상태코드404과 JSON 을 응답한다.', done => {
             request(app)
-              .get('/post/6688')
+              .get('/posts/6688')
               .send({})
               .expect(404)
               .expect('Content-Type', /json/)
@@ -193,7 +187,7 @@ describe('/Post는********************************', () => {
 
           it('id가 자연수가 아닌경우 400을 응답한다', done => {
             request(app)
-              .get('/post/-1')
+              .get('/posts/-1')
               .send({})
               .expect(400)
               .expect('Content-Type', /json/)
@@ -206,7 +200,7 @@ describe('/Post는********************************', () => {
         describe('url로 요청한경우', () => {
           it('상태코드200과 html을 반환한다.', done => {
             request(app)
-              .get('/post/1')
+              .get('/posts/1')
               .expect(200)
               .expect('Content-Type', /html/)
               .end(done);
@@ -217,7 +211,7 @@ describe('/Post는********************************', () => {
           let body;
           before(done => {
             request(app)
-              .get('/post/1')
+              .get('/posts/1')
               .send({})
               .expect(200)
               .expect('Content-Type', /json/)
@@ -229,7 +223,7 @@ describe('/Post는********************************', () => {
 
           it('상태코드200과 JSON 을 응답한다.', done => {
             request(app)
-              .get('/post/1')
+              .get('/posts/1')
               .send({})
               .expect(200)
               .expect('Content-Type', /json/)
@@ -248,15 +242,15 @@ describe('/Post는********************************', () => {
     });
   });
 
-  /** POST /post/ 요청시
+  /** POST /posts/ 요청시
    * case success : 로그인상태
    * case fail : 비로그인, title,tag,content,category 누락
    */
-  describe('POST /post/ 요청시....', () => {
+  describe('POST /posts/ 요청시....', () => {
     describe('비로그인 상태에서...', () => {
       it('권한없음 401과 unauthorized 반환한다.', done => {
         request(app)
-          .post('/post')
+          .post('/posts')
           .send(WritePostVal)
           .expect(401)
           .expect('Content-Type', /json/)
@@ -268,21 +262,10 @@ describe('/Post는********************************', () => {
     });
 
     describe('로그인 상태에서...', () => {
-      let agent = request.agent(app);
-      before(done => {
-        agent
-          .post('/auth/login')
-          .send({
-            id: 'jonghwa',
-            pw: 'jonghwapw',
-          })
-          .end(done);
-      });
-
       describe('실패시...', () => {
         it('모든 입력값은 String이지 않으면 400을 반환한다.', done => {
           agent
-            .post('/post')
+            .post('/posts')
             .send({
               title: '5번',
               tag: '#아무거나 #갑시다 #히히',
@@ -296,7 +279,7 @@ describe('/Post는********************************', () => {
 
         it('title 누락시 400을 반환', done => {
           agent
-            .post('/post')
+            .post('/posts')
             .send({
               tag: '#아무거나 #갑시다 #히히',
               content: '1번글 content입니다.',
@@ -309,7 +292,7 @@ describe('/Post는********************************', () => {
 
         it('tag 누락시 400을 반환', done => {
           agent
-            .post('/post')
+            .post('/posts')
             .send({
               title: '5번',
               content: '1번글 content입니다.',
@@ -322,7 +305,7 @@ describe('/Post는********************************', () => {
 
         it('cotent 누락시 400을 반환', done => {
           agent
-            .post('/post')
+            .post('/posts')
             .send({
               title: '5번',
               tag: '#아무거나 #갑시다 #히히',
@@ -337,7 +320,7 @@ describe('/Post는********************************', () => {
           let body;
           it('201을 Json 타입을 반환한다.', done => {
             agent
-              .post('/post')
+              .post('/posts')
               .send({
                 title: '5번입니다하하',
                 tag: '#아무거나 #갑시다 #히히',
@@ -361,36 +344,25 @@ describe('/Post는********************************', () => {
     });
   });
 
-  /** GET /post/:id/edit
+  /** GET /posts/:id/edit
    *  success : 200과 html을 반환한다.
    *  fail : 비로그인상태, id가 자연수가 아닌경우, id가 없는경우
    */
-  describe('GET /post/:id/edit 요청시...', () => {
+  describe('GET /posts/:id/edit 요청시...', () => {
     describe('비로그인 상태에서....', () => {
       it('세션이 없다면 401과 html을 응답한다...', done => {
         request(app)
-          .get('/post/1/edit')
+          .get('/posts/1/edit')
           .expect(401)
           .expect('Content-Type', /html/)
           .end(done);
       });
     });
     describe('로그인 상태에서....', () => {
-      let agent = request.agent(app);
-      before(done => {
-        agent
-          .post('/auth/login')
-          .send({
-            id: 'jonghwa',
-            pw: 'jonghwapw',
-          })
-          .end(done);
-      });
-
       describe('실패시....', () => {
         it('id값이 자연수가 아닌경우 400, html 반환한다.', done => {
           agent
-            .get('/post/a/edit')
+            .get('/posts/a/edit')
             .expect(400)
             .expect('Content-Type', /html/)
             .end(done);
@@ -398,7 +370,7 @@ describe('/Post는********************************', () => {
 
         it('존재하지 않는 id값 이라면 404를 반환한다.', done => {
           agent
-            .get('/post/79999/edit')
+            .get('/posts/79999/edit')
             .expect(404)
             .expect('Content-Type', /html/)
             .end(done);
@@ -408,7 +380,7 @@ describe('/Post는********************************', () => {
       describe('성공시....', () => {
         it('성공시 200과 html을 반환한다.', done => {
           agent
-            .get('/post/1/edit')
+            .get('/posts/1/edit')
             .expect(200)
             .expect('Content-Type', /html/)
             .end(done);
@@ -417,37 +389,27 @@ describe('/Post는********************************', () => {
     });
   });
 
-  /** PUT /post/:id
+  /** PUT /posts/:id
    *  success :
    *  fail : 비로그인, id가 자연수가 아닌경우, 없는 리소스
    *
    */
-  describe('PUT /post/:id 요청시...', () => {
+  describe('PUT /posts/:id 요청시...', () => {
     describe('비로그인 상태에서...', () => {
       it('401과 html을 응답한다.', done => {
         request(app)
-          .get('/post/1/new')
+          .get('/posts/1/new')
           .expect('Content-Type', /html/)
           .expect(401)
           .end(done);
       });
     });
 
-    let agent = request.agent(app);
     describe('로그인 상태에서...', () => {
-      before(done => {
-        agent
-          .post('/auth/login')
-          .send({
-            id: 'jonghwa',
-            pw: 'jonghwapw',
-          })
-          .end(done);
-      });
       describe('실패시...', () => {
         it('id값이 자연수가 아닌경우 400, html 반환한다.', done => {
           agent
-            .put('/post/a')
+            .put('/posts/a')
             .expect(400)
             .expect('Content-Type', /html/)
             .end(done);
@@ -455,7 +417,7 @@ describe('/Post는********************************', () => {
 
         it('모든 입력값은 String이지 않으면 400을 반환한다.', done => {
           agent
-            .put('/post/1')
+            .put('/posts/1')
             .send({
               title: '5번',
               tag: '#아무거나 #갑시다 #히히',
@@ -469,7 +431,7 @@ describe('/Post는********************************', () => {
 
         it('title 누락시 400을 반환', done => {
           agent
-            .put('/post/1')
+            .put('/posts/1')
             .send({
               tag: '#아무거나 #갑시다 #히히',
               content: '1번글 content입니다.',
@@ -482,7 +444,7 @@ describe('/Post는********************************', () => {
 
         it('tag 누락시 400을 반환', done => {
           agent
-            .put('/post/1')
+            .put('/posts/1')
             .send({
               title: '5번',
               content: '1번글 content입니다.',
@@ -495,7 +457,7 @@ describe('/Post는********************************', () => {
 
         it('cotent 누락시 400을 반환', done => {
           agent
-            .put('/post/1')
+            .put('/posts/1')
             .send({
               title: '5번',
               tag: '#아무거나 #갑시다 #히히',
@@ -508,7 +470,7 @@ describe('/Post는********************************', () => {
 
         it('존재하지 않는 id 입력시 404를 응답한다....', done => {
           agent
-            .put('/post/999999999')
+            .put('/posts/999999999')
             .send({
               title: '5번',
               tag: '#수정 #성공 #합시다.',
@@ -523,7 +485,7 @@ describe('/Post는********************************', () => {
       describe('성공시...', () => {
         it('204를 반환한다...', done => {
           agent
-            .put('/post/1')
+            .put('/posts/1')
             .send({
               title: '5번',
               tag: '#수정 #성공 #합시다.',
@@ -537,15 +499,15 @@ describe('/Post는********************************', () => {
     });
   });
 
-  /** DELETE /post/:id
+  /** DELETE /posts/:id
    *  success : 204를 응답한다.
    *  fail : 비로그인시, 아이디가 자연수가 아닌경우, 아이디가 없는경우
    */
-  describe('DELETE /post/:id 요청시...', () => {
+  describe('DELETE /posts/:id 요청시...', () => {
     describe('비로그인시...', () => {
       it('세션이 없으면 401과 json을 반환한다.', done => {
         request(app)
-          .delete('/post/5')
+          .delete('/posts/5')
           .send({})
           .expect(401)
           .expect('Content-Type', /json/)
@@ -553,21 +515,11 @@ describe('/Post는********************************', () => {
       });
     });
 
-    let agent = request.agent(app);
     describe('로그인 상태에서...', () => {
-      before(done => {
-        agent
-          .post('/auth/login')
-          .send({
-            id: 'jonghwa',
-            pw: 'jonghwapw',
-          })
-          .end(done);
-      });
       describe('실패시...', () => {
         it('id값이 자연수가 아닌경우 400, html 반환한다.', done => {
           agent
-            .delete('/post/a')
+            .delete('/posts/a')
             .expect(400)
             .expect('Content-Type', /html/)
             .end(done);
@@ -575,7 +527,7 @@ describe('/Post는********************************', () => {
 
         it('id값이 없는경우 404과 html을 반환한다.', done => {
           agent
-            .delete('/post/999999')
+            .delete('/posts/999999')
             .expect(404)
             .expect('Content-Type', /html/)
             .end(done);
@@ -583,7 +535,7 @@ describe('/Post는********************************', () => {
 
         it('id값이 없고 JSON으로 요청한경우 404, json 반환한다.', done => {
           agent
-            .delete('/post/999999')
+            .delete('/posts/999999')
             .send({})
             .expect(404)
             .expect('Content-Type', /json/)
@@ -593,7 +545,7 @@ describe('/Post는********************************', () => {
       describe('성공시...', () => {
         it('204를 응답한다..', done => {
           agent
-            .delete(`/post/${deleteNo}`)
+            .delete(`/posts/${deleteNo}`)
             .expect(204)
             .end(done);
         });

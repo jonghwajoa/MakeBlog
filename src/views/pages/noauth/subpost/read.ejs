@@ -11,7 +11,7 @@
     <meta http-equiv="Pragma" content="no-cache" />
     
     <% include ../../../partials/essentialCss.ejs %>
-    <link rel='stylesheet' href='/css/post/read.css' />
+    <link rel='stylesheet' href='/css/posts/read.css' />
     
 </head>
 
@@ -80,9 +80,9 @@
         
         <noscript>Please enable JavaScript</noscript>
         <script src="/js/disqus/disqus.js"></script>
-        <script>let disqus = new Disqus("https://weknowjs.xyz/post/<%=home%>/<%=post.sub_no %>",'<%=home%>/<%=post.sub_no %>') </script>
+        <script>let disqus = new Disqus("https://weknowjs.xyz/posts/<%=home%>/<%=post.sub_no %>",'<%=home%>/<%=post.sub_no %>') </script>
         <script src="/js/util/ajaxUtil.js"></script>
-        <script src="/js/post/post.js"></script>
+        <script src="/js/posts/posts.js"></script>
         <script>
             const postRead = new Post();
             postRead.readInit();

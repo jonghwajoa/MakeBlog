@@ -2,23 +2,25 @@
 <html lang="ko">
 
 <head>
-    <title id="headTitle">WeKnowJS-<%=post.title%></title>
-    <meta charset="UTF-8">
+    <title id="headTitle">WeKnowJS <%=post.title%></title>
+    <meta charset="UTF-8" />
     <meta name="author" content="JongHwa" />
-    <meta name="description" content="포스트 일기, Post read Page" />
+    <meta name="description" content="게시글 페이지, Post Read Page" />
     <meta name="generator" content="Visual Studio Code" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="Cache-Control" content="no-cache" />
-    <meta name="Pragma" content="no-cache" />
+    <meta http-equiv="Cache-Control" content="no-cache" />
+    <meta http-equiv="Pragma" content="no-cache" />
 
     <% include ../../../partials/essentialCss.ejs %>
-    <link rel='stylesheet' href='/css/post/read.css' />
+    <link rel='stylesheet' href='/css/posts/read.css' />
     
 </head>
 
 <body>
-    <% include ../../../partials/headerTeam.ejs %>
+    <% include ../../../partials/header.ejs %>
     <% include ../../../partials/editorViewer.ejs %>
+
+    
     <div class="content-wrap">
         <div class='content-header'>
             <div class='post-intro'>
@@ -30,9 +32,10 @@
                     <dd id="createDate">
                         <%= post.created_at %>
                     </dd>
-                    <dd>| view</dd>
+                    <dd>
+                        | view
+                    </dd>
                     </dt>
-
                     <dt>
                     <dd id="viewCount">
                         <%= post.count %>
@@ -40,24 +43,18 @@
                     </dt>
                 </dl>
             </div>
-
-            <div class="manageArea">
-                <a href="/post/<%=post.no%>/new">
-                    <input type="button" value='서브글 작성' />
-                </a>
-                <input type="button" value='수정하기' id='update' onclick="postRead.updateView('<%= post.no%>')"/>
-                <input type="button" value='삭제하기' id='delete' onclick="postRead.deletePost('<%= post.no%>')" />
-            </div>
         </div>
         <!-- /content-header -->
 
 
+        <!-- content-content -->
         <div class='content-content'>
             <div class="content-text" id ='content-text'>
                 <input type="hidden" id="postContent" value="<%= post.content %>" />
             </div>
             <!-- /content-text -->
             
+            <!-- content-side -->
             <div class="content-side">
                 <div class='sidepost'>
                     <div class='sideTop'>
@@ -72,9 +69,9 @@
                     </div>
                 </div>
              </div>
-             <!-- /cotentside -->
+             <!-- //cotent-side -->
         </div>
-        <!-- /content-content -->
+        <!-- //content-content -->
 
         <div>
             <div id="disqus_thread"></div>
@@ -87,28 +84,15 @@
     <% include ../../../partials/footer.ejs %>
 
     <noscript>Please enable JavaScript</noscript>
+    <script src="/js/disqus/disqus.js"></script>
+    <script>let disqus = new Disqus("https://weknowjs.xyz/posts/post<%=post.no%>sub1",'post<%=post.no%>sub1') </script>
     <script src="/js/util/ajaxUtil.js"></script>
-    <script src="/js/post/post.js"></script>
-    
+    <script src="/js/posts/posts.js"></script>
     <script>
-        window.onload = function () {
-            const disqus_config = function () {
-                this.page.url = '/post/<%=post.no%>';
-                this.page.identifier = `<%=post.no%>`;
-            };
-
-            (function () { // DON'T EDIT BELOW THIS LINE
-                var d = document, s = d.createElement('script');
-                s.src = 'https://weknowjs-xyz.disqus.com/embed.js';
-                s.setAttribute('data-timestamp', +new Date());
-                (d.head || d.body).appendChild(s);
-            })();
-        }
-      const postRead = new Post();
-      postRead.readInit();
-
+        const postRead = new Post();
+        postRead.readInit();
     </script>
-
+ 
 
 </body>
 

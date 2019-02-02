@@ -2,25 +2,23 @@
 <html lang="ko">
 
 <head>
-    <title id="headTitle">WeKnowJS <%=post.title%></title>
-    <meta charset="UTF-8" />
+    <title id="headTitle">WeKnowJS-<%=post.title%></title>
+    <meta charset="UTF-8">
     <meta name="author" content="JongHwa" />
-    <meta name="description" content="게시글 페이지, Post Read Page" />
+    <meta name="description" content="포스트 일기, Post read Page" />
     <meta name="generator" content="Visual Studio Code" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta http-equiv="Cache-Control" content="no-cache" />
-    <meta http-equiv="Pragma" content="no-cache" />
+    <meta name="Cache-Control" content="no-cache" />
+    <meta name="Pragma" content="no-cache" />
 
     <% include ../../../partials/essentialCss.ejs %>
-    <link rel='stylesheet' href='/css/post/read.css' />
+    <link rel='stylesheet' href='/css/posts/read.css' />
     
 </head>
 
 <body>
-    <% include ../../../partials/header.ejs %>
+    <% include ../../../partials/headerTeam.ejs %>
     <% include ../../../partials/editorViewer.ejs %>
-
-    
     <div class="content-wrap">
         <div class='content-header'>
             <div class='post-intro'>
@@ -32,10 +30,9 @@
                     <dd id="createDate">
                         <%= post.created_at %>
                     </dd>
-                    <dd>
-                        | view
-                    </dd>
+                    <dd>| view</dd>
                     </dt>
+
                     <dt>
                     <dd id="viewCount">
                         <%= post.count %>
@@ -43,18 +40,24 @@
                     </dt>
                 </dl>
             </div>
+
+            <div class="manageArea">
+                <a href="/posts/<%=post.no%>/new">
+                    <input type="button" value='서브글 작성' />
+                </a>
+                <input type="button" value='수정하기' id='update' onclick="postRead.updateView('<%= post.no%>')"/>
+                <input type="button" value='삭제하기' id='delete' onclick="postRead.deletePost('<%= post.no%>')" />
+            </div>
         </div>
         <!-- /content-header -->
 
 
-        <!-- content-content -->
         <div class='content-content'>
             <div class="content-text" id ='content-text'>
                 <input type="hidden" id="postContent" value="<%= post.content %>" />
             </div>
             <!-- /content-text -->
             
-            <!-- content-side -->
             <div class="content-side">
                 <div class='sidepost'>
                     <div class='sideTop'>
@@ -69,9 +72,9 @@
                     </div>
                 </div>
              </div>
-             <!-- //cotent-side -->
+             <!-- /cotentside -->
         </div>
-        <!-- //content-content -->
+        <!-- /content-content -->
 
         <div>
             <div id="disqus_thread"></div>
@@ -85,14 +88,14 @@
 
     <noscript>Please enable JavaScript</noscript>
     <script src="/js/disqus/disqus.js"></script>
-    <script>let disqus = new Disqus("https://weknowjs.xyz/post/post<%=post.no%>sub1",'post<%=post.no%>sub1') </script>
+    <script>let disqus = new Disqus("https://weknowjs.xyz/posts/post<%=post.no%>sub1",'post<%=post.no%>sub1') </script>
     <script src="/js/util/ajaxUtil.js"></script>
-    <script src="/js/post/post.js"></script>
+    <script src="/js/posts/posts.js"></script>
     <script>
         const postRead = new Post();
         postRead.readInit();
     </script>
- 
+
 
 </body>
 

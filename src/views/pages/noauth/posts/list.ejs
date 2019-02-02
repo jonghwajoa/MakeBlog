@@ -4,30 +4,25 @@
     <title>WeKnowJS-PostList</title>
     <meta charset="UTF-8" />
     <meta name="author" content="JongHwa" />
-    <meta name="description" content="포스트 리스트 페이지, Post List Page" />
+    <meta name="description" content="게시글 리스트 페이지, Posts List Page" />
     <meta name="generator" content="Visual Studio Code" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-   
+
     <% include ../../../partials/essentialCss.ejs %>
-    <link rel="stylesheet" href="/css/post/list.css" />
+    <link rel="stylesheet" href="/css/posts/list.css" />
   </head>
 
   <body>
-    <% include ../../../partials/headerTeam.ejs %>
+    <% include ../../../partials/header.ejs %>
 
     <div class="content-wrap">
       <div class="flex-container">
         <div class='post-area'>
-          <div class="create-btn">
-            <a href="/post/new"> <input type="button" value="글등록" /> </a>
-          </div>
-
-
           <% postList.forEach((item,index) => { %>
           <div class="post">
             <span class="post-tag"><%= item.tag %></span>
 
-            <h3><a href="/post/<%=item.no %>"><%= item.title %></a></h3>
+            <h3><a href="/posts/<%=item.no %>"><%= item.title %></a></h3>
 
             <div class="postInfo">
               <span><%= item.created_at %> | view <%= item.count %> </span>
@@ -38,19 +33,19 @@
           <div class="paging">
             <% if(pagingInfo.page >10) { %>
             <div class="pagingArrow">
-              <a href="/post?page=<%=pagingInfo.startPage -1%>">&lt;</a>
+              <a href="/posts?page=<%=pagingInfo.startPage -1%>">&lt;</a>
             </div>
             <% } %> <% for (let i=pagingInfo.startPage; i <= pagingInfo.endPage
             ; i++) { %>
             <div class="pagingNum">
               <% if(parseInt(pagingInfo.page) === i) { %>
-              <a href="/post?page=<%=i%>" class="targetPage"><%= i %></a> <%
-              }else { %> <a href="/post?page=<%=i%>"><%= i %></a> <% } %>
+              <a href="/posts?page=<%=i%>" class="targetPage"><%= i %></a> <%
+              }else { %> <a href="/posts?page=<%=i%>"><%= i %></a> <% } %>
             </div>
 
             <% } %> <% if (pagingInfo.endPage < pagingInfo.totalPage) { %>
             <div class="pagingArrow">
-              <a href="/post?page=<%=pagingInfo.endPage +1%>">&gt;</a>
+              <a href="/posts?page=<%=pagingInfo.endPage +1%>">&gt;</a>
             </div>
             <% } %>
           </div>
@@ -74,7 +69,7 @@
           <ul>
             <% hotPost.forEach((item,index) => { %>
             <li>
-              <a href="/post/<%=item.no%>">
+              <a href="/posts/<%=item.no%>">
                 <span><%= index+1 %> <%= item.title %></span>
               </a>
             </li>
@@ -87,7 +82,7 @@
           <ul>
             <% hotSubPost.forEach((item,index) => { %>
             <li>
-              <a href="/post/<%=item.post_no%>/<%=item.sub_no%>">
+              <a href="/posts/<%=item.post_no%>/<%=item.sub_no%>">
                 <span><%= index+1 %></span> <span><%= item.title %></span>
               </a>
             </li>

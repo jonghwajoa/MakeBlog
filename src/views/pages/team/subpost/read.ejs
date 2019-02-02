@@ -12,7 +12,7 @@
     <meta name="Pragma" content="no-cache" />
 
     <% include ../../../partials/essentialCss.ejs %>
-    <link rel='stylesheet' href='/css/post/read.css' />
+    <link rel='stylesheet' href='/css/posts/read.css' />
     
 </head>
 
@@ -39,7 +39,7 @@
                     </dl>
                 </div>
                 <div class="manageArea">
-                        <a href="/post/<%=post.no%>/new">
+                        <a href="/posts/<%=post.no%>/new">
                             <input type="button" value='서브글 작성' />
                         </a>
                             <input type="button" value='수정하기' id='update' onclick='postRead.updateView("<%=home%>")' />
@@ -65,7 +65,7 @@
                         <div class='subpost'>
                             <a onclick="postRead.getContent('<%=home%>')">Home</a>
                             <% subPost.forEach((item,index) => { %>
-                            <a onclick="postRead.getContent('<%=home%>','<%=item.sub_no %>')" >
+                            <a onclick="postRead.getContent('<%=home%>','<%=item.sub_no %>')" class="subpost_element">
                                 <%=item.title %></a>
                             <% }) %>
                         </div>
@@ -84,28 +84,15 @@
 
         <% include ../../../partials/footer.ejs %>
 
-            <noscript>Please enable JavaScript</noscript>
-            <script src="/js/util/ajaxUtil.js"></script>
-            <script src="/js/post/post.js"></script>
-            <script>
-                window.onload = function () {
-                    const disqus_config = function () {
-                        this.page.url = '/post/<%=home%>/<%= post.no %>';  // Replace PAGE_URL with your page's canonical URL variable
-                        this.page.identifier = `<%=home%>/<%= post.no %>`;; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
-                    };
-
-                    (function () { // DON'T EDIT BELOW THIS LINE
-                        var d = document, s = d.createElement('script');
-                        s.src = 'https://weknowjs-xyz.disqus.com/embed.js';
-                        s.setAttribute('data-timestamp', +new Date());
-                        (d.head || d.body).appendChild(s);
-                    })();
-
-                    
-                }
-                const postRead = new Post();
-                postRead.readInit();
-            </script>
+        <noscript>Please enable JavaScript</noscript>
+        <script src="/js/disqus/disqus.js"></script>
+        <script>let disqus = new Disqus("https://weknowjs.xyz/posts/<%=home%>/<%=post.sub_no %>",'<%=home%>/<%=post.sub_no %>') </script>
+        <script src="/js/util/ajaxUtil.js"></script>
+        <script src="/js/posts/posts.js"></script>
+        <script>
+            const postRead = new Post();
+            postRead.readInit();
+        </script>
 
 
 </body>

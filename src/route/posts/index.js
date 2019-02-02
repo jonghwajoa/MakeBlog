@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const multer = require('multer');
 const bcrypt = require('bcrypt');
-const ctrl = require('./post.ctrl');
+const ctrl = require('./posts.ctrl');
 const { paramIsINT } = require('../../lib/middleware/checkParam');
 const needsAuth = require('../../lib/middleware/needsAuth');
 
@@ -39,7 +39,7 @@ router
   .post(needsAuth)
   .put(needsAuth)
   .delete(needsAuth);
-router.get(['/new', '/:id/new', '/:id/edit', '/:id/:subId/edit']);
+router.get(['/new', '/:id/new', '/:id/edit', '/:id/:subId/edit'], needsAuth);
 
 /* post route */
 router
