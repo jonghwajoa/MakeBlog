@@ -39,7 +39,7 @@
           <div class="category-add">
             <label for="category-add">카테고리 추가</label>
             <input type="text" class="category-input" id="category-add" />
-            <button onclick="postWrite.addCategory()">추가</button>
+            <button onclick="post.addCategory()">추가</button>
           </div>
           <!-- //category-add -->
 
@@ -51,7 +51,7 @@
               <option value="<%=e.no%>"> <%=e.explain %> </option>
               <% }) %>
             </select>
-            <button onclick="postWrite.deleteCategory()">삭제</button>
+            <button onclick="post.deleteCategory()">삭제</button>
           </div>
           <!-- //category-delete -->
         </div>
@@ -60,7 +60,7 @@
         <div id="editSection" id="content" name="content"></div>
 
         <button class="custom" onclick="back()">뒤로가기</button>
-        <button class="custom" id="submit" onclick="postWrite.submit()">작성하기</button>
+        <button class="custom" id="submit" onclick="post.submit()">작성하기</button>
       </div>
       <!-- //container -->
     </div>
@@ -69,8 +69,9 @@
     <script src="/js/util/ajaxUtil.js"></script>
     <script src="/js/posts/posts.js"></script>
     <script>
-      const postWrite = new Post();
-      postWrite.writeInit();
+      document.addEventListener('DOMContentLoaded', function() {
+        post.writeInit();
+      });
     </script>
   </body>
 </html>

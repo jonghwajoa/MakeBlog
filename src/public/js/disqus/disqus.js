@@ -18,8 +18,6 @@ class Disqus {
   }
 
   reload(newIdentifier, newUrl) {
-    console.log(newIdentifier);
-    console.log(newUrl);
     window.DISQUS.reset({
       reload: true,
       config: function() {

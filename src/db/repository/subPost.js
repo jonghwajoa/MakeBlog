@@ -28,7 +28,7 @@ const findHotPost = () => {
   });
 };
 
-const findByPostNo = id => {
+const findAllSubPost = id => {
   return SubPosts.findAll({
     where: {
       post_no: id,
@@ -47,11 +47,7 @@ const findDetailByPostNo = (postId, subId) => {
       'content',
       'count',
       [
-        SubPosts.sequelize.fn(
-          'date_format',
-          SubPosts.sequelize.col('created_at'),
-          '%Y-%m-%d',
-        ),
+        SubPosts.sequelize.fn('date_format', SubPosts.sequelize.col('created_at'), '%Y-%m-%d'),
         'created_at',
       ],
     ],
@@ -76,7 +72,7 @@ const deleteByForeignkey = id => {
 
 module.exports = {
   create,
-  findByPostNo,
+  findAllSubPost,
   findDetailByPostNo,
   findHotPost,
   findById,

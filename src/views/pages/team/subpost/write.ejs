@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ko">
   <head>
-    <title>WeKnowJS-서브글 작성중</title>
+    <title>WeKnowJS 서브글 작성중</title>
     <meta name="author" content="JongHwa" />
     <meta name="description" content="서브 포스트 작성 페이지 , SubPost Write Page" />
     <meta name="generator" content="Visual Studio Code" />
@@ -24,7 +24,7 @@
         <div id="editSection" id="content" name="content"></div>
 
         <button class="custom" onclick="back()">뒤로가기</button>
-        <button class="custom" id="submit" onclick="postWrite.submitSub('<%=no%>')">
+        <button class="custom" id="submit" onclick="post.submitSub('<%=no%>')">
           작성하기
         </button>
       </div>
@@ -35,8 +35,9 @@
     <script src="/js/posts/posts.js"></script>
 
     <script>
-      const postWrite = new Post();
-      postWrite.writeInit();
+      document.addEventListener('DOMContentLoaded', function() {
+        post.writeInit();
+      });
     </script>
   </body>
 </html>

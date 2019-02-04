@@ -67,7 +67,6 @@ const list = async (req, res, next) => {
   let postList, totalCnt, pagingInfo;
   let hotPost, hotSubPost, monthCount, totalCount;
   let requestPage = req.query.page || 1;
-
   if (!paramCheck.isUINT(requestPage)) {
     const err = new Error('Bad Request');
     err.status = 400;
@@ -121,7 +120,7 @@ const show = async (req, res, next) => {
     if (!post) {
       return next();
     }
-    subPost = await subPostDB.findByPostNo(id);
+    subPost = await subPostDB.findAllSubPost(id);
     post.updateAttributes({ count: post.dataValues.count + 1 });
   } catch (e) {
     return next(e);
@@ -160,15 +159,18 @@ const showSubPost = async (req, res, next) => {
     post = await subPostDB.findDetailByPostNo(id, subId);
     if (!post) return next();
     post.updateAttributes({ count: post.dataValues.count + 1 });
-    subPost = await subPostDB.findByPostNo(id, subId);
+
+    subPost = await subPostDB.findAllSubPost(id, subId);
   } catch (e) {
     return next(e);
   }
 
+  let path = 'noauth/subpost/read';
   if (req.session.isLogin) {
-    return res.render('team/subpost/read', { post, subPost, home: id });
+    path = 'team/subpost/read';
   }
-  return res.render('noauth/subpost/read', { post, subPost, home: id });
+
+  return res.render(path, { post, subPost, home: id });
 };
 
 const getContent = async (req, res, next) => {
@@ -308,6 +310,10 @@ const addCategory = async (req, res, next) => {
   const { requestCategoryName } = req.body;
   let result;
 
+  if (!requestCategoryName) {
+    return res.status(400).end();
+  }
+
   try {
     result = await categoryDB.find(requestCategoryName);
     if (result !== null) {
@@ -319,7 +325,7 @@ const addCategory = async (req, res, next) => {
     next(e);
   }
 
-  return res.json({
+  return res.status(201).json({
     message: '카테고리 추가 성공',
     no: result.dataValues.no,
   });
@@ -367,7 +373,3 @@ module.exports = {
   removeCategory,
 };
 
-/**
- * 파일업로드
- * 카테고리추가
- */

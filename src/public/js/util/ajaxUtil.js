@@ -99,7 +99,7 @@ const ajaxUtil = {
           reject(xhr);
         }
       };
-      xhr.open('POST', '/post/file', true);
+      xhr.open('POST', '/posts/file', true);
       xhr.send(formData);
       xhr.onerror = () => reject(req.status);
     });

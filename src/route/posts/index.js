@@ -50,7 +50,6 @@ router
 router.get('/new', ctrl.createView);
 router.post('/file', upload.array('photo'), ctrl.uploadImage);
 router.route('/category').post(ctrl.addCategory);
-
 router.route('/category/:id').delete(ctrl.removeCategory);
 
 router.route('/:id').all(paramIsINT);

@@ -114,7 +114,6 @@ const Post = (() => {
     if (!this.savePost[subNo]) {
       this.savePost[subNo] = { ...reqeustPost };
     }
-    disqus.reload(`${postNo}/${subNo}`, `https://weknowjs.xyz/posts/${postNo}/${subNo}`);
   };
 
   // read 함수
@@ -343,3 +342,5 @@ const Post = (() => {
 
   return Post;
 })();
+
+post = new Post();

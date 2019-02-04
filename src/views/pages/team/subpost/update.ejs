@@ -26,7 +26,7 @@
           <p hidden id="hiddenContent"><%- post.content %></p>
         </div>
         <button class="custom" onclick="back()">뒤로가기</button>
-        <button class="custom" onclick='postUpdate.updateSub("<%=home%>","<%=post.sub_no%>")'>
+        <button class="custom" onclick='post.updateSub("<%=home%>","<%=post.sub_no%>")'>
           수정하기
         </button>
       </div>
@@ -36,8 +36,9 @@
     <script src="/js/util/ajaxUtil.js"></script>
     <script src="/js/posts/posts.js"></script>
     <script>
-      const postUpdate = new Post();
-      postUpdate.updateInit();
+      document.addEventListener('DOMContentLoaded', function() {
+        post.updateInit();
+      });
     </script>
   </body>
 </html>

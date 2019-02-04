@@ -45,8 +45,8 @@
                 <a href="/posts/<%=post.no%>/new">
                     <input type="button" value='서브글 작성' />
                 </a>
-                <input type="button" value='수정하기' id='update' onclick="postRead.updateView('<%= post.no%>')"/>
-                <input type="button" value='삭제하기' id='delete' onclick="postRead.deletePost('<%= post.no%>')" />
+                <input type="button" value='수정하기' id='update' onclick="post.updateView('<%= post.no%>')"/>
+                <input type="button" value='삭제하기' id='delete' onclick="post.deletePost('<%= post.no%>')" />
             </div>
         </div>
         <!-- /content-header -->
@@ -64,9 +64,9 @@
                         <h2>Sub post</h2>
                     </div>
                     <div class='subpost'>
-                        <a onclick="postRead.getContent('<%=post.no%>')">Home</a>
+                        <a onclick="post.getContent('<%=post.no%>')">Home</a>
                         <% subPost.forEach((item,index) => { %>
-                        <a onclick="postRead.getContent('<%=post.no%>','<%=item.sub_no %>')" class="subpost_element">
+                        <a onclick="post.getContent('<%=post.no%>','<%=item.sub_no %>')" class="subpost_element">
                             <%=item.title %></a>
                         <% }) %>
                     </div>
@@ -88,12 +88,13 @@
 
     <noscript>Please enable JavaScript</noscript>
     <script src="/js/disqus/disqus.js"></script>
-    <script>let disqus = new Disqus("https://weknowjs.xyz/posts/post<%=post.no%>sub1",'post<%=post.no%>sub1') </script>
     <script src="/js/util/ajaxUtil.js"></script>
     <script src="/js/posts/posts.js"></script>
     <script>
-        const postRead = new Post();
-        postRead.readInit();
+        document.addEventListener("DOMContentLoaded", function(){ 
+            let disqus = new Disqus("https://weknowjs.xyz/posts/<%=post.no%>",'<%=post.no%>')
+            post.readInit();
+        })
     </script>
 
 

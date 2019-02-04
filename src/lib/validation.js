@@ -46,7 +46,7 @@ const isLength = (val, min, max = Number.MAX_SAFE_INTEGER) => {
 };
 
 const isUINT = num => {
-  num = parseInt(num);
+  num = Number(num);
   return num > 0;
 };
 

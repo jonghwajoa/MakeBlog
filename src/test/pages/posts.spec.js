@@ -38,7 +38,6 @@ describe('/Posts는********************************', () => {
   });
 
   describe('GET / 요청시.....', () => {
-    let body;
     it('302와 반환한다.', done => {
       request(app)
         .get('/')

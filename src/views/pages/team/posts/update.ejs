@@ -44,7 +44,7 @@
         <!-- //editsection -->
 
         <button class="custom" onclick="back()">뒤로가기</button>
-        <button class="custom" onclick="postUpdate.update('<%=post.no%>')">수정하기</button>
+        <button class="custom" onclick="post.update('<%=post.no%>')">수정하기</button>
       </div>
       <!-- //container -->
     </div>
@@ -53,8 +53,7 @@
     <script src="/js/util/ajaxUtil.js"></script>
     <script src="/js/posts/posts.js"></script>
     <script>
-      const postUpdate = new Post();
-      postUpdate.updateInit();
+      post.updateInit();
     </script>
   </body>
 </html>
