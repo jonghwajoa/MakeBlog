@@ -57,14 +57,14 @@ const create = async (req, res, next) => {
     return res.status(400).json({ message: '잘못된 요청입니다.' });
   }
 
+  let createResult;
   try {
     //req.session.userid
-    await SolvingDB.create(req.body, 1);
+    createResult = await SolvingDB.create(req.body, 1);
   } catch (e) {
     next(e);
   }
-
-  return res.status(201).end();
+  return res.status(201).json({ no: createResult.dataValues.problemNum });
 };
 
 const show = async (req, res, next) => {
@@ -165,6 +165,10 @@ const addCategory = async (req, res, next) => {
   const { requestCategoryName } = req.body;
   let categoryResult;
 
+  if (!requestCategoryName) {
+    return res.status(400).end();
+  }
+
   try {
     categoryResult = await CategoryDB.findByName(requestCategoryName);
     if (categoryResult !== null) {
@@ -177,7 +181,7 @@ const addCategory = async (req, res, next) => {
     return next(e);
   }
 
-  return res.json({
+  return res.status(201).json({
     message: '카테고리 추가 성공',
     no: categoryResult.dataValues.no,
   });

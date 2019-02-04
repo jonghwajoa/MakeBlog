@@ -4,7 +4,7 @@ const app = require('../../app');
 const models = require('../../db');
 
 let agent = request.agent(app);
-let deleteNo;
+let deleteNo, categoryDeleteNo;
 
 /**
  * 리스트
@@ -13,6 +13,7 @@ let deleteNo;
  * 보기
  * 업데이트 뷰
  * 업데이트
+ * 삭제하기
  */
 
 describe('/solving은 *********************', () => {
@@ -162,10 +163,14 @@ describe('/solving은 *********************', () => {
             content: '컨텐츠입니다.',
             category: '1',
             url: ' ',
-            problemNum: '64532',
+            problemNum: '5555',
           })
           .expect(201)
-          .end(done);
+          .end((err, res) => {
+            res.status.should.be.exactly(201);
+            deleteNo = res.body.no;
+            done();
+          });
       });
     });
   });
@@ -214,7 +219,6 @@ describe('/solving은 *********************', () => {
       });
     });
   });
-  //TODO : 업데이트 뷰,, 업데이트 코드작성
 
   describe('GET /solving/:id/edit', () => {
     describe('실패시....', () => {
@@ -259,7 +263,6 @@ describe('/solving은 *********************', () => {
           .end(done);
       });
 
-      ////////
       it('title이 null이면 400을 반환한다.', done => {
         agent
           .put('/solving')
@@ -319,6 +322,101 @@ describe('/solving은 *********************', () => {
           })
           .expect(204)
           .end(done);
+      });
+    });
+  });
+
+  describe('DELETE /solving/:id', () => {
+    it('비로그인시 401을 반환한다...', done => {
+      request(app)
+        .delete('/solving/5555')
+        .expect(401)
+        .end(done);
+    });
+
+    it('없는 no면 404를 반환한다....', done => {
+      agent
+        .delete(`/solving/9999556`)
+        .expect(404)
+        .end(done);
+    });
+
+    it('삭제 성공시 204를 응답한다....', done => {
+      agent
+        .delete(`/solving/${deleteNo}`)
+        .expect(204)
+        .end(done);
+    });
+  });
+
+  describe('Solving Category 관련....', () => {
+    describe('POST /solving/category', () => {
+      it('성공시 201과 no를 JSON으로 응답한다. ', done => {
+        agent
+          .post('/solving/category')
+          .send({
+            requestCategoryName: 'name1',
+          })
+          .expect(200)
+          .expect('Content-Type', /json/)
+          .end((err, res) => {
+            res.body.should.property('no');
+            categoryDeleteNo = res.body.no;
+            done();
+          });
+      });
+
+      it('비로그인시 요청시 401을 응답한다...', done => {
+        request(app)
+          .post('/solving/category')
+          .send({
+            requestCategoryName: 'name1',
+          })
+          .expect(401)
+          .end(done);
+      });
+
+      it('categoryName이 없으면 400을 응답한다.', done => {
+        agent
+          .post('/solving/category')
+          .send({})
+          .expect(400)
+          .end(done);
+      });
+
+      it('이미 존재하는 categoryName이면 400을 응답한다.', done => {
+        agent
+          .post('/solving/category')
+          .send({
+            requestCategoryName: 'name1',
+          })
+          .expect(400)
+          .end(done);
+      });
+    });
+
+    describe('DELETE /posts/category/:id는 ....', () => {
+      it('비로그인시 요청시 401을 응답한다...', done => {
+        request(app)
+          .delete(`/solving/category/${categoryDeleteNo}`)
+          .expect(401)
+          .end(done);
+      });
+
+      describe('로그인 상태에서.....', () => {
+        it('없는 id 요청시 404를 반환한다...', done => {
+          agent
+            .delete('/solving/category/543543534')
+            .expect(404)
+            .end(done);
+        });
+
+        it('삭제 성공시 204를 응답한다...', done => {
+          agent
+            .delete(`/solving/category/${categoryDeleteNo}`)
+            .expect(204)
+            .end(done);
+        });
       });
     });
   });

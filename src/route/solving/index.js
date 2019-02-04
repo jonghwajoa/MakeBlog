@@ -4,10 +4,16 @@ const { paramIsINT } = require('../../lib/middleware/checkParam');
 const needsAuth = require('../../lib/middleware/needsAuth');
 
 router
+  .route('*')
+  .post(needsAuth)
+  .put(needsAuth)
+  .delete(needsAuth);
+
+router
   .route('/')
   .get(ctrl.list)
-  .post(needsAuth, ctrl.create)
-  .put(needsAuth, ctrl.update);
+  .post(ctrl.create)
+  .put(ctrl.update);
 
 router.route('/category').post(ctrl.addCategory);
 router.route('/category/:id').delete(ctrl.removeCategory);
