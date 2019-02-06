@@ -4,6 +4,7 @@ const bcrypt = require('bcrypt');
 const ctrl = require('./posts.ctrl');
 const { paramIsINT } = require('../../lib/middleware/checkParam');
 const needsAuth = require('../../lib/middleware/needsAuth');
+const crpyto = require('crypto');
 
 const storage = multer.diskStorage({
   destination: function(req, file, cb) {
