@@ -1,10 +1,9 @@
 const router = require('express').Router();
 const multer = require('multer');
-const bcrypt = require('bcrypt');
 const ctrl = require('./posts.ctrl');
 const { paramIsINT } = require('../../lib/middleware/checkParam');
 const needsAuth = require('../../lib/middleware/needsAuth');
-const crpyto = require('crypto');
+const uuidv4 = require('uuid/v4');
 
 const storage = multer.diskStorage({
   destination: function(req, file, cb) {
@@ -12,15 +11,10 @@ const storage = multer.diskStorage({
   },
   filename: async function(req, file, cb) {
     const fileName = file.originalname.toLowerCase().split('.');
-    let reName;
-    try {
-      const salt = await bcrypt.genSalt(10);
-      reName = await bcrypt.hash(fileName[0], salt);
-    } catch (e) {
-      cb(null, false);
-    }
-    let finalName = `${reName}.${fileName[fileName.length - 1]}`.replace(/\//g, 'v');
-    cb(null, finalName);
+    let reName = `${new Date().getTime()}${uuidv4()}`;
+    let extension = fileName[fileName.length - 1];
+    let savaFileName = `${reName}.${extension}`;
+    cb(null, savaFileName);
   },
 });
 
