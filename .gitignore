@@ -7,6 +7,5 @@ src/config
 src/bin/www.js
 src/public/lib
 src/public/dist
-src/public/fonts
 
 object.js
