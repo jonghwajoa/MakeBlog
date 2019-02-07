@@ -151,3 +151,117 @@
 .content-reply {
   margin: 100px auto 0;
 }
+
+@media (max-width: 780px) {
+  .wrap .flex {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    min-height: 100vh;
+  }
+
+  .flex .side {
+    flex: 1 1 300px;
+    overflow-y: auto;
+    background-color: #fff;
+    margin-bottom: 20px;
+  }
+
+  .flex .content {
+    flex: 1 1 100%;
+  }
+
+  .flex .side .category {
+    margin-bottom: 1.3rem;
+    box-sizing: border-box;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  /* 여기까지 */
+
+  .flex .content .container {
+    margin: 5px auto 20px;
+    padding: 50px 30px;
+    width: 95%;
+    box-sizing: border-box;
+    box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.15);
+    border-radius: 10px;
+    position: relative;
+    background: white;
+  }
+
+  .content-admin {
+    position: absolute;
+    right: 20px;
+    top: 10px;
+  }
+
+  .content-admin input[type='button'] {
+    width: 100px;
+    height: 50px;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    background-color: violet;
+    color: white;
+    font-size: 1.3rem;
+  }
+
+  .content-admin input[type='button']:hover {
+    background-color: darksalmon;
+  }
+
+  .content-title {
+    width: inherit;
+    font-family: 'Do Hyeon', sans-serif;
+  }
+
+  .content-title h1 {
+    font-size: 2rem;
+    color: black;
+    margin-bottom: 1rem;
+  }
+
+  .content-title dl {
+    display: inline-block;
+  }
+
+  .content-title dt {
+    display: inline-block;
+  }
+
+  .content-title dd {
+    display: inline-block;
+  }
+
+  .content-title h3 {
+    text-align: left;
+    display: block;
+    font-size: 1rem;
+    margin: 5px 0 0 0;
+  }
+
+  .content-title h3 a {
+    color: #d9480f;
+  }
+
+  .content-title h3 a:hover {
+    color: #748ffc;
+  }
+
+  .content-title::after {
+    display: block;
+    content: '';
+    margin-top: 10px;
+    border-bottom: 1px solid #e6ebf1;
+  }
+
+  .content-content {
+    margin: 30px 0;
+  }
+
+  .content-reply {
+    margin: 100px auto 0;
+  }
+}

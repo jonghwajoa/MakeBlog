@@ -99,6 +99,7 @@ const show = async (req, res, next) => {
     path = 'team/solving/list';
   }
 
+  res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate');
   return res.render(path, {
     category: categoryResult,
     post: postResult,

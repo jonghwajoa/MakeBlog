@@ -112,10 +112,10 @@ class Solving {
     this.showProblem.href = result.url;
     this.editor.setMarkdown(result.content);
     this.curPage = problemNum;
-    window.history.replaceState(null, '', `/solving/${problemNum}`);
     if (this.updateAtag) {
       this.updateAtag.href = `/solving/${problemNum}/edit`;
     }
+    window.history.pushState(result, null, `/solving/${problemNum}`);
 
     if (!this.mapSaveSolving.has(problemNum)) {
       this.mapSaveSolving.set(problemNum, result);
@@ -147,6 +147,16 @@ class Solving {
     } catch (e) {
       alert(e.message);
     }
+  }
+
+  backLoadContent(result) {
+    this.readTitle.innerHTML = result.title;
+    this.createDate.innerHTML = result.created_at;
+    this.count.innerHTML = `| view ${result.count}`;
+    this.showProblem.innerHTML = result.url;
+    this.showProblem.href = result.url;
+    this.editor.setMarkdown(result.content);
+    disqus.reload(result.problemNum, `https://weknowjs-xyz/solving/${result.problemNum}`);
   }
 
   async update() {

@@ -156,56 +156,157 @@ ul li span {
   font-weight: bold;
 }
 
-/* @media (max-width: 500px) {
-  .content-wrap {
+@media (max-width: 780px) {
+  .flex-container {
+    overflow: hidden;
     display: flex;
     flex-direction: row;
-    width: 95%;
-    min-height: 10vh;
-    margin: 0 auto;
-    padding: 0px;
-  }
-}
-
-@media (max-width: 550px) {
-  section .post h2 {
-    font-family: 'Nanum Gothic', sans-serif;
-    font-weight: bold;
-    font-size: 1rem;
-    margin-bottom: 15px;
-    display: block;
+    width: 98%;
+    min-height: 80vh;
+    margin: 0 auto 30px;
   }
 
-  section .post p.tag {
-    font-size: 0.8rem;
-    color: #cccccc;
-    margin-bottom: 10px;
-    box-sizing: border-box;
+  .flex-container > .post-area {
+    flex: 1 1;
+    flex-grow: 1;
   }
-}
 
-@media (max-width: 800px) {
-  .content-wrap > aside {
+  .flex-container > aside {
     display: none;
   }
-  .content-wrap > .content-container {
-    margin-right: 0;
-  }
-}
 
-@media (min-width: 801px) and (max-width: 1100px) {
-  .content-wrap > aside {
-    flex-basis: 200px;
-    flex-shrink: 0;
+  .post {
+    margin: 5px 0;
+    padding: 10px 5px;
+    box-sizing: border-box;
+    min-height: 100px;
+    border-bottom: 2px solid #ededed;
   }
-}
 
-@media (min-wdith: 551px) and (max-width: 800px) {
-  section .post h2 {
-    font-family: 'Nanum Gothic', sans-serif;
-    font-weight: bold;
-    font-size: 1.3rem;
-    margin-bottom: 15px;
+  .post span.post-tag {
+    font-size: 1rem;
+    color: #cccccc;
+    margin-bottom: 0.25rem;
+    box-sizing: border-box;
     display: block;
   }
-} */
+
+  .post h3 {
+    font-family: 'Nanum Gothic', sans-serif;
+    font-weight: bold;
+    font-size: 1.5rem;
+    margin-bottom: 0.8rem;
+    display: block;
+  }
+
+  .post h3 a:hover {
+    color: black;
+    font-size: 2rem;
+  }
+
+  .post .postInfo {
+    margin-bottom: 10px;
+  }
+
+  input.btnNew {
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    background-color: violet;
+    font-size: 1.5rem;
+  }
+
+  /* 페이징 */
+  .paging {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    font-size: 1rem;
+    margin: 30px auto 20px;
+    overflow: hidden;
+    font-weight: bold;
+  }
+
+  .paging .pagingNum {
+    text-align: center;
+    margin: 10px 2px;
+    border: 1px solid violet;
+    border-radius: 10%;
+    padding: 5px;
+    box-sizing: border-box;
+  }
+
+  .paging .pagingArrow {
+    text-align: center;
+    margin: 10px 2px;
+    border: 1px solid tomato;
+    border-radius: 10%;
+    padding: 5px;
+    box-sizing: border-box;
+  }
+
+  .create-btn input[type='button'] {
+    color: white;
+    width: 100%;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    background-color: violet;
+    font-size: 1.5rem;
+  }
+
+  aside .aside-container {
+    position: fixed;
+    top: 7rem;
+  }
+
+  aside .aside-container > div {
+    box-sizing: border-box;
+    padding: 10px;
+    box-shadow: 0 1px 10px pink;
+    margin: 10px auto 30px;
+    width: 280px;
+  }
+
+  .aside-container .visit-count {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    padding: 10px;
+  }
+
+  .aside-container .visit-count .gridItem {
+    background-color: rgba(255, 255, 255, 0.8);
+    text-align: center;
+  }
+
+  .aside-container .visit-count .gridItem.title {
+    font-family: 'Nanum Gothic', sans-serif;
+    margin-bottom: 10px;
+    font-size: 1.2rem;
+    font-weight: bold;
+  }
+
+  .aside-container > div > h2 {
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+
+  ul li {
+    margin-bottom: 10px;
+    font-size: 1rem;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+
+  ul li a:hover {
+    color: #e67700;
+    font-size: 1.3rem;
+  }
+
+  ul li span {
+    font-weight: bold;
+  }
+}

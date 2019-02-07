@@ -41,10 +41,11 @@ https://www.weknowjs.xyz/
 - [가독성 : ! or false](https://github.com/jonghwajoa/MakeBlog/blob/master/Memo/!%20or%20false.md)
 - [선언식 vs 표현식](https://github.com/jonghwajoa/MakeBlog/blob/master/Memo/%EC%84%A0%EC%96%B8%EC%8B%9Dvs%ED%91%9C%ED%98%84%EC%8B%9D.md)
 - [반복적인 요청 ( Map vs Object )](https://github.com/jonghwajoa/MakeBlog/blob/master/Memo/Map%20vs%20Object.md)
+- pushState
 
 <br>
 
-## v1 (배포버전)
+## v1
 
 개발기간 : 180814 ~ 180901
 
@@ -69,7 +70,7 @@ https://www.weknowjs.xyz/
 
 <br>
 
-## v2 (완료사항 - 미배포)
+## v2
 
 개발기간 : 19.01.17 ~ continue
 
@@ -82,16 +83,6 @@ https://www.weknowjs.xyz/
 - Solving 기능구현
 - 카테고리 추가 삭제 기능 (POST 페이지)
 - solving js 재작성, map 저장
-
-## v2 (진행사항)
-
-- html 다시 작성하기.. (3 월중 시작이었으나.. 진행중... 매우 천천히 하기)
-- 테스트 코드작성 ( auth, solving, post, validation,)
-- disqus reload
-
-### v2 목표까지 남은 기능 (미진행)
-
-## 발견된 오류
 
 ## 수정
 

@@ -372,4 +372,3 @@ module.exports = {
   addCategory,
   removeCategory,
 };
-

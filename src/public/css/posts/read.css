@@ -125,51 +125,135 @@ a + a {
   font-size: 1.3rem;
 }
 
-/* 미디어 쿼리 */
-@media (min-width: 801px) {
-  .sidepost .subpost a {
-    display: block;
-    overflow: hidden;
-    width: inherit;
-    max-width: 250px;
-    padding: 10px 10px;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-  }
-}
-
-@media (max-width: 800px) {
+@media (max-width: 780px) {
   .content-wrap {
     min-height: 80vh;
-    margin: 10px 10px;
+    width: 99%;
+    margin: 10px auto 50px;
     box-sizing: border-box;
-    padding: 10px;
+    padding: 30px 20px;
   }
 
-  .content-wrap section.content {
-    display: flex;
-    flex-direction: column-reverse;
+  /* content-header */
+
+  .content-header {
+    margin-bottom: 20px;
   }
 
-  .content-wrap section.content .side {
-    flex-shrink: 0;
-    flex-basis: 0;
-    margin: 0;
+  .content-header .manageArea {
+    text-align: right;
+    height: 0;
   }
 
-  .content-wrap section.content .side::after {
+  .content-header .manageArea input[type='button'] {
+    position: relative;
+    bottom: 50px;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    background-color: violet;
+    font-size: 1.5rem;
+  }
+
+  .content-header::after {
     display: block;
     content: '';
     margin-top: 20px;
-    border-top: 4px solid #c9add8;
+    border-bottom: 2px solid #e6ebf1;
+  }
+
+  .content-header .post-intro {
+    box-sizing: border-box;
+    font-family: 'Do Hyeon', sans-serif;
+  }
+
+  .content-header .post-intro h1 {
+    font-size: 2rem;
+    color: black;
+    margin-bottom: 10px;
+  }
+
+  .content-header .post-intro dl {
+    display: block;
+  }
+
+  .content-header .post-intro dt {
+    display: inline-block;
+  }
+
+  .content-header .post-intro dd {
+    display: inline-block;
+  }
+
+  /* content-content */
+
+  .content-content {
+    display: flex;
+    flex-direction: column-reverse;
+    margin-bottom: 100px;
+  }
+
+  .content-content .content-text {
+    flex-grow: 1;
+    flex-shrink: 1;
+    font-size: 1.5rem;
+  }
+
+  .content-content .content-side {
+    flex: 0 0 250px;
+    margin-left: 0;
+  }
+
+  .sidepost {
+    border-radius: 5px;
+    width: 100%;
+    box-shadow: 0 0 0px 1px rgba(0, 0, 0, 0.3);
+    text-overflow: ellipsis;
+    white-space: pre-line;
+  }
+
+  .sidepost .sideTop {
+    background-color: #cccccc;
+  }
+
+  .sidepost .sideTop h2 {
+    text-align: center;
+    font-family: 'Nanum Gothic', sans-serif;
+    font-size: 1.3rem;
+    font-weight: bold;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #d1d5da;
+    box-sizing: border-box;
+  }
+
+  .sidepost .subpost {
+    font-size: 1rem;
+    font-weight: bold;
+    width: 100%;
   }
 
   .sidepost .subpost a {
-    display: block;
-    overflow: hidden;
-    width: inherit;
-    padding: 10px 10px;
-    white-space: nowrap;
-    text-overflow: ellipsis;
+    cursor: pointer;
+  }
+
+  .sidepost .subpost a:hover {
+    color: #e67700;
+  }
+
+  a + a {
+    border-top: 1px solid #cccccc;
+  }
+
+  .side input[type='button'] {
+    margin-top: 20px;
+    width: 250px;
+    padding: 10px 5px;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    background-color: violet;
+    color: white;
+    font-size: 1.3rem;
   }
 }

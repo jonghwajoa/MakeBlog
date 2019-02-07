@@ -62,7 +62,7 @@ nav .nav-container .menu {
   font-family: 'Do Hyeon', sans-serif;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 780px) {
   nav .nav-container {
     width: 98%;
     margin: 0 auto;
@@ -72,20 +72,23 @@ nav .nav-container .menu {
   }
 
   nav .nav-container .brand {
+    margin-left: 1rem;
     flex: 0 0 180px;
+    font-family: 'Do Hyeon', sans-serif;
+    font-weight: bold;
   }
 
   .nav-container .brand span {
-    font-size: 2rem;
+    font-size: 1.7rem;
   }
 
   .nav-container .menu span {
-    font-size: 1.2rem;
+    font-size: 1.3rem;
     color: #cccccc;
     font-weight: bold;
   }
 
   .nav-container .menu > div {
-    flex: 0 0 70px;
+    flex: 0 0 40px;
   }
 }

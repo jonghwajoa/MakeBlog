@@ -4,8 +4,6 @@ class Disqus {
     this.page.url = url;
     this.page.identifier = id;
     this.init();
-    console.log(url);
-    console.log(id);
   }
 
   init() {

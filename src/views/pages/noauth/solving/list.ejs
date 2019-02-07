@@ -18,12 +18,15 @@
     <% include ../../../partials/header.ejs %>
 
     <div class="wrap">
+      <!-- flex -->
       <div class="flex">
+        <!-- side -->
         <div class="side">
+          
           <% category.forEach((outerE,i) => { %>
           <div class="category" id = 'category'>
             <h2>
-              <h3 onclick="solving.toggle(<%=i%>)"> <%= outerE.title %> ( <%= outerE.Solvings.length %> )</h3>
+              <h3 onclick="solving.toggle('<%=i%>')"> <%= outerE.title %> ( <%= outerE.Solvings.length %> )</h3>
               <% outerE.Solvings.forEach((innerE,j) => { %>
                 <div class="category-content category-content<%=i%>">
                   <a onclick="solving.read('<%=innerE.dataValues.problemNum %>')">
@@ -37,9 +40,13 @@
               </h2>
           </div>
           <% }) %>
+          <!-- /category -->
         </div>
+        <!-- //side -->
 
+        <!-- content -->
         <div class="content">
+          <!-- container -->
           <div class="container">
             <div class="content-title">
               
@@ -58,7 +65,9 @@
             <div class="content-reply" id="disqus_thread">댓글들</div>
             <!-- // content-reply -->
           </div>
+          <!-- //container -->
         </div>
+        <!-- //content -->
       </div>
     </div>
     <!-- //wrap -->
@@ -73,6 +82,11 @@
     <script src="/js/util/ajaxUtil.js"></script>
     <script src="/js/solving/solving.js"></script>
     <script>let solving = new Solving();solving.solvingList();</script>
+    <script>
 
+      window.onpopstate = function(e) {
+          solving.backLoadContent(e.state);
+      }
+    </script>
   </body>
 </html>
