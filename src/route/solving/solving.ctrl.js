@@ -1,28 +1,10 @@
 const CategoryDB = require('../../db/repository/categoryCote');
 const SolvingDB = require('../../db/repository/solving');
 const { solvingValidation } = require('../../lib/validation');
-const db = require('../../db');
 
 const list = async (req, res, next) => {
-  let categoryResult;
-  let homePost;
-
-  try {
-    categoryResult = await CategoryDB.findAllList();
-    homePost = await SolvingDB.findById(1);
-  } catch (e) {
-    return next(e);
-  }
-
-  let path = 'noauth/solving/list';
-  if (req.session.isLogin) {
-    path = 'team/solving/list';
-  }
-
-  return res.render(path, {
-    category: categoryResult,
-    post: homePost,
-  });
+  req.params = { id: 1 };
+  show(req, res, next);
 };
 
 const createView = async (req, res) => {

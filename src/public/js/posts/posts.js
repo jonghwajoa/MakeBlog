@@ -108,7 +108,9 @@ const Post = (() => {
     this.postTitle.innerHTML = title;
     this.headTitle.innerHTML = `WeKnowJS ${title}`;
     this.editor.setValue(content.trim());
-    window.history.replaceState(null, '', `/posts/${postNo}/${subNo}`);
+
+    window.history.pushState(reqeustPost, null, `/posts/${postNo}/${subNo}`);
+
     this.curSubNo = subNo;
 
     if (!this.savePost[subNo]) {
@@ -289,6 +291,19 @@ const Post = (() => {
     }
 
     alert('카테고리 삭제 성공');
+  };
+
+  Post.prototype.backLoadContent = function(prevState) {
+    if (!prevState) {
+      location.reload();
+      return;
+    }
+    let { content, title, count, created_at } = prevState;
+    this.date.innerHTML = `${created_at}`;
+    this.viewCount.innerHTML = `${count}`;
+    this.postTitle.innerHTML = title;
+    this.headTitle.innerHTML = `WeKnowJS ${title}`;
+    this.editor.setValue(content.trim());
   };
 
   function readEditor() {

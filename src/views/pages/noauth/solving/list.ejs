@@ -81,8 +81,9 @@
     <script>let disqus = new Disqus("https://weknowjs-xyz/solving/<%=post.problemNum%>",'<%=post.problemNum%>') </script>
     <script src="/js/util/ajaxUtil.js"></script>
     <script src="/js/solving/solving.js"></script>
-    <script>let solving = new Solving();solving.solvingList();</script>
     <script>
+      let solving = new Solving();
+      solving.solvingList();
 
       window.onpopstate = function(e) {
           solving.backLoadContent(e.state);

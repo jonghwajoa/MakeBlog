@@ -90,6 +90,10 @@
         document.addEventListener("DOMContentLoaded", function(){ 
             let disqus = new Disqus("https://weknowjs-xyz/posts/<%=post.no%>",'<%=post.no%>') 
             post.readInit();
+
+            window.onpopstate = function(e) {
+                post.backLoadContent(e.state);
+            } 
         })
     </script>
  

@@ -10,7 +10,6 @@ class Solving {
     this.curPage = 1;
     this.listEditorInit();
     this.mapSaveSolving = new Map();
-
     let category = document.getElementsByClassName('category');
 
     for (let i = 1; i < category.length; i++) {
@@ -115,12 +114,17 @@ class Solving {
     if (this.updateAtag) {
       this.updateAtag.href = `/solving/${problemNum}/edit`;
     }
+
+    this.saveContentOnMap(problemNum, result);
+    disqus.reload(problemNum, `https://weknowjs-xyz/solving/${problemNum}`);
+  }
+
+  saveContentOnMap(problemNum, result) {
     window.history.pushState(result, null, `/solving/${problemNum}`);
 
     if (!this.mapSaveSolving.has(problemNum)) {
       this.mapSaveSolving.set(problemNum, result);
     }
-    disqus.reload(problemNum, `https://weknowjs-xyz/solving/${problemNum}`);
   }
 
   async write() {
@@ -150,6 +154,10 @@ class Solving {
   }
 
   backLoadContent(result) {
+    if (!result) {
+      location.reload();
+      return;
+    }
     this.readTitle.innerHTML = result.title;
     this.createDate.innerHTML = result.created_at;
     this.count.innerHTML = `| view ${result.count}`;
