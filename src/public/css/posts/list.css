@@ -139,7 +139,7 @@ aside .aside-container > div {
   font-weight: bold;
 }
 
-ul li {
+.aside-container ul li {
   margin-bottom: 10px;
   font-size: 1rem;
   text-overflow: ellipsis;
@@ -147,12 +147,12 @@ ul li {
   overflow: hidden;
 }
 
-ul li a:hover {
+.aside-container ul li a:hover {
   color: #e67700;
   font-size: 1.3rem;
 }
 
-ul li span {
+.aside-container ul li span {
   font-weight: bold;
 }
 
@@ -293,7 +293,7 @@ ul li span {
     font-weight: bold;
   }
 
-  ul li {
+  .aside-container ul li {
     margin-bottom: 10px;
     font-size: 1rem;
     text-overflow: ellipsis;
@@ -301,12 +301,12 @@ ul li span {
     overflow: hidden;
   }
 
-  ul li a:hover {
+  .aside-container ul li a:hover {
     color: #e67700;
     font-size: 1.3rem;
   }
 
-  ul li span {
+  .aside-container ul li span {
     font-weight: bold;
   }
 }

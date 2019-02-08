@@ -25,7 +25,7 @@
           <% category.forEach((outerE,i) => { %>
           <div class="category">
               <h2>
-                <h3 onclick="solving.toggle(<%=i%>)"> <%= outerE.title %> ( <%= outerE.Solvings.length %> )</h3>
+                <h3 onclick="solving.toggle('<%=i%>')"> <%= outerE.title %> ( <%= outerE.Solvings.length %> )</h3>
                 <% outerE.Solvings.forEach((innerE,j) => { %>
                   <div class="category-content category-content<%=i%>">
                     <a onclick="solving.read('<%=innerE.dataValues.problemNum %>')">
@@ -78,12 +78,13 @@
         <!-- //content -->
       </div>
       <!-- //flex -->
+      <div class="moveTop-btn" id="moveTop-btn">&#x2912;</div>
     </div>
     <!-- //wrap -->
 
     <% include ../../../partials/footer.ejs %>
     <!-- footer -->
-
+    <script src="/js/nav/nav.js"></script>
     <script src="/js/disqus/disqus.js"></script>
     <script>let disqus = new Disqus("https://weknowjs-xyz/solving/<%=post.problemNum%>",'<%=post.problemNum%>') </script>
     <script src="/js/util/ajaxUtil.js"></script>
