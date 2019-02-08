@@ -140,7 +140,6 @@ describe('벨리데이션 함수 검증테스트......', () => {
     });
   });
 
-  //TODO : 여기부터 할차례
   describe('solvingValidation 함수는....', () => {
     it('title이 누락되면 false를 응답한다,', () => {
       solvingValidation({ content, url, category, problemNum: '99999' }).should.be.false();

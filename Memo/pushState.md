@@ -57,5 +57,28 @@ e.state는 해당 URL에 해당하는 값(Ajax를 통해 받아온 값)을 저�
 
 
 
+## Cache  false
 
+```js
+  res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate');
+  res.header('Expires', '-1');
+  res.header('Pragma', 'no-cache');
+```
 
+같은 페이지내에서 뒤로가기 했을때 pushState를 통해서 데이터를 유지하고, 화면에 뿌려준다.
+
+하지만 다른 페이지를 갔다가 다시 뒤로가기 하면 어떻게 되는가..?
+
+우리가 원하는 화면은 HTML에 data가 입력되어있는 페이지 일것이다.
+
+하지만 웹브라우저가 캐시하고 있는 상황이라면..?
+
+![json](https://user-images.githubusercontent.com/31912670/52464696-389be700-2bbf-11e9-98d7-75e1af83dad4.jpg)
+
+JSON 포맷으로 화면에 뿌려준다..
+
+**이 얼마나 최악의 상황인가..**
+
+json을 통해서 데이터를 가져왔을때 캐시했기 때문에 벌어지는 현상이다..
+
+이를 방지하고자  웹에서 캐시하지 않도록 설정하자..

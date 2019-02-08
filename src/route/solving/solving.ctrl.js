@@ -83,6 +83,9 @@ const show = async (req, res, next) => {
     return next(e);
   }
 
+  res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate');
+  res.header('Expires', '-1');
+  res.header('Pragma', 'no-cache');
   if (req.headers['content-type'] === 'application/json') {
     return res.json(postResult);
   }
@@ -99,7 +102,6 @@ const show = async (req, res, next) => {
     path = 'team/solving/list';
   }
 
-  res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate');
   return res.render(path, {
     category: categoryResult,
     post: postResult,
