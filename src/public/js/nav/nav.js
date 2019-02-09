@@ -13,25 +13,19 @@ class Nav {
   }
 
   eventInit() {
-    this.moveTop.addEventListener(
-      'click',
-      function(e) {
-        window.scrollTo(0, 0);
-        this.moveTop.style.display = 'none';
-      }.bind(this),
-    );
+    this.moveTop.addEventListener('click', () => {
+      window.scrollTo(0, 0);
+      this.moveTop.style.display = 'none';
+    });
 
-    this.mMenu.addEventListener(
-      'click',
-      function(e) {
-        if (this.mNavState) {
-          this.pcMenu.style.display = 'none';
-        } else {
-          this.pcMenu.style.display = 'block';
-        }
-        this.mNavState = !this.mNavState;
-      }.bind(this),
-    );
+    this.mMenu.addEventListener('click', () => {
+      if (this.mNavState) {
+        this.pcMenu.style.display = 'none';
+      } else {
+        this.pcMenu.style.display = 'block';
+      }
+      this.mNavState = !this.mNavState;
+    });
 
     window.addEventListener('resize', () => {
       this.exitMmenu();

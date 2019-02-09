@@ -1,54 +1,71 @@
-const Post = (() => {
-  function Post() {
+class Post {
+  constructor() {
     this.curSubNo = 1;
-    // this.mapSavePost = new Map();
     this.savePost = [];
     this.subPost = document.getElementsByClassName('subpost_element');
+    this.editor;
   }
 
-  Post.prototype.readInit = function() {
+  readInit() {
     this.content = document.getElementById('postContent');
     this.viewCount = document.getElementById('viewCount');
     this.date = document.getElementById('createDate');
     this.postTitle = document.getElementById('title');
     this.headTitle = document.getElementById('headTitle');
-    this.editor = readEditor();
+    this.readEditor();
     let trimContent = this.content.value.trim();
     this.editor.setMarkdown(trimContent);
+    this.subPostViewHandle();
+  }
 
+  subPostViewHandle() {
     let subPostLength = this.subPost.length;
+    let contentSide = document.getElementsByClassName('content-side')[0];
     if (!subPostLength) {
-      this.subPostBtn = document.getElementsByClassName('content-side');
-      this.subPostBtn[0].style.display = 'none';
+      contentSide.style.display = 'none';
     } else {
       let subPostBtn = document.getElementById('subPostBtn');
-      this.subPostBtnState = false;
+      let subPostView = document.getElementsByClassName('sidepost')[0];
+      let subPostBtnState = false;
       subPostBtn.addEventListener('click', () => {
-        if (!this.subPostBtnState) {
-          document.getElementsByClassName('sidepost')[0].style.display = 'block';
+        if (!subPostBtnState) {
+          subPostView.style.display = 'block';
         } else {
-          document.getElementsByClassName('sidepost')[0].style.display = 'none';
+          subPostView.style.display = 'none';
         }
-        this.subPostBtnState = !this.subPostBtnState;
+        subPostBtnState = !subPostBtnState;
+      });
+
+      let lastHeight = 0;
+      window.addEventListener('scroll', () => {
+        let curHeight = window.scrollY;
+        if (curHeight > lastHeight) {
+          contentSide.style.display = 'none';
+          subPostView.style.display = 'none';
+          subPostBtnState = false;
+        } else {
+          contentSide.style.display = 'block';
+        }
+        lastHeight = curHeight;
       });
     }
-  };
+  }
 
-  Post.prototype.writeInit = function() {
+  writeInit() {
     this.postTitle = document.getElementById('title');
     this.categorySelect = document.getElementById('category-select');
     this.deleteSelect = document.getElementById('category-delete');
     this.categoryAdd = document.getElementById('category-add');
     this.tag = document.getElementById('tag');
-    this.editor = writeEditor();
-  };
+    this.writeEditor();
+  }
 
-  Post.prototype.updateInit = function() {
+  updateInit() {
     this.content = document.getElementById('hiddenContent');
     this.postTitle = document.getElementById('title');
     this.tag = document.getElementById('tag');
     this.categorySelect = document.getElementById('category-select');
-    this.editor = writeEditor();
+    this.writeEditor();
     this.editor.setMarkdown(this.content.innerHTML.trim());
 
     if (this.tag) {
@@ -57,10 +74,9 @@ const Post = (() => {
 
       this.tag.value = tagVal.map(item => item.substr(1, item.length)).join(' ');
     }
-  };
+  }
 
-  //write 함수
-  Post.prototype.submit = async function submit() {
+  async submit() {
     const title = this.postTitle.value;
     const content = this.editor.getMarkdown().trim();
     const category = this.categorySelect;
@@ -97,10 +113,9 @@ const Post = (() => {
     } catch (e) {
       alert(`작성 실패\n${e.responseText}`);
     }
-  };
+  }
 
-  // read함수
-  Post.prototype.getContent = async function(postNo, subNo = 1) {
+  async getContent(postNo, subNo = 1) {
     let reqeustPost;
     if (this.savePost[subNo]) {
       reqeustPost = this.savePost[subNo];
@@ -128,10 +143,9 @@ const Post = (() => {
     if (!this.savePost[subNo]) {
       this.savePost[subNo] = { ...reqeustPost };
     }
-  };
+  }
 
-  // read 함수
-  Post.prototype.deletePost = async function(postNo) {
+  async deletePost(postNo) {
     let message = '서브게시글을 삭제하시겠습니까?';
     let url = `/posts/${postNo}/${this.curSubNo}`;
     let redirect = `/posts/${postNo}`;
@@ -154,17 +168,17 @@ const Post = (() => {
     } catch (e) {
       alert(`삭제 실패\n${e.status}`);
     }
-  };
+  }
 
-  Post.prototype.updateView = async function(postNo) {
+  async updateView(postNo) {
     let path = `/posts/${postNo}/${this.curSubNo}/edit`;
     if (this.curSubNo === 1) {
       path = `/posts/${postNo}/edit`;
     }
     location.href = path;
-  };
+  }
 
-  Post.prototype.submitSub = async function(postNo) {
+  async submitSub(postNo) {
     const title = this.postTitle.value;
     const content = this.editor.getMarkdown().trim();
     if (!title) {
@@ -188,9 +202,9 @@ const Post = (() => {
     } catch (e) {
       alert(`작성 실패\n${e.responseText}`);
     }
-  };
+  }
 
-  Post.prototype.update = async function(postNo) {
+  async update(postNo) {
     const title = this.postTitle.value;
     const content = this.editor.getMarkdown().trim();
     const category = this.categorySelect;
@@ -228,9 +242,9 @@ const Post = (() => {
     } catch (e) {
       alert(`업데이트 실패\n${e.responseText}`);
     }
-  };
+  }
 
-  Post.prototype.updateSub = async function(postNo, subNo) {
+  async updateSub(postNo, subNo) {
     const title = this.postTitle.value;
     const content = this.editor.getMarkdown().trim();
 
@@ -257,9 +271,9 @@ const Post = (() => {
     } catch (e) {
       alert(`업데이트 실패\n${e.responseText}`);
     }
-  };
+  }
 
-  Post.prototype.addCategory = async function() {
+  async addCategory() {
     let requestCategoryName = this.categoryAdd.value;
 
     let result;
@@ -281,9 +295,9 @@ const Post = (() => {
     this.categorySelect.options.add(newSelect);
     this.deleteSelect.options.add(newSelect2);
     alert(message);
-  };
+  }
 
-  Post.prototype.deleteCategory = async function() {
+  async deleteCategory() {
     let deleteSelect = this.deleteSelect;
 
     let reqeustDeleteCategoryName = deleteSelect.value;
@@ -303,9 +317,9 @@ const Post = (() => {
     }
 
     alert('카테고리 삭제 성공');
-  };
+  }
 
-  Post.prototype.backLoadContent = function(prevState) {
+  backLoadContent(prevState) {
     if (!prevState) {
       location.reload();
       return;
@@ -316,10 +330,10 @@ const Post = (() => {
     this.postTitle.innerHTML = title;
     this.headTitle.innerHTML = `WeKnowJS ${title}`;
     this.editor.setValue(content.trim());
-  };
+  }
 
-  function readEditor() {
-    return new tui.Editor({
+  readEditor() {
+    this.editor = new tui.Editor({
       el: document.getElementById('content-text'),
       exts: [
         'table',
@@ -334,8 +348,8 @@ const Post = (() => {
     });
   }
 
-  function writeEditor() {
-    return new tui.Editor({
+  writeEditor() {
+    this.editor = new tui.Editor({
       el: document.getElementById('editSection'),
       initialEditType: 'markdown',
       previewStyle: 'vertical',
@@ -366,8 +380,6 @@ const Post = (() => {
       },
     });
   }
-
-  return Post;
-})();
+}
 
 post = new Post();
