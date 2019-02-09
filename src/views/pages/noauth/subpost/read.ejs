@@ -49,23 +49,6 @@
                 </div>
                 <!--  //content-text -->
                 
-                <!-- content-side -->
-                <div class="content-side">
-                    <div class='sidepost'>
-                        <div class='sideTop'>
-                            <h2>Sub post</h2>
-                        </div>
-
-                        <div class='subpost'>
-                            <a onclick="post.getContent('<%=home%>')">Home</a>
-                            <% subPost.forEach((item,index) => { %>
-                            <a onclick="post.getContent('<%=home%>','<%=item.sub_no %>')" class="subpost_element">
-                                <%=item.title %></a>
-                            <% }) %>
-                        </div>
-                    </div>
-                </div>
-                <!-- //content-side -->
             </div>
             <!-- //content-content -->
 
@@ -73,6 +56,23 @@
                 <div id="disqus_thread"></div>
             </div>
             <div class="moveTop-btn" id="moveTop-btn">&#x2912;</div>
+            
+
+            <!-- content-side -->
+        <div class="content-side">
+                <h2 id='subPostBtn'>연관 게시글</h2>
+                <div class='sidepost'>
+                    <h2>연관 게시글</h2>
+                    <ul>
+                        <li><a onclick="post.getContent('<%=home%>')">Home</a></li>
+                        <% subPost.forEach((item,index) => { %>
+                            <li><a onclick="post.getContent('<%=home%>','<%=item.sub_no %>')" class="subpost_element"><%=item.title %></a>
+                            </li>
+                        <% }) %>
+                    </ul>
+                </div>
+            </div>
+            <!-- //cotent-side -->
         </div>
 
 

@@ -1,4 +1,5 @@
 .content-wrap {
+  position: relative;
   min-height: 80vh;
   max-width: 1700px;
   margin: 10px auto 50px;
@@ -61,8 +62,7 @@
 /* content-content */
 
 .content-content {
-  display: flex;
-  flex-direction: row;
+  min-height: 30vh;
   margin-bottom: 100px;
 }
 
@@ -70,47 +70,65 @@
   flex-grow: 1;
   flex-shrink: 1;
   font-size: 1.5rem;
+  font-weight: bold;
 }
 
-.content-content .content-side {
-  flex: 0 0 250px;
-  margin-left: 50px;
-}
+/* 사이드 시작 */
 
-.sidepost {
-  border-radius: 5px;
-  box-shadow: 0 0 0px 1px rgba(0, 0, 0, 0.3);
-}
-
-.sidepost .sideTop {
-  background-color: #cccccc;
-}
-
-.sidepost .sideTop h2 {
+.content-side {
+  position: fixed;
+  width: 100px;
+  height: 10px;
+  bottom: 50px;
+  right: 50px;
   text-align: center;
-  font-family: 'Nanum Gothic', sans-serif;
-  font-size: 1.3rem;
-  font-weight: bold;
-  padding: 10px 0;
-  border-bottom: 1px solid #d1d5da;
-  box-sizing: border-box;
-}
-
-.sidepost .subpost {
-  font-size: 1rem;
-  font-weight: bold;
-}
-
-.sidepost .subpost a {
   cursor: pointer;
 }
 
-.sidepost .subpost a:hover {
-  color: #e67700;
+.content-side > h2 {
+  line-height: 50px;
+  background: #bac8ff;
+  border-radius: 20px;
+  font-weight: bold;
 }
 
-a + a {
-  border-top: 1px solid #cccccc;
+.content-side .sidepost {
+  position: absolute;
+  bottom: 10px;
+  right: 50px;
+  background: white;
+  text-align: left;
+  box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.12);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  display: none;
+}
+
+.content-side .sidepost h2 {
+  font-size: 2rem;
+  text-align: center;
+  padding: 10px;
+  font-family: 'Do Hyeon', sans-serif;
+  cursor: text;
+}
+
+.content-side .sidepost ul li {
+  margin-top: 5px;
+  border-top: 1px solid #ced4da;
+}
+
+.content-side .sidepost ul li a {
+  cursor: pointer;
+  display: block;
+  color: #343a40;
+  font-weight: bold;
+  font-size: 1rem;
+  padding: 10px;
+}
+
+.content-side .sidepost ul li a:hover {
+  color: #748ffc;
 }
 
 .side input[type='button'] {
@@ -200,17 +218,10 @@ a + a {
     font-size: 1.5rem;
   }
 
-  .content-content .content-side {
-    flex: 0 0 250px;
-    margin-left: 0;
-  }
-
   .sidepost {
     border-radius: 5px;
     width: 100%;
     box-shadow: 0 0 0px 1px rgba(0, 0, 0, 0.3);
-    text-overflow: ellipsis;
-    white-space: pre-line;
   }
 
   .sidepost .sideTop {

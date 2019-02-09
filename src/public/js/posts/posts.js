@@ -3,6 +3,7 @@ const Post = (() => {
     this.curSubNo = 1;
     // this.mapSavePost = new Map();
     this.savePost = [];
+    this.subPost = document.getElementsByClassName('subpost_element');
   }
 
   Post.prototype.readInit = function() {
@@ -15,10 +16,21 @@ const Post = (() => {
     let trimContent = this.content.value.trim();
     this.editor.setMarkdown(trimContent);
 
-    let subPostLength = document.getElementsByClassName('subpost_element').length;
-
+    let subPostLength = this.subPost.length;
     if (!subPostLength) {
-      document.getElementsByClassName('content-side')[0].style.display = 'none';
+      this.subPostBtn = document.getElementsByClassName('content-side');
+      this.subPostBtn[0].style.display = 'none';
+    } else {
+      let subPostBtn = document.getElementById('subPostBtn');
+      this.subPostBtnState = false;
+      subPostBtn.addEventListener('click', () => {
+        if (!this.subPostBtnState) {
+          document.getElementsByClassName('sidepost')[0].style.display = 'block';
+        } else {
+          document.getElementsByClassName('sidepost')[0].style.display = 'none';
+        }
+        this.subPostBtnState = !this.subPostBtnState;
+      });
     }
   };
 
