@@ -82,7 +82,6 @@
   bottom: 50px;
   right: 50px;
   text-align: center;
-  cursor: pointer;
 }
 
 .content-side > h2 {
@@ -95,13 +94,10 @@
 .content-side .sidepost {
   position: absolute;
   bottom: 10px;
-  right: 50px;
+  right: 55px;
   background: white;
   text-align: left;
   box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.12);
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden;
   display: none;
 }
 
@@ -110,7 +106,6 @@
   text-align: center;
   padding: 10px;
   font-family: 'Do Hyeon', sans-serif;
-  cursor: text;
 }
 
 .content-side .sidepost ul li {
@@ -125,6 +120,9 @@
   font-weight: bold;
   font-size: 1rem;
   padding: 10px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .content-side .sidepost ul li a:hover {
@@ -216,5 +214,41 @@
     flex-grow: 1;
     flex-shrink: 1;
     font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 780px) {
+  .content-wrap {
+    position: relative;
+    min-height: 80vh;
+    max-width: 780px;
+    margin: 10px auto 50px;
+    box-sizing: border-box;
+    padding: 30px 10px;
+  }
+
+  .content-side .sidepost {
+    position: absolute;
+    bottom: 10px;
+    right: 55px;
+    background: white;
+    text-align: left;
+    box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.12);
+    display: none;
+    height: 300px;
+    width: 300px;
+    overflow-y: auto;
+  }
+
+  .content-side .sidepost ul li a {
+    cursor: pointer;
+    display: block;
+    color: #343a40;
+    font-weight: bold;
+    font-size: 1rem;
+    padding: 10px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
   }
 }

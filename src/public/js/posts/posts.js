@@ -61,12 +61,12 @@ class Post {
   }
 
   updateInit() {
-    this.content = document.getElementById('hiddenContent');
+    this.content = document.getElementById('content-hidden');
     this.postTitle = document.getElementById('title');
     this.tag = document.getElementById('tag');
     this.categorySelect = document.getElementById('category-select');
     this.writeEditor();
-    this.editor.setMarkdown(this.content.innerHTML.trim());
+    this.editor.setMarkdown(this.content.value.trim());
 
     if (this.tag) {
       let tagVal = this.tag.value.split(' ');

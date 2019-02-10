@@ -178,7 +178,6 @@
     text-overflow: ellipsis;
     white-space: nowrap;
   }
-  /* 여기까지 */
 
   .flex .content .container {
     margin: 5px auto 20px;
@@ -263,5 +262,18 @@
 
   .content-reply {
     margin: 100px auto 0;
+  }
+}
+
+@media (max-width: 780px) {
+  .flex .content .container {
+    margin: 5px auto 20px;
+    padding: 30px 10px;
+    width: 99%;
+    box-sizing: border-box;
+    box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.15);
+    border-radius: 10px;
+    position: relative;
+    background: white;
   }
 }

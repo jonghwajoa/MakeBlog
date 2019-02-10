@@ -23,7 +23,7 @@
         </div>
 
         <div id="editSection" id="content" name="content">
-          <p hidden id="hiddenContent"><%- post.content %></p>
+          <input type="hidden" id="content-hidden" value="<%= post.content %>" />
         </div>
         <button class="custom" onclick="back()">뒤로가기</button>
         <button class="custom" onclick='post.updateSub("<%=home%>","<%=post.sub_no%>")'>
