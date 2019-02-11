@@ -143,6 +143,7 @@ class Post {
     if (!this.savePost[subNo]) {
       this.savePost[subNo] = { ...reqeustPost };
     }
+    window.scrollTo(0, 10);
   }
 
   async deletePost(postNo) {

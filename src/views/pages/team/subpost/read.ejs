@@ -22,6 +22,15 @@
 
 
     <div class="content-wrap">
+
+        <div class="manageArea">
+            <a href="/posts/<%=post.no%>/new">
+            <input type="button" value='서브글 작성' />
+            </a>
+            <input type="button" value='수정하기' id='update' onclick='post.updateView("<%=home%>")' />
+            <input type="button" value='삭제하기' id='delete' onclick='post.deletePost("<%=home%>")' />
+        </div>
+
         <div class='content-header'>
             <div class='post-intro'>
                 <h1 id="title"><%= post.title %></h1>
@@ -38,13 +47,6 @@
                         </dt>
                     </dl>
                 </div>
-                <div class="manageArea">
-                        <a href="/posts/<%=post.no%>/new">
-                            <input type="button" value='서브글 작성' />
-                        </a>
-                            <input type="button" value='수정하기' id='update' onclick='post.updateView("<%=home%>")' />
-                        <input type="button" value='삭제하기' id='delete' onclick='post.deletePost("<%=home%>","<%=post.sub_no%>")' />
-                    </div>
             </div>
 
             <!-- content-content -->

@@ -192,6 +192,9 @@ const getContent = async (req, res, next) => {
     return next(e);
   }
 
+  res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate');
+  res.header('Expires', '-1');
+  res.header('Pragma', 'no-cache');
   return res.json(post);
 };
 

@@ -90,3 +90,4 @@ https://www.weknowjs.xyz/
 - 카테고리 Set null 설정 -> RESTRICT 변경 (삭제 실패시 상태코드 409 반환)
 - 수정하기,삭제하기 id 값 미변경
 - page 파라미터 오류 500 error 에러 점검 -> parseint 에서 number 로 대체
+- 업데이트 hidden p tag -> input hidden 으로 수정

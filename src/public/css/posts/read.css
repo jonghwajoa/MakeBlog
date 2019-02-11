@@ -1,39 +1,41 @@
 .content-wrap {
   position: relative;
   min-height: 80vh;
-  max-width: 1700px;
+  max-width: 1000px;
   margin: 10px auto 50px;
   box-sizing: border-box;
   padding: 30px 50px;
 }
 
+/* manageArea */
+.content-wrap .manageArea {
+  position: absolute;
+  right: -200px;
+}
+
+.content-wrap .manageArea input[type='button'] {
+  margin-bottom: 20px;
+  width: 200px;
+  bottom: 50px;
+  display: block;
+  padding: 10px;
+  color: black;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.12);
+  background: white;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.content-wrap .manageArea input[type='button']:hover {
+  background: skyblue;
+}
 /* content-header */
 
 .content-header {
-  margin-bottom: 20px;
-}
-
-.content-header .manageArea {
-  text-align: right;
-  height: 0;
-}
-
-.content-header .manageArea input[type='button'] {
-  position: relative;
-  bottom: 50px;
-  color: white;
-  padding: 10px 20px;
-  border: none;
-  cursor: pointer;
-  background-color: violet;
-  font-size: 1.5rem;
-}
-
-.content-header::after {
-  display: block;
-  content: '';
-  margin-top: 20px;
-  border-bottom: 2px solid #e6ebf1;
+  margin-bottom: 15vh;
+  text-align: center;
 }
 
 .content-header .post-intro {
@@ -42,13 +44,14 @@
 }
 
 .content-header .post-intro h1 {
-  font-size: 2rem;
+  font-size: 4rem;
   color: black;
   margin-bottom: 10px;
 }
 
 .content-header .post-intro dl {
   display: block;
+  font-size: 1.2rem;
 }
 
 .content-header .post-intro dt {
@@ -67,9 +70,6 @@
 }
 
 .content-content .content-text {
-  flex-grow: 1;
-  flex-shrink: 1;
-  font-size: 1.5rem;
   font-weight: bold;
 }
 
@@ -89,6 +89,7 @@
   background: #bac8ff;
   border-radius: 20px;
   font-weight: bold;
+  cursor: pointer;
 }
 
 .content-side .sidepost {
@@ -154,6 +155,7 @@
 
   .content-header {
     margin-bottom: 20px;
+    height: 25vh;
   }
 
   .content-header .manageArea {
@@ -170,13 +172,6 @@
     cursor: pointer;
     background-color: violet;
     font-size: 1.5rem;
-  }
-
-  .content-header::after {
-    display: block;
-    content: '';
-    margin-top: 20px;
-    border-bottom: 2px solid #e6ebf1;
   }
 
   .content-header .post-intro {
@@ -205,26 +200,16 @@
   /* content-content */
 
   .content-content {
-    display: flex;
-    flex-direction: column-reverse;
     margin-bottom: 100px;
+    margin: 0 auto;
   }
 
   .content-content .content-text {
-    flex-grow: 1;
-    flex-shrink: 1;
     font-size: 1.5rem;
   }
-}
 
-@media (max-width: 780px) {
-  .content-wrap {
-    position: relative;
-    min-height: 80vh;
-    max-width: 780px;
-    margin: 10px auto 50px;
-    box-sizing: border-box;
-    padding: 30px 10px;
+  .content-side {
+    right: 20px;
   }
 
   .content-side .sidepost {
@@ -236,7 +221,7 @@
     box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.12);
     display: none;
     height: 300px;
-    width: 300px;
+    width: 250px;
     overflow-y: auto;
   }
 

@@ -19,6 +19,14 @@
     <% include ../../../partials/headerTeam.ejs %>
     <% include ../../../partials/editorViewer.ejs %>
     <div class="content-wrap">
+        <div class="manageArea">
+            <a href="/posts/<%=post.no%>/new">
+            <input type="button" value='서브글 작성' />
+            </a>
+            <input type="button" value='수정하기' id='update' onclick="post.updateView('<%= post.no%>')"/>
+            <input type="button" value='삭제하기' id='delete' onclick="post.deletePost('<%= post.no%>')" />
+        </div>
+
         <div class='content-header'>
             <div class='post-intro'>
                 <h1 id="title">
@@ -38,14 +46,6 @@
                     </dd>
                     </dt>
                 </dl>
-            </div>
-
-            <div class="manageArea">
-                <a href="/posts/<%=post.no%>/new">
-                    <input type="button" value='서브글 작성' />
-                </a>
-                <input type="button" value='수정하기' id='update' onclick="post.updateView('<%= post.no%>')"/>
-                <input type="button" value='삭제하기' id='delete' onclick="post.deletePost('<%= post.no%>')" />
             </div>
         </div>
         <!-- /content-header -->
@@ -80,6 +80,8 @@
             </div>
         <!-- //cotent-side -->
     </div>
+
+
 
 
     <% include ../../../partials/footer.ejs %>
