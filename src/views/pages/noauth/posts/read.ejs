@@ -2,7 +2,7 @@
 <html lang="ko">
 
 <head>
-    <title id="headTitle">WeKnowJS <%=post.title%></title>
+    <title id="headTitle">WeKnowJS</title>
     <meta charset="UTF-8" />
     <meta name="author" content="JongHwa" />
     <meta name="description" content="게시글 페이지, Post Read Page" />
@@ -70,7 +70,7 @@
             </div>
         </div>
         <!-- //cotent-side -->
-        <div>
+        <div class='reply-wrap'>
             <div id="disqus_thread"></div>
         </div>
         <div class="moveTop-btn" id="moveTop-btn">&#x2912;</div>
@@ -86,7 +86,7 @@
     <script src="/js/nav/nav.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", function(){ 
-            let disqus = new Disqus("https://weknowjs-xyz/posts/<%=post.no%>",'<%=post.no%>') 
+            let disqus = new Disqus('<%=post.no%>','<%=post.no%>');
             post.readInit();
 
             window.onpopstate = function(e) {

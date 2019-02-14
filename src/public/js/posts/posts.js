@@ -11,7 +11,6 @@ class Post {
     this.viewCount = document.getElementById('viewCount');
     this.date = document.getElementById('createDate');
     this.postTitle = document.getElementById('title');
-    this.headTitle = document.getElementById('headTitle');
     this.readEditor();
     let trimContent = this.content.value.trim();
     this.editor.setMarkdown(trimContent);
@@ -133,7 +132,6 @@ class Post {
     this.date.innerHTML = `${created_at}`;
     this.viewCount.innerHTML = `${count}`;
     this.postTitle.innerHTML = title;
-    this.headTitle.innerHTML = `WeKnowJS ${title}`;
     this.editor.setValue(content.trim());
 
     window.history.pushState(reqeustPost, null, `/posts/${postNo}/${subNo}`);
@@ -329,7 +327,6 @@ class Post {
     this.date.innerHTML = `${created_at}`;
     this.viewCount.innerHTML = `${count}`;
     this.postTitle.innerHTML = title;
-    this.headTitle.innerHTML = `WeKnowJS ${title}`;
     this.editor.setValue(content.trim());
   }
 
@@ -373,7 +370,7 @@ class Post {
         async addImageBlobHook(photo, cb) {
           try {
             let result = await ajaxUtil.saveFileAjax(photo);
-            return cb(`http://localhost/images/${result}`);
+            return cb(`https://weknowjs.xyz/images/${result}`);
           } catch (e) {
             alert(e.statusText);
           }

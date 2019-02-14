@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <title id="headTitle">WeKnowJS <%=post.title%></title>
+    <title id="headTitle">WeKnowJS</title>
     <meta charset="UTF-8" />
     <meta name="author" content="JongHwa" />
     <meta name="description" content="서브 포스트 읽기 , SubPost Read Page" />
@@ -34,20 +34,20 @@
         <div class='content-header'>
             <div class='post-intro'>
                 <h1 id="title"><%= post.title %></h1>
-                    <dl class=postInfo>
-                        <dt>
-                            <dd id="createDate">
-                                <%= post.created_at %> |
-                            </dd>
-                        </dt>
-                        <dt>
-                            <dd id="viewCount">
-                                View <%= post.count %>
-                            </dd>
-                        </dt>
-                    </dl>
-                </div>
+                <dl class=postInfo>
+                    <dt>
+                        <dd id="createDate">
+                            <%= post.created_at %> |
+                        </dd>
+                    </dt>
+                    <dt>
+                        <dd id="viewCount">
+                            View <%= post.count %>
+                        </dd>
+                    </dt>
+                </dl>
             </div>
+        </div>
 
             <!-- content-content -->
             <div class='content-content'>
@@ -59,7 +59,7 @@
             </div>
             <!-- //content-content -->
 
-            <div>
+            <div class='reply-wrap'>
                 <div id="disqus_thread"></div>
             </div>
             <div class="moveTop-btn" id="moveTop-btn">&#x2912;</div>

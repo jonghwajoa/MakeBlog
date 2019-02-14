@@ -142,6 +142,10 @@
   font-size: 1.3rem;
 }
 
+.reply-wrap {
+  margin-top: 200px;
+}
+
 @media (max-width: 780px) {
   .content-wrap {
     min-height: 80vh;
@@ -199,12 +203,12 @@
 
   /* content-content */
 
-  .content-content {
+  .content-wrap .content-content {
     margin-bottom: 100px;
     margin: 0 auto;
   }
 
-  .content-content .content-text {
+  .content-wrap .content-content .content-text {
     font-size: 1.5rem;
   }
 

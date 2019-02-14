@@ -80,7 +80,7 @@ class Solving {
         async addImageBlobHook(photo, cb) {
           try {
             let result = await ajaxUtil.saveFileAjax(photo);
-            return cb(`http://localhost/images/${result}`);
+            return cb(`https://www.weknowjs.xyz/images/${result}`);
           } catch (e) {
             alert(e.statusText);
           }

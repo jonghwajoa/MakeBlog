@@ -129,17 +129,27 @@ nav .nav-container .pcMenu ul li a:hover {
   nav .nav-container .pcMenu ul {
     position: absolute;
     height: 100vh;
-    width: 300px;
+    width: 250px;
     right: -40px;
-    top: 73px;
+    top: 70px;
     text-align: center;
     background: white;
     color: black;
     z-index: 99999;
+    border-left: 5px solid pink;
   }
 
   nav .nav-container .pcMenu ul li {
     display: block;
+  }
+
+  nav .nav-container .pcMenu ul li:hover {
+    color: rgba(0, 0, 0, 0.9);
+    background: rgba(1, 1, 1, 0.1);
+  }
+
+  nav .nav-container .pcMenu ul li a:hover {
+    color: #555;
   }
 
   nav ul li a {
@@ -149,10 +159,6 @@ nav .nav-container .pcMenu ul li a:hover {
 
   .mMenu {
     display: block;
-  }
-
-  nav .nav-container .pcMenu ul li a:hover {
-    color: rgba(0, 0, 0, 0.9);
   }
 
   .moveTop-btn {

@@ -1,8 +1,8 @@
 class Disqus {
   constructor(url, id) {
     this.page = {};
-    this.page.url = url;
-    this.page.identifier = id;
+    this.page.url = `https://weknowjs-xyz/posts/${url}`;
+    this.page.identifier = `https://weknowjs-xyz/posts/${id}`;
     this.init();
   }
 
