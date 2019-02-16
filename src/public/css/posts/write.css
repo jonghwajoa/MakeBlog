@@ -22,7 +22,72 @@
   font-size: 1.2rem;
 }
 
-.container .category {
+.container .tag-container {
+  height: 70px;
+  line-height: 70px;
+  margin-bottom: 20px;
+  border: 1px solid #cccccc;
+  display: flex;
+  flex-direction: row;
+  overflow: hidden;
+  flex-wrap: nowrap;
+}
+
+.container .tag-container .tag-add {
+  flex: 0 0 300px;
+}
+
+.container .tag-container .tag-add label {
+  font-weight: bold;
+  font-size: 1.1rem;
+  margin-left: 5px;
+}
+
+.container .tag-container .tag-add input[type='text'] {
+  width: 150px;
+  box-sizing: border-box;
+  color: black;
+  font-size: 1.2rem;
+}
+
+.container .tag-container .tag-add button {
+  height: 30px;
+  width: 50px;
+  cursor: pointer;
+  font-weight: bold;
+  background-color: blueviolet;
+  border-radius: 5%;
+  border: none;
+  color: white;
+}
+
+.container .tag-container .tag {
+  margin-left: 10px;
+}
+
+.container .tag-container .tag span {
+  border: 1px solid #cccccc;
+  border-radius: 15px;
+  padding: 5px 12px;
+  font-weight: bold;
+  font-family: 'Nanum Gothic', sans-serif;
+}
+
+.container .tag-container .tag span:hover {
+  background: violet;
+  cursor: pointer;
+}
+
+/* 
+.container .tag-container span {
+  border: 1px solid #cccccc;
+  border-radius: 15px;
+  padding: 5px 12px;
+  font-weight: bold;
+  font-family: 'Nanum Gothic', sans-serif;
+}
+
+.container .tag-container {
   border: 1px solid #cccccc;
   padding: 10px;
   margin-bottom: 20px;
@@ -31,37 +96,37 @@
   justify-content: space-between;
 }
 
-.category .category-select {
+.tag-container.tag-select {
   flex: auto;
 }
 
-.category .category-add {
+.tag-container.tag-add {
   flex: auto;
 }
 
-.category .category-delete {
+.tag-container.tag-delete {
   flex: auto;
 }
 
-.category label {
+.tag-container label {
   font-weight: bold;
   font-size: 1.1rem;
 }
 
-.category select {
+.tag-container select {
   height: 30px;
   width: 150px;
   margin-left: 10px;
 }
 
-.category .category-input {
+.tag-container .tag-input {
   width: 150px;
   box-sizing: border-box;
   color: black;
   font-size: 1.2rem;
 }
 
-.category button {
+.tag-container button {
   height: 30px;
   width: 70px;
   cursor: pointer;
@@ -70,7 +135,7 @@
   border-radius: 5%;
   border: none;
   color: white;
-}
+} */
 
 .container button.custom {
   float: right;

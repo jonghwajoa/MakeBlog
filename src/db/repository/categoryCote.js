@@ -7,7 +7,6 @@ const findAllList = () => {
       {
         model: Solving,
         attributes: ['problemNum'],
-        order: [[CategoryCote.sequelize.fn('length', CategoryCote.sequelize.col('problemNum'))]],
       },
     ],
   });

@@ -34,7 +34,8 @@ router
   .post(needsAuth)
   .put(needsAuth)
   .delete(needsAuth);
-router.get(['/new', '/:id/new', '/:id/edit', '/:id/:subId/edit'], needsAuth);
+//'/new'
+router.get(['/:id/new', '/:id/edit', '/:id/:subId/edit'], needsAuth);
 
 /* post route */
 router
@@ -46,6 +47,8 @@ router.get('/new', ctrl.createView);
 router.post('/file', upload.array('photo'), ctrl.uploadImage);
 router.route('/category').post(ctrl.addCategory);
 router.route('/category/:id').delete(ctrl.removeCategory);
+
+router.route('/tag').post(ctrl.addTag);
 
 router.route('/:id').all(paramIsINT);
 router

@@ -4,6 +4,7 @@ class Post {
     this.savePost = [];
     this.subPost = document.getElementsByClassName('subpost_element');
     this.editor;
+    this.tags = [];
   }
 
   readInit() {
@@ -57,6 +58,44 @@ class Post {
     this.categoryAdd = document.getElementById('category-add');
     this.tag = document.getElementById('tag');
     this.writeEditor();
+
+    let tagAddBtn = document.getElementById('tagAddBtn');
+    let tagAddName = document.getElementById('tagAddName');
+
+    tagAddBtn.addEventListener('click', e => {
+      this.addTag(tagAddName.value);
+    });
+  }
+
+  addTag(requestTagName) {
+    if (!requestTagName) {
+      alert('공백은 추가할 수 없습니다.');
+      return;
+    }
+
+    if (requestTagName.length > 50) {
+      alert('TAG의 최대길이는 50입니다.');
+      return;
+    }
+
+    let tags = this.tags;
+    for (let e of tags) {
+      if (e == requestTagName) {
+        alert('이미 추가된 TAG 입니다.');
+        return;
+      }
+    }
+    tags.push(requestTagName);
+
+    let tagE = document.createElement('span');
+    tagE.className = 'tag-item';
+    tagE.innerText = requestTagName;
+    tagE.style.marginRight = '5px';
+
+    tagE.addEventListener('click', () => {
+      tagE.remove();
+    });
+    this.tag.append(tagE);
   }
 
   updateInit() {
@@ -272,6 +311,9 @@ class Post {
     }
   }
 
+  /**
+   * @deprecated
+   */
   async addCategory() {
     let requestCategoryName = this.categoryAdd.value;
 
@@ -296,6 +338,9 @@ class Post {
     alert(message);
   }
 
+  /**
+   * @deprecated
+   */
   async deleteCategory() {
     let deleteSelect = this.deleteSelect;
 

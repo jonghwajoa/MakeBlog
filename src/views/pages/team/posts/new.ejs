@@ -20,42 +20,19 @@
       <!-- container -->
       <div class="container">
         <div class="title"><input type="text" id="title" name="title" placeholder="Title" /></div>
-        <div class="tag"><input type="text" id="tag" name="tag" placeholder="Tag" /></div>
 
-        <!-- category -->
-        <div class="category">
-          <!-- category-select -->
-          <div class="category-select">
-            <label for="category-select">카테고리 선택</label>
-            <select name="category-select" id="category-select">
-              <% category.forEach((e,i) => { %>
-              <option value="<%=e.no%>"> <%=e.explain %> </option>
-              <% }) %>
-            </select>
-          </div>
-          <!-- //category-select -->
+        <!-- tags -->
 
-          <!-- category-add -->
-          <div class="category-add">
-            <label for="category-add">카테고리 추가</label>
-            <input type="text" class="category-input" id="category-add" />
-            <button onclick="post.addCategory()">추가</button>
+        <div class="tag-container">
+          <div class="tag-add">
+            <label for="category-add">태그 추가</label>
+            <input type="text" class="category-input" id="tagAddName" />
+            <button id="tagAddBtn">추가</button>
           </div>
-          <!-- //category-add -->
 
-          <!-- category-delete -->
-          <div class="category-delete">
-            <label for="category-delete">카테고리 삭제</label>
-            <select name="category-delete" id="category-delete">
-              <% category.forEach((e,i) => { %>
-              <option value="<%=e.no%>"> <%=e.explain %> </option>
-              <% }) %>
-            </select>
-            <button onclick="post.deleteCategory()">삭제</button>
-          </div>
-          <!-- //category-delete -->
+          <div class="tag" id="tag"></div>
         </div>
-        <!-- //category -->
+        <!-- //tags -->
 
         <div id="editSection" id="content" name="content"></div>
 

@@ -2,6 +2,7 @@ const postDB = require('../../db/repository/post');
 const subPostDB = require('../../db/repository/subPost');
 const visitDB = require('../../db/repository/visitCount');
 const categoryDB = require('../../db/repository/categories');
+const tagDB = require('../../db/repository/tags');
 const db = require('../../db');
 const paging = require('../../lib/paging');
 const paramCheck = require('../../lib/validation');
@@ -9,7 +10,8 @@ const paramCheck = require('../../lib/validation');
 const createView = async (req, res) => {
   try {
     const category = await categoryDB.findAll();
-    return res.render('team/posts/new', { category });
+    const tag = await tagDB.findAll();
+    return res.render('team/posts/new', { category, tag });
   } catch (e) {
     next(e);
   }
@@ -309,6 +311,35 @@ const uploadImage = (req, res) => {
   return res.end(req.files[0].filename);
 };
 
+const addTag = async (req, res, next) => {
+  const { requestTagName } = req.body;
+  let result;
+
+  if (!requestTagName) {
+    return res.status(400).end();
+  }
+
+  try {
+    result = await tagDB.findByName(requestTagName);
+    if (result !== null) {
+      return res.status(400).json('이미 존재하는 TAG 입니다.');
+    }
+    result = await tagDB.create(requestTagName);
+  } catch (e) {
+    e.message = 'TAG 추가 실패';
+    next(e);
+  }
+
+  return res.status(201).json({
+    message: 'TAG 추가 성공',
+    no: result.dataValues.no,
+  });
+};
+
+/**
+ * @deprecated
+ * 카테고리 기능 없애고 TAG로 교체
+ */
 const addCategory = async (req, res, next) => {
   const { requestCategoryName } = req.body;
   let result;
@@ -334,6 +365,10 @@ const addCategory = async (req, res, next) => {
   });
 };
 
+/**
+ * @deprecated
+ * 카테고리 기능 없애고 TAG로 교체
+ */
 const removeCategory = async (req, res, next) => {
   let { id } = req.params;
 
@@ -374,4 +409,5 @@ module.exports = {
   uploadImage,
   addCategory,
   removeCategory,
+  addTag,
 };
