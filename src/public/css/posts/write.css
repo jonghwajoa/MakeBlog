@@ -78,65 +78,6 @@
   cursor: pointer;
 }
 
-/* 
-.container .tag-container span {
-  border: 1px solid #cccccc;
-  border-radius: 15px;
-  padding: 5px 12px;
-  font-weight: bold;
-  font-family: 'Nanum Gothic', sans-serif;
-}
-
-.container .tag-container {
-  border: 1px solid #cccccc;
-  padding: 10px;
-  margin-bottom: 20px;
-  display: flex;
-  flex-direction: initial;
-  justify-content: space-between;
-}
-
-.tag-container.tag-select {
-  flex: auto;
-}
-
-.tag-container.tag-add {
-  flex: auto;
-}
-
-.tag-container.tag-delete {
-  flex: auto;
-}
-
-.tag-container label {
-  font-weight: bold;
-  font-size: 1.1rem;
-}
-
-.tag-container select {
-  height: 30px;
-  width: 150px;
-  margin-left: 10px;
-}
-
-.tag-container .tag-input {
-  width: 150px;
-  box-sizing: border-box;
-  color: black;
-  font-size: 1.2rem;
-}
-
-.tag-container button {
-  height: 30px;
-  width: 70px;
-  cursor: pointer;
-  font-weight: bold;
-  background-color: blueviolet;
-  border-radius: 5%;
-  border: none;
-  color: white;
-} */
-
 .container button.custom {
   float: right;
   overflow: hidden;

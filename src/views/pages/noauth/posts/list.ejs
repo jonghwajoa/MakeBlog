@@ -15,21 +15,37 @@
   <body>
     <% include ../../../partials/header.ejs %>
 
+    <!-- wrap -->
     <div class="content-wrap">
+      <!-- flex-container -->
       <div class="flex-container">
+        <!-- post-area -->
         <div class='post-area'>
           <% postList.forEach((item,index) => { %>
           <div class="post">
-            <span class="post-tag"><%= item.tag %></span>
+            
+            <!-- postTag -->
+            <div class="postTag">
+              <ul>
+                <% item.Tags.forEach(e => { %>
+                  <li>&#8917;<%= e.name %></li>
+                <% }) %>
+              </ul>
+            </div>
+            <!-- //postTag -->
 
             <h3><a href="/posts/<%=item.no %>"><%= item.title %></a></h3>
 
+            <!-- postInfo -->
             <div class="postInfo">
               <span><%= item.created_at %> | view <%= item.count %> </span>
             </div>
+            <!-- //postInfo -->
           </div>
           <% }) %>
+          <!-- //post -->
 
+          <!-- paging -->
           <div class="paging">
             <% if(pagingInfo.page >10) { %>
             <div class="pagingArrow">
@@ -49,12 +65,15 @@
             </div>
             <% } %>
           </div>
+          <!-- //paging -->
         </section>
       </div>
 
       <aside>
+        <!-- aside-ontainer -->
         <div class="aside-container"> 
 
+        <!-- visit-count -->
         <div class="visit-count">
           <div class="gridItem title">total</div>
           <div class="gridItem title">monthly</div>
@@ -63,7 +82,9 @@
           <div class="gridItem"><%= monthCount %></div>
           <div class="gridItem"><%=today%></div>
         </div>
+        <!-- //visit-count -->
         
+        <!-- hotPost -->
         <div class="hotPost">
           <h2>Post TOP5</h2>
           <ul>
@@ -76,7 +97,9 @@
             <% }) %>
           </ul>
         </div>
+        <!-- //hotPost -->
 
+        <!-- hotSubPost -->
         <div class="hotSubPost">
           <h2>SubPost TOP5</h2>
           <ul>
@@ -89,7 +112,21 @@
             <% }) %>
           </ul>
         </div> 
+        <!-- //hotSubPost -->
+
+        <!-- allTag -->
+        <div class='allTag'>
+          <h2>태그 목록</h2>
+          <ul>
+            <% allTag.forEach(e => { %>
+              <li>&#8917;<%= e.name %></li>
+            <% }) %>
+          </ul>
+        </div>
+        <!-- //allTag -->
+
       </div>
+      <!-- //aside-ontainer -->
       </aside>
       <div class="moveTop-btn" id="moveTop-btn">&#x2912;</div>
     </div>

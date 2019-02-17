@@ -31,29 +31,40 @@
   border-bottom: 2px solid #ededed;
 }
 
-.post span.post-tag {
-  font-size: 1rem;
-  color: #cccccc;
-  margin-bottom: 0.25rem;
-  box-sizing: border-box;
-  display: block;
+.post .postTag {
+  margin-bottom: 5px;
+}
+
+.post .postTag ul {
+  text-align: left;
+}
+
+.post .postTag li {
+  display: inline-block;
+  border-radius: 7px;
+  padding: 4px 8px;
+  font-weight: bold;
+  font-family: 'Nanum Gothic', sans-serif;
+  background: #f8f9fa;
+  color: #495057;
+  border: 1px solid #dee2e6;
+  font-size: 0.8rem;
 }
 
 .post h3 {
   font-family: 'Nanum Gothic', sans-serif;
   font-weight: bold;
   font-size: 1.5rem;
-  margin-bottom: 0.8rem;
+  margin-bottom: 0.6rem;
   display: block;
 }
 
 .post h3 a:hover {
   color: black;
-  font-size: 2rem;
 }
 
 .post .postInfo {
-  margin-bottom: 10px;
+  margin-bottom: 7px;
 }
 
 input.btnNew {
@@ -103,7 +114,6 @@ input.btnNew {
 }
 
 aside .aside-container {
-  position: fixed;
   top: 7rem;
 }
 
@@ -155,6 +165,23 @@ aside .aside-container > div {
   font-weight: bold;
 }
 
+.aside-container .allTag {
+  box-shadow: none;
+}
+
+.aside-container .allTag li {
+  display: inline-block;
+  border-radius: 7px;
+  padding: 5px 12px;
+  font-weight: bold;
+  font-family: 'Nanum Gothic', sans-serif;
+  background: #f8f9fa;
+  color: black;
+  border: 1px solid #dee2e6;
+
+  font-size: 1rem;
+}
+
 @media (max-width: 780px) {
   .flex-container {
     overflow: hidden;
@@ -180,14 +207,6 @@ aside .aside-container > div {
     box-sizing: border-box;
     min-height: 100px;
     border-bottom: 2px solid #ededed;
-  }
-
-  .post span.post-tag {
-    font-size: 1rem;
-    color: #cccccc;
-    margin-bottom: 0.25rem;
-    box-sizing: border-box;
-    display: block;
   }
 
   .post h3 {

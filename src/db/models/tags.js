@@ -32,6 +32,7 @@ module.exports = (sequelize, DataTypes) => {
   /*  Associate */
   Tags.associate = function(models) {
     Tags.belongsToMany(models.Posts, { through: models.AssociationTag, foreignKey: 'tag_no' });
+    Tags.hasMany(models.AssociationTag, { foreignKey: 'tag_no' });
   };
 
   /* instance Method */
@@ -41,6 +42,12 @@ module.exports = (sequelize, DataTypes) => {
   };
 
   /* class Method */
+
+  Tags.findAllWithCount = () => {
+    return Tags.findAll({
+      attributes: ['name'],
+    });
+  };
 
   Tags.findByTest = name => {
     return Tags.findOne({

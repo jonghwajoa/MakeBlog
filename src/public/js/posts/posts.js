@@ -18,6 +18,28 @@ class Post {
     this.subPostViewHandle();
   }
 
+  writeInit() {
+    this.postTitle = document.getElementById('title');
+    this.tag = document.getElementById('tag');
+    this.writeEditor();
+    this.tagEvent();
+    this.writeSubmit();
+  }
+
+  updateInit() {
+    this.content = document.getElementById('content-hidden');
+    this.writeEditor();
+    this.editor.setMarkdown(this.content.value.trim());
+    this.postTitle = document.getElementById('title');
+    this.tag = document.getElementById('tag');
+    this.tagEvent();
+
+    let tagArray = Array.from(document.getElementsByClassName('hiddenTag'));
+    for (let e of tagArray) {
+      this.addTag(e.value);
+    }
+  }
+
   subPostViewHandle() {
     let subPostLength = this.subPost.length;
     let contentSide = document.getElementsByClassName('content-side')[0];
@@ -51,17 +73,9 @@ class Post {
     }
   }
 
-  writeInit() {
-    this.postTitle = document.getElementById('title');
-    this.tag = document.getElementById('tag');
-    this.writeEditor();
-    this.writeEventInit();
-  }
-
-  writeEventInit() {
+  tagEvent() {
     let tagAddBtn = document.getElementById('tagAddBtn');
     let tagAddName = document.getElementById('tagAddName');
-    let submitBtn = document.getElementById('submit');
 
     tagAddName.addEventListener('keypress', e => {
       const key = e.which || e.keyCode;
@@ -73,6 +87,10 @@ class Post {
     tagAddBtn.addEventListener('click', () => {
       this.addTag(tagAddName.value.trim());
     });
+  }
+
+  writeSubmit() {
+    let submitBtn = document.getElementById('submit');
 
     submitBtn.addEventListener('click', async () => {
       const title = this.postTitle.value;
@@ -146,22 +164,6 @@ class Post {
     });
     this.tag.append(tagE);
     tagAddName.value = '';
-  }
-
-  updateInit() {
-    this.content = document.getElementById('content-hidden');
-    this.postTitle = document.getElementById('title');
-    this.tag = document.getElementById('tag');
-    this.categorySelect = document.getElementById('category-select');
-    this.writeEditor();
-    this.editor.setMarkdown(this.content.value.trim());
-
-    if (this.tag) {
-      let tagVal = this.tag.value.split(' ');
-      tagVal.shift();
-
-      this.tag.value = tagVal.map(item => item.substr(1, item.length)).join(' ');
-    }
   }
 
   async getContent(postNo, subNo = 1) {
@@ -256,9 +258,6 @@ class Post {
   async update(postNo) {
     const title = this.postTitle.value;
     const content = this.editor.getMarkdown().trim();
-    const category = this.categorySelect;
-    const categoryText = '#' + category[category.selectedIndex].text;
-    let tag = this.tag.value.trim().replace(/\s*,+\s*|\s+/g, ' #');
 
     if (!title) {
       alert('제목을 입력하세요..');
@@ -270,21 +269,12 @@ class Post {
       return false;
     }
 
-    if (tag) {
-      tag = categoryText + ' #' + tag;
-    } else {
-      tag = categoryText;
-    }
-
     const params = {
       title,
-      tag,
       content,
-      category: category.value,
     };
 
     let url = `/posts/${postNo}`;
-
     try {
       await ajaxUtil.sendPutAjax(url, params);
       location.href = `/posts/${postNo}`;

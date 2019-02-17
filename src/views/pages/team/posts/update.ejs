@@ -22,28 +22,28 @@
           <input type="text" id="title" name="title" value="<%= post.title %>" />
         </div>
 
-        <div class="tag"><input type="text" id="tag" name="tag" value="<%= post.tag %>" /></div>
-
-        <!-- category -->
-        <div class="category">
-          <label for="category-select">category</label>
-          <select name="category" id="category-select">
-            <% category.forEach((item,idx) => { if(item.no == post.category_no) { %>
-            <option value="<%=item.no%>" selected><%=item.explain %> </option>
-            <% } else { %>
-            <option value="<%=item.no%>"><%=item.explain %> </option>
-            <% } }) %>
-          </select>
+        <!-- tags -->
+        <div class="tag-container">
+          <div class="tag-add">
+            <label for="category-add">태그 추가</label>
+            <input type="text" class="category-input" id="tagAddName" />
+            <button id="tagAddBtn">추가</button>
+          </div>
+          <div class="tag" id="tag">
+            <% post.Tags.forEach(e => { %>
+            <input type="hidden" class="hiddenTag" value="<%= e.name%>" />
+            <% }) %>
+          </div>
         </div>
-        <!-- //category -->
+        <!-- //tags -->
 
         <!-- editsection -->
-        <div id="editSection" id="content" name="content">
+        <div id="content-content" name="content">
           <input type="hidden" id="content-hidden" value="<%= post.content %>" />
         </div>
         <!-- //editsection -->
 
-        <button class="custom" onclick="back()">뒤로가기</button>
+        <button class="custom">뒤로가기</button>
         <button class="custom" onclick="post.update('<%=post.no%>')">수정하기</button>
       </div>
       <!-- //container -->

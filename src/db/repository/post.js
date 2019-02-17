@@ -12,20 +12,6 @@ const findByCategoryId = id => {
   });
 };
 
-const findAll = (pageNum = 10, offset = 0) => {
-  return Posts.findAll({
-    limit: pageNum,
-    offset,
-    attributes: [
-      'no',
-      'title',
-      'count',
-      [Posts.sequelize.fn('date_format', Posts.sequelize.col('created_at'), '%Y.%m.%d'), 'created_at'],
-    ],
-    order: [['created_at', 'DESC']],
-  });
-};
-
 /**
  * @deprecated
  * use instance destroy instead of this function
@@ -51,7 +37,6 @@ const updateById = (id, title, content, categories) => {
 
 module.exports = {
   deleteById,
-  findAll,
   updateById,
   findTransactionById,
   findByCategoryId,

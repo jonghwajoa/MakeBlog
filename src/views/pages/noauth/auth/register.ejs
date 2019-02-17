@@ -8,6 +8,9 @@
     <meta name="generator" content="Visual Studio Code" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="robots" content="noindex,nofollow" />
+
+    <link rel="stylesheet" href="/css/auth/login.css" />
+    <% include ../../../partials/essentialCss.ejs %>
   </head>
 
   <body>
@@ -56,7 +59,7 @@
           nickname,
         };
         xhr.onload = function() {
-          if (xhr.status === 200) {
+          if (xhr.status === 200 || xhr.status) {
             alert('회원가입 성공');
             location.href = '/auth/login';
           } else {

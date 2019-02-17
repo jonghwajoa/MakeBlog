@@ -59,6 +59,21 @@ module.exports = (sequelize, DataTypes) => {
     });
   };
 
+  Posts.findAllWithPaging = (pageNum = 10, offset = 0) => {
+    return Posts.findAll({
+      limit: pageNum,
+      offset,
+      attributes: [
+        'no',
+        'title',
+        'count',
+        [sequelize.fn('date_format', sequelize.col('created_at'), '%Y.%m.%d'), 'created_at'],
+      ],
+      order: [['created_at', 'DESC']],
+      include: [{ model: sequelize.models.Tags, attributes: ['name'], through: { attributes: [] } }],
+    });
+  };
+
   Posts.findDetailById = id => {
     return Posts.findById(id, {
       attributes: [
@@ -75,6 +90,7 @@ module.exports = (sequelize, DataTypes) => {
   Posts.findByIdCustom = id => {
     return Posts.findById(id, {
       attributes: ['no', 'title', 'content'],
+      include: [{ model: sequelize.models.Tags, attributes: ['name'], through: { attributes: [] } }],
     });
   };
 

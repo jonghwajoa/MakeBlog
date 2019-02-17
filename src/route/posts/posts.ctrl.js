@@ -82,12 +82,13 @@ const list = async (req, res, next) => {
   }
 
   try {
-    [totalCnt, hotPost, hotSubPost, monthCount, totalCount] = await Promise.all([
+    [totalCnt, hotPost, hotSubPost, monthCount, totalCount, allTag] = await Promise.all([
       db.Posts.count(),
       db.Posts.findHotPost(),
       subPostDB.findHotPost(),
       db.VisitCount.findMonthCount(req.year, req.month),
       db.VisitCount.sum('count'),
+      db.Tags.findAllWithCount(),
     ]);
   } catch (e) {
     return next(e);
@@ -96,7 +97,7 @@ const list = async (req, res, next) => {
   pagingInfo = paging(totalCnt, req.query);
   const offset = (pagingInfo.page - 1) * pagingInfo.perPageNum;
   try {
-    postList = await postDB.findAll(pagingInfo.perPageNum, offset);
+    postList = await db.Posts.findAllWithPaging(pagingInfo.perPageNum, offset);
   } catch (e) {
     return next(e);
   }
@@ -109,6 +110,7 @@ const list = async (req, res, next) => {
     monthCount,
     totalCount,
     today: req.today,
+    allTag,
   };
 
   let path = 'noauth/posts/list';
@@ -208,11 +210,10 @@ const getContent = async (req, res, next) => {
 
 const updateView = async (req, res, next) => {
   const { id } = req.params;
-  let post, category;
+  let post;
 
   try {
     post = await db.Posts.findByIdCustom(id);
-    category = await categoryDB.findAll();
   } catch (e) {
     return next(e);
   }
@@ -222,22 +223,22 @@ const updateView = async (req, res, next) => {
     err.status = 404;
     return next(err);
   }
-  return res.render('team/posts/update', { post, category });
+  return res.render('team/posts/update', { post });
 };
 
 const update = async (req, res, next) => {
   let { id } = req.params;
-  let { title, tag, content, category } = req.body;
+  let { title, content } = req.body;
 
-  if (!paramCheck.postValidation(req.body)) {
-    return res.status(400).json('입력이 올바르지 않습니다.');
-  }
+  // if (!paramCheck.postValidation(req.body)) {
+  //   return res.status(400).json('입력이 올바르지 않습니다.');
+  // }
 
   let result;
-  let updateVal = { title, tag, content, category_no: category };
+  let updateVal = { title, content };
 
   try {
-    result = await db.Posts.findByIdCustom(id);
+    result = await db.Posts.findById(id);
     if (!result) return next();
     result = await result.update(updateVal);
   } catch (e) {
