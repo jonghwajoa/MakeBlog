@@ -11,11 +11,13 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING(100),
         allowNull: false,
         unique: true,
-      },
-      count: {
-        type: DataTypes.INTEGER.UNSIGNED,
-        defaultValue: 0,
-        allowNull: false,
+        validate: {
+          len: {
+            min: 1,
+            max: 100,
+            msg: 'Tag 이름의 길이는 1 이상 100 이하 입니다.',
+          },
+        },
       },
     },
     {
@@ -27,17 +29,18 @@ module.exports = (sequelize, DataTypes) => {
     },
   );
 
+  /*  Associate */
   Tags.associate = function(models) {
     Tags.belongsToMany(models.Posts, { through: 'tbl_post_tag', foreignKey: 'tag_no', timestamps: false });
   };
+
+  /* instance Method */
 
   Tags.prototype.getNo = function() {
     return this.no;
   };
 
-  Tags.prototype.getCount = function() {
-    return this.count;
-  };
+  /* class Method */
 
   Tags.findByTest = name => {
     return Tags.findOne({
@@ -67,13 +70,12 @@ module.exports = (sequelize, DataTypes) => {
     });
   };
 
-  Tags.findOrCreateByName = (name, transaction) => {
+  Tags.findOrCreateByName = name => {
     return Tags.findOrCreate({
       where: {
         name,
       },
       attributes: ['no'],
-      transaction,
     });
   };
 

@@ -41,7 +41,7 @@ router.get(['/:id/new', '/:id/edit', '/:id/:subId/edit'], needsAuth);
 router
   .route('/')
   .get(ctrl.list)
-  .post(ctrl.createTest);
+  .post(ctrl.create);
 
 router.get('/new', ctrl.createView);
 router.post('/file', upload.array('photo'), ctrl.uploadImage);
@@ -53,7 +53,7 @@ router.route('/tag').post(ctrl.addTag);
 router.route('/:id').all(paramIsINT);
 router
   .route('/:id')
-  .get(ctrl.show)
+  .get(ctrl.read)
   .post(ctrl.createSubPost)
   .put(ctrl.update)
   .delete(ctrl.remove);

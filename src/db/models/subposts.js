@@ -35,5 +35,15 @@ module.exports = (sequelize, DataTypes) => {
     SubPosts.belongsTo(models.Posts);
   };
 
+
+  SubPosts.findByPostNo = id => {
+    return SubPosts.findAll({
+      where: {
+        post_no: id,
+      },
+      attributes: ['title', 'sub_no'],
+    });
+  };
+
   return SubPosts;
 };

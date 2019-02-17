@@ -34,6 +34,16 @@ describe('categoryRepository는.......', () => {
       }
       result.dataValues.should.property('no');
     });
+
+    it('길이가 100이상이면 오류를 반환', async () => {
+      let result;
+
+      try {
+        result = await db.Tags.createByName('hehe'.repeat(100));
+      } catch (e) {
+        e.errors[0].message.should.be.equal('Tag 이름의 길이는 1 이상 100 이하 입니다.');
+      }
+    });
   });
 
   describe('updateOrCreate는...', () => {

@@ -63,6 +63,13 @@ class Post {
     let tagAddName = document.getElementById('tagAddName');
     let submitBtn = document.getElementById('submit');
 
+    tagAddName.addEventListener('keypress', e => {
+      const key = e.which || e.keyCode;
+      if (key === 13) {
+        this.addTag(tagAddName.value.trim());
+      }
+    });
+
     tagAddBtn.addEventListener('click', () => {
       this.addTag(tagAddName.value.trim());
     });
@@ -135,8 +142,10 @@ class Post {
 
     tagE.addEventListener('click', () => {
       tagE.remove();
+      this.tags = tags.filter(e => e != requestTagName);
     });
     this.tag.append(tagE);
+    tagAddName.value = '';
   }
 
   updateInit() {

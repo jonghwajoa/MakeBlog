@@ -29,19 +29,31 @@ const createSubView = async (req, res, next) => {
 };
 
 const create = async (req, res, next) => {
+  if (!paramCheck.postValidation(req.body)) {
+    return res.status(400).json('입력이 올바르지 않습니다.');
+  }
+
+  try {
+    let result = await postDB.creatPost(req.body, req.session.userid);
+    return res.status(201).json({ no: result.dataValues.no });
+  } catch (e) {
+    return next(e);
+  }
+};
+
+const createTest = async (req, res, next) => {
   let { title, tags, content } = req.body;
 
-  let transaction, tagsUUID;
+  let transaction;
   // TODO VALIDATION 진행
   try {
-    for (let e of tags) {
-      let result = await db.Tags.findOrCreateByName(e);
-      tagsUUID.push(result[0].getNo());
-    }
-
     transaction = await db.sequelize.transaction();
+    await Promise.all[
+      tags.forEach(e => {
+        db.Tags.findOrCreateByName(e, transaction);
+      })
+    ];
     let result = await db.Posts.createPost(req.body, req.session.userid, transaction);
-    
     await transaction.commit();
     return res.status(201).json({ no: result.getNo() });
   } catch (e) {
@@ -118,22 +130,20 @@ const list = async (req, res, next) => {
   return res.render(path, { ...returnObj });
 };
 
-const read = async (req, res, next) => {
+const show = async (req, res, next) => {
   const id = req.params.id;
   let post, subPost;
 
   try {
-    post = await db.Posts.findDetailById(id);
+    post = await postDB.postFindById(id);
     if (!post) {
       return next();
     }
-    subPost = await db.SubPosts.findByPostNo(id);
-    post.updateAttributes({ count: post.getCount() + 1 });
+    subPost = await subPostDB.findAllSubPost(id);
+    post.updateAttributes({ count: post.dataValues.count + 1 });
   } catch (e) {
     return next(e);
   }
-
-  return res.json({ post, subPost });
 
   if (req.headers['content-type'] === 'application/json') {
     return res.json({ post, subPost });
@@ -402,7 +412,8 @@ const removeCategory = async (req, res, next) => {
 module.exports = {
   list,
   createView,
-  read,
+  create,
+  show,
   updateView,
   update,
   remove,
@@ -416,6 +427,5 @@ module.exports = {
   addCategory,
   removeCategory,
   addTag,
-  /** refactoring 진행한것들 */
-  create,
+  createTest,
 };

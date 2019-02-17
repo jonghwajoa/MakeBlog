@@ -42,10 +42,16 @@ module.exports = (sequelize, DataTypes) => {
     });
   };
 
+  /* instance Method */
   Posts.prototype.getNo = function() {
     return this.no;
   };
 
+  Posts.prototype.getCount = function() {
+    return this.count;
+  };
+
+  /* class Method */
   Posts.createPost = ({ title, content }, writer, transaction) => {
     return Posts.create(
       {
@@ -55,6 +61,18 @@ module.exports = (sequelize, DataTypes) => {
       },
       { transaction },
     );
+  };
+
+  Posts.findDetailById = id => {
+    return Posts.findById(id, {
+      attributes: [
+        'no',
+        'title',
+        'content',
+        'count',
+        [Posts.sequelize.fn('date_format', Posts.sequelize.col('created_at'), '%Y-%m-%d'), 'created_at'],
+      ],
+    });
   };
 
   return Posts;
