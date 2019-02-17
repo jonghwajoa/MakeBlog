@@ -42,6 +42,13 @@
                     </dt>
                 </dl>
             </div>
+            <div class='postTag'>
+                <ul>
+                    <% post.Tags.forEach(e => { %>
+                        <li><%= e.name %></li>
+                    <% }) %>
+                </ul>
+            </div>
         </div>
         <!-- /content-header -->
 

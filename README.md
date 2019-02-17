@@ -4,35 +4,36 @@ https://www.weknowjs.xyz/
 
 ## API
 
-| API                   | METHOD | 기능                  |
-| --------------------- | ------ | --------------------- |
-| /auth/login           | GET    | 로그인 form           |
-| /auth/login           | POST   | 로그인                |
-| /auth/register        | GET    | 회원가입 form         |
-| /auth/register        | POST   | 회원가입              |
-| /post                 | GET    | 포스트 리스트 출력    |
-| /post/new             | GET    | 포스트 생성 form      |
-| /post                 | POST   | 포스트 생성           |
-| /post/:id             | GET    | 포스트 보기           |
-| /post/:id             | PUT    | 포스트 수정           |
-| /post/:id             | DELETE | 포스트 삭제           |
-| /post/:id/edit        | GET    | 포스트 수정 form      |
-| /post/:id/            | POST   | 서브 포스트 생성      |
-| /post/:id/:subId      | GET    | 서브 포스트 보기      |
-| /post/:id/:subId      | PUT    | 서브 포스트 수정      |
-| /post/:id/:subId      | DELETE | 서브 포스트 삭제      |
-| /post/:id/:subId/edit | GET    | 서브 포스트 수정 form |
-| /post/category        | POST   | 포스트 카테고리 추가  |
-| /post/category/:id    | DELETE | 포스트 카테고리 삭제  |
-| /post/file            | POST   | 사진 저장             |
-| /solving              | GET    | solving home          |
-| /solving              | POST   | solving 생성          |
-| /solving/new          | GET    | 문제 생성 form        |
-| /solving/:id          | GET    | solving 보기          |
-| /solving/:id/edit     | GET    | solving 수정 form     |
-| /solving              | put    | solving 수정          |
-| /solving/category     | POST   | solving 카테고리 추가 |
-| /solving/category/:id | DELETE | solving 카테고리 삭제 |
+| API                    | METHOD | 기능                  | 기타       |
+| ---------------------- | ------ | --------------------- | ---------- |
+| /auth/login            | GET    | 로그인 form           |            |
+| /auth/login            | POST   | 로그인                |            |
+| /auth/register         | GET    | 회원가입 form         |            |
+| /auth/register         | POST   | 회원가입              |            |
+| /posts                 | GET    | 포스트 리스트 출력    |            |
+| /posts/new             | GET    | 포스트 생성 form      |            |
+| /posts                 | POST   | 포스트 생성           |            |
+| /posts/:id             | GET    | 포스트 보기           |            |
+| /posts/:id             | PUT    | 포스트 수정           |            |
+| /posts/:id             | DELETE | 포스트 삭제           |            |
+| /posts/:id/edit        | GET    | 포스트 수정 form      |            |
+| /posts/:id/            | POST   | 서브 포스트 생성      |            |
+| /posts/:id/:subId      | GET    | 서브 포스트 보기      |            |
+| /posts/:id/:subId      | PUT    | 서브 포스트 수정      |            |
+| /posts/:id/:subId      | DELETE | 서브 포스트 삭제      |            |
+| /posts/:id/:subId/edit | GET    | 서브 포스트 수정 form |            |
+| /posts/tag             | POST   | 포스트 TAG 추가       |            |
+| /posts/category        | POST   | 포스트 카테고리 추가  | deprecated |
+| /posts/category/:id    | DELETE | 포스트 카테고리 삭제  | deprecated |
+| /posts/file            | POST   | 사진 저장             |            |
+| /solving               | GET    | solving home          |            |
+| /solving               | POST   | solving 생성          |            |
+| /solving/new           | GET    | 문제 생성 form        |            |
+| /solving/:id           | GET    | solving 보기          |            |
+| /solving/:id/edit      | GET    | solving 수정 form     |            |
+| /solving               | put    | solving 수정          |            |
+| /solving/category      | POST   | solving 카테고리 추가 |            |
+| /solving/category/:id  | DELETE | solving 카테고리 삭제 |            |
 
 <br>
 
@@ -41,7 +42,8 @@ https://www.weknowjs.xyz/
 - [가독성 : ! or false](https://github.com/jonghwajoa/MakeBlog/blob/master/Memo/!%20or%20false.md)
 - [선언식 vs 표현식](https://github.com/jonghwajoa/MakeBlog/blob/master/Memo/%EC%84%A0%EC%96%B8%EC%8B%9Dvs%ED%91%9C%ED%98%84%EC%8B%9D.md)
 - [반복적인 요청 ( Map vs Object )](https://github.com/jonghwajoa/MakeBlog/blob/master/Memo/Map%20vs%20Object.md)
-- pushState
+- [pushState](https://github.com/jonghwajoa/MakeBlog/blob/master/Memo/pushState.md)
+- [Robots.txt](https://github.com/jonghwajoa/MakeBlog/blob/master/Memo/robotstxt.md)
 
 <br>
 
@@ -62,7 +64,7 @@ https://www.weknowjs.xyz/
 - 페이징 처리
 - 댓글 (disqus)
 
-### v1 오류 수정
+### V1 오류 수정
 
 - 본글 삭제시 서브글 미삭제 (cascade 미적용)
 - postNo 와 subNo 의 불일치 요청시 post 와 subPost 혼합 응답 수정
@@ -70,9 +72,9 @@ https://www.weknowjs.xyz/
 
 <br>
 
-## v2
+## V2
 
-개발기간 : 19.01.17 ~ continue
+개발기간 : 19.01.17 ~ 19.02.17
 
 - 방문로그 추가
 - 게시글 컬럼 추가 (sub_no)
@@ -91,3 +93,9 @@ https://www.weknowjs.xyz/
 - 수정하기,삭제하기 id 값 미변경
 - page 파라미터 오류 500 error 에러 점검 -> parseint 에서 number 로 대체
 - 업데이트 hidden p tag -> input hidden 으로 수정
+
+## V 2.1
+
+- Post 페이지 카테고리기능 삭제
+- TAG 기능 추가
+- Repository 폴더 삭제 진행

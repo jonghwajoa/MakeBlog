@@ -62,6 +62,23 @@
   display: inline-block;
 }
 
+.content-header .postTag {
+}
+.content-header .postTag ul {
+  text-align: right;
+}
+
+.content-header .postTag li {
+  display: inline-block;
+  border-radius: 15px;
+  padding: 5px 12px;
+  font-weight: bold;
+  font-family: 'Nanum Gothic', sans-serif;
+  background: #f8f9fa;
+  color: #495057;
+  border: 1px solid #dee2e6;
+}
+
 /* content-content */
 
 .content-content {

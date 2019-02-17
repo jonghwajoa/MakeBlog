@@ -16,7 +16,7 @@ const createSubView = async (req, res, next) => {
   let no = req.params.id;
   let result;
   try {
-    result = await postDB.findById(no);
+    result = await db.Posts.findByIdCustom(id);
   } catch (e) {
     return next(e);
   }
@@ -27,29 +27,26 @@ const createSubView = async (req, res, next) => {
   return res.render('team/subpost/write', { no: req.params.id });
 };
 
+// TODO VALIDATION 진행
 const create = async (req, res, next) => {
   let { title, tags, content } = req.body;
 
-  let transaction;
   const tagsUUID = [];
-  // TODO VALIDATION 진행
   try {
     for (let e of tags) {
       let result = await db.Tags.findOrCreateByName(e);
       tagsUUID.push(result[0].getNo());
     }
 
-    transaction = await db.sequelize.transaction();
-    let result = await db.Posts.createPost(req.body, req.session.userid, transaction);
-    await transaction.commit();
+    let createPostResult = await db.Posts.createPost(req.body, req.session.userid);
+    let createPostNo = createPostResult.getNo();
 
     for (let e of tagsUUID) {
-      result.addTags(db.Tags, { through: { status: e } });
+      await db.AssociationTag.createIfnotExistByCompositeKey(createPostNo, e);
     }
 
-    return res.status(201).json({ no: result.getNo() });
+    return res.status(201).json({ no: createPostNo });
   } catch (e) {
-    await transaction.rollback();
     return next(e);
   }
 };
@@ -61,7 +58,7 @@ const createSubPost = async (req, res, next) => {
   }
 
   try {
-    let isExist = await postDB.findById(id);
+    let isExist = await db.Posts.findByIdCustom(id);
     if (isExist == null) {
       return next();
     }
@@ -86,8 +83,8 @@ const list = async (req, res, next) => {
 
   try {
     [totalCnt, hotPost, hotSubPost, monthCount, totalCount] = await Promise.all([
-      postDB.totalCount(),
-      postDB.findHotPost(),
+      db.Posts.count(),
+      db.Posts.findHotPost(),
       subPostDB.findHotPost(),
       db.VisitCount.findMonthCount(req.year, req.month),
       db.VisitCount.sum('count'),
@@ -137,8 +134,6 @@ const read = async (req, res, next) => {
     return next(e);
   }
 
-  return res.json({ post, subPost });
-
   if (req.headers['content-type'] === 'application/json') {
     return res.json({ post, subPost });
   }
@@ -165,7 +160,7 @@ const showSubPost = async (req, res, next) => {
 
   let post, subPost;
   try {
-    post = await postDB.postFindById(id);
+    post = await db.Posts.findDetailById(id);
     if (post == null) {
       return next();
     }
@@ -192,7 +187,7 @@ const getContent = async (req, res, next) => {
 
   try {
     if (subId === '1') {
-      post = await postDB.postFindById(id);
+      post = await db.Posts.findDetailById(id);
     } else {
       post = await subPostDB.findDetailByPostNo(id, subId);
     }
@@ -216,7 +211,7 @@ const updateView = async (req, res, next) => {
   let post, category;
 
   try {
-    post = await postDB.findById(id);
+    post = await db.Posts.findByIdCustom(id);
     category = await categoryDB.findAll();
   } catch (e) {
     return next(e);
@@ -242,7 +237,7 @@ const update = async (req, res, next) => {
   let updateVal = { title, tag, content, category_no: category };
 
   try {
-    result = await postDB.findById(id);
+    result = await db.Posts.findByIdCustom(id);
     if (!result) return next();
     result = await result.update(updateVal);
   } catch (e) {
@@ -291,7 +286,7 @@ const remove = async (req, res, next) => {
   let result, transaction;
 
   try {
-    result = await postDB.findById(id);
+    result = await db.Posts.findByIdCustom(id);
     if (!result) return next();
     transaction = await db.sequelize.transaction();
     await subPostDB.deleteByForeignkey(id, transaction);

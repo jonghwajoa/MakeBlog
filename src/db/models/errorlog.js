@@ -36,7 +36,7 @@ module.exports = (sequelize, DataTypes) => {
   ErrorLog.associate = function(models) {};
 
   ErrorLog.createLog = (status, content, ip, referrer, path) => {
-    return errorLog.create({
+    return ErrorLog.create({
       status,
       content,
       ip,

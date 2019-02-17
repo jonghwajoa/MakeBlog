@@ -51,15 +51,12 @@ module.exports = (sequelize, DataTypes) => {
   };
 
   /* class Method */
-  Posts.createPost = ({ title, content }, writer, transaction) => {
-    return Posts.create(
-      {
-        title,
-        content,
-        writer,
-      },
-      { transaction },
-    );
+  Posts.createPost = ({ title, content }, writer) => {
+    return Posts.create({
+      title,
+      content,
+      writer,
+    });
   };
 
   Posts.findDetailById = id => {
@@ -69,9 +66,28 @@ module.exports = (sequelize, DataTypes) => {
         'title',
         'content',
         'count',
-        [Posts.sequelize.fn('date_format', Posts.sequelize.col('created_at'), '%Y-%m-%d'), 'created_at'],
+        [sequelize.fn('date_format', sequelize.col('created_at'), '%Y-%m-%d'), 'created_at'],
       ],
+      include: [{ model: sequelize.models.Tags, attributes: ['name'], through: { attributes: [] } }],
     });
+  };
+
+  Posts.findByIdCustom = id => {
+    return Posts.findById(id, {
+      attributes: ['no', 'title', 'content'],
+    });
+  };
+
+  Posts.findHotPost = () => {
+    return Posts.findAll({
+      limit: 5,
+      attributes: ['no', 'title'],
+      order: [['count', 'desc']],
+    });
+  };
+
+  Posts.totalCount = () => {
+    return Posts.count();
   };
 
   return Posts;

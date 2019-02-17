@@ -32,6 +32,8 @@ router.use((err, req, res, next) => {
     return res.status(err.status).json({ message: err.message });
   }
 
+  console.log(err);
+
   if (err.status === 400) {
     return res.status(err.status).render('error/badRequest');
   } else if (err.status === 401) {
