@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
-  const errorLog = sequelize.define(
-    'errorLog',
+  const ErrorLog = sequelize.define(
+    'ErrorLog',
     {
       no: {
         type: DataTypes.INTEGER,
@@ -33,6 +33,17 @@ module.exports = (sequelize, DataTypes) => {
     },
   );
 
-  errorLog.associate = function(models) {};
-  return errorLog;
+  ErrorLog.associate = function(models) {};
+
+  ErrorLog.createLog = (status, content, ip, referrer, path) => {
+    return errorLog.create({
+      status,
+      content,
+      ip,
+      referrer,
+      path,
+    });
+  };
+
+  return ErrorLog;
 };

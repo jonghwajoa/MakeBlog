@@ -1,5 +1,4 @@
-const visitDB = require('../../db/repository/visitCount');
-const visitLogDB = require('../../db/repository/visitLog');
+const db = require('../../db');
 const uaParse = require('ua-parser-js');
 
 async function visit(req, res, next) {
@@ -7,7 +6,7 @@ async function visit(req, res, next) {
   let result;
   const [year, month, day] = getToday(date);
   try {
-    result = await visitDB.findOrCreate(year, month, day);
+    result = await db.VisitCount.findOrCreateToday(year, month, day);
     if (!req.cookies.count) {
       res.cookie('count', 'true');
       result[0].updateAttributes({ count: result[0].dataValues.count + 1 });
@@ -36,7 +35,7 @@ async function visit(req, res, next) {
     day,
   };
 
-  visitLogDB.create(log);
+  db.VisitLog.createByObj(log);
 
   next();
 }

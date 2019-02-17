@@ -34,5 +34,26 @@ module.exports = (sequelize, DataTypes) => {
   );
 
   VisitCount.associate = function(models) {};
+
+  VisitCount.findOrCreateToday = (year, month, day) => {
+    return VisitCount.findOrCreate({
+      where: {
+        year,
+        month,
+        day,
+      },
+    });
+  };
+
+  VisitCount.findMonthCount = (year, month) => {
+    return VisitCount.sum('count', {
+      where: { year, month },
+    });
+  };
+
+  VisitCount.findToalCount = month => {
+    return VisitCount.sum('count');
+  };
+
   return VisitCount;
 };

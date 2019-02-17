@@ -31,7 +31,7 @@ module.exports = (sequelize, DataTypes) => {
 
   /*  Associate */
   Tags.associate = function(models) {
-    Tags.belongsToMany(models.Posts, { through: 'tbl_post_tag', foreignKey: 'tag_no', timestamps: false });
+    Tags.belongsToMany(models.Posts, { through: models.AssociationTag, foreignKey: 'tag_no' });
   };
 
   /* instance Method */

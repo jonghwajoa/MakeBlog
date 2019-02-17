@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const errorDB = require('../db/repository/errorLog');
+const db = require('../db');
 
 router.get('/', async (req, res) => {
   return res.status(301).redirect('/posts');
@@ -25,10 +25,9 @@ router.use((err, req, res, next) => {
   err.status = err.status || 500;
   err.message = err.message || 'Server Error';
   if (err.status >= 500) {
-    errorDB.create(err.status, err.stack, req.ip.substr(7), req.headers['referer'], req._parsedUrl.path);
+    db.ErrorLog.createLog(err.status, err.stack, req.ip.substr(7), req.headers['referer'], req._parsedUrl.path);
   }
 
-  console.log(err);
   if (req.headers['content-type'] === 'application/json') {
     return res.status(err.status).json({ message: err.message });
   }

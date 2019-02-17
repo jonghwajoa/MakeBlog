@@ -1,6 +1,5 @@
 const postDB = require('../../db/repository/post');
 const subPostDB = require('../../db/repository/subPost');
-const visitDB = require('../../db/repository/visitCount');
 const db = require('../../db');
 const paging = require('../../lib/paging');
 const paramCheck = require('../../lib/validation');
@@ -31,7 +30,8 @@ const createSubView = async (req, res, next) => {
 const create = async (req, res, next) => {
   let { title, tags, content } = req.body;
 
-  let transaction, tagsUUID;
+  let transaction;
+  const tagsUUID = [];
   // TODO VALIDATION 진행
   try {
     for (let e of tags) {
@@ -41,8 +41,12 @@ const create = async (req, res, next) => {
 
     transaction = await db.sequelize.transaction();
     let result = await db.Posts.createPost(req.body, req.session.userid, transaction);
-    
     await transaction.commit();
+
+    for (let e of tagsUUID) {
+      result.addTags(db.Tags, { through: { status: e } });
+    }
+
     return res.status(201).json({ no: result.getNo() });
   } catch (e) {
     await transaction.rollback();
@@ -85,8 +89,8 @@ const list = async (req, res, next) => {
       postDB.totalCount(),
       postDB.findHotPost(),
       subPostDB.findHotPost(),
-      visitDB.findMonthCount(req.year, req.month),
-      visitDB.findToalCount(),
+      db.VisitCount.findMonthCount(req.year, req.month),
+      db.VisitCount.sum('count'),
     ]);
   } catch (e) {
     return next(e);

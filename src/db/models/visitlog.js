@@ -59,5 +59,12 @@ module.exports = (sequelize, DataTypes) => {
   );
 
   VisitLog.associate = function(models) {};
+
+  VisitLog.createByObj = obj => {
+    return VisitLog.create({
+      ...obj,
+    });
+  };
+
   return VisitLog;
 };
