@@ -10,7 +10,7 @@
     "product": "port=80 ssl_port=443 node ./src/bin/www",
     "test": "set NODE_ENV=test&&mocha -w src/test/validation.spec.js",
     "testall": "set NODE_ENV=test&&mocha -w src/test/index.spec.js",
-    "test2": "set NODE_ENV=test&&mocha -w src/test/validation.spec.js"
+    "test2": "set NODE_ENV=test&&mocha -w src/test/db/tag.spec.js"
   },
   "keywords": [],
   "author": "",

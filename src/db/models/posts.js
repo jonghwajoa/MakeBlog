@@ -9,7 +9,6 @@ module.exports = (sequelize, DataTypes) => {
         autoIncrement: true,
       },
       title: { type: DataTypes.STRING(100), allowNull: false },
-      tag: { type: DataTypes.STRING(100), allowNull: false },
       content: {
         type: DataTypes.TEXT('long'),
         allowNull: false,
@@ -31,11 +30,31 @@ module.exports = (sequelize, DataTypes) => {
 
   Posts.associate = function(models) {
     Posts.belongsTo(models.Users, { foreignKey: 'writer' });
-    Posts.belongsTo(models.Categories);
     Posts.hasMany(models.SubPosts, {
       onDelete: 'cascade',
       hooks: true,
     });
+
+    Posts.belongsToMany(models.Tags, {
+      through: 'tbl_post_tag',
+      foreignKey: 'post_no',
+      timestamps: false,
+    });
+  };
+
+  Posts.prototype.getNo = function() {
+    return this.no;
+  };
+
+  Posts.createPost = ({ title, content }, writer, transaction) => {
+    return Posts.create(
+      {
+        title,
+        content,
+        writer,
+      },
+      { transaction },
+    );
   };
 
   return Posts;

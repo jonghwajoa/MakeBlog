@@ -7,7 +7,11 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true,
         autoIncrement: true,
       },
-      name: { type: DataTypes.STRING(100), allowNull: false },
+      name: {
+        type: DataTypes.STRING(100),
+        allowNull: false,
+        unique: true,
+      },
       count: {
         type: DataTypes.INTEGER.UNSIGNED,
         defaultValue: 0,
@@ -23,7 +27,55 @@ module.exports = (sequelize, DataTypes) => {
     },
   );
 
-  Tags.associate = function(models) {};
+  Tags.associate = function(models) {
+    Tags.belongsToMany(models.Posts, { through: 'tbl_post_tag', foreignKey: 'tag_no', timestamps: false });
+  };
+
+  Tags.prototype.getNo = function() {
+    return this.no;
+  };
+
+  Tags.prototype.getCount = function() {
+    return this.count;
+  };
+
+  Tags.findByTest = name => {
+    return Tags.findOne({
+      where: {
+        name,
+      },
+    });
+  };
+
+  Tags.createByName = name => {
+    return Tags.create({
+      name,
+    });
+  };
+
+  Tags.updateOrCreateByName = name => {
+    return Tags.findOne({
+      where: {
+        name,
+      },
+    }).then(result => {
+      if (!result) {
+        return Tags.create({
+          name,
+        });
+      }
+    });
+  };
+
+  Tags.findOrCreateByName = (name, transaction) => {
+    return Tags.findOrCreate({
+      where: {
+        name,
+      },
+      attributes: ['no'],
+      transaction,
+    });
+  };
 
   return Tags;
 };

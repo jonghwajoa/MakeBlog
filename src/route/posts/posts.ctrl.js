@@ -1,17 +1,13 @@
 const postDB = require('../../db/repository/post');
 const subPostDB = require('../../db/repository/subPost');
 const visitDB = require('../../db/repository/visitCount');
-const categoryDB = require('../../db/repository/categories');
-const tagDB = require('../../db/repository/tags');
 const db = require('../../db');
 const paging = require('../../lib/paging');
 const paramCheck = require('../../lib/validation');
 
-const createView = async (req, res) => {
+const createView = async (req, res, next) => {
   try {
-    const category = await categoryDB.findAll();
-    const tag = await tagDB.findAll();
-    return res.render('team/posts/new', { category, tag });
+    return res.render('team/posts/new');
   } catch (e) {
     next(e);
   }
@@ -41,6 +37,27 @@ const create = async (req, res, next) => {
     let result = await postDB.creatPost(req.body, req.session.userid);
     return res.status(201).json({ no: result.dataValues.no });
   } catch (e) {
+    return next(e);
+  }
+};
+
+const createTest = async (req, res, next) => {
+  let { title, tags, content } = req.body;
+
+  let transaction;
+  // TODO VALIDATION 진행
+  try {
+    transaction = await db.sequelize.transaction();
+    await Promise.all[
+      tags.forEach(e => {
+        db.Tags.findOrCreateByName(e,transaction);
+      })
+    ];
+    let result = await db.Posts.createPost(req.body, req.session.userid,transaction);
+    await transaction.commit();
+    return res.status(201).json({ no: result.getNo() });
+  } catch (e) {
+    await transaction.rollback();
     return next(e);
   }
 };
@@ -410,4 +427,5 @@ module.exports = {
   addCategory,
   removeCategory,
   addTag,
+  createTest,
 };

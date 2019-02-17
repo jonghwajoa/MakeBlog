@@ -28,6 +28,7 @@ router.use((err, req, res, next) => {
     errorDB.create(err.status, err.stack, req.ip.substr(7), req.headers['referer'], req._parsedUrl.path);
   }
 
+  console.log(err);
   if (req.headers['content-type'] === 'application/json') {
     return res.status(err.status).json({ message: err.message });
   }

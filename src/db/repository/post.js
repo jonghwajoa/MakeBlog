@@ -2,7 +2,7 @@ const { Posts } = require('../../db');
 
 const findById = id => {
   return Posts.findById(id, {
-    attributes: ['no', 'title', 'tag', 'content', 'category_no'],
+    attributes: ['no', 'title', 'content'],
   });
 };
 
@@ -33,23 +33,17 @@ const findAll = (pageNum = 10, offset = 0) => {
     attributes: [
       'no',
       'title',
-      'tag',
       'count',
-      [
-        Posts.sequelize.fn('date_format', Posts.sequelize.col('created_at'), '%Y.%m.%d'),
-        'created_at',
-      ],
+      [Posts.sequelize.fn('date_format', Posts.sequelize.col('created_at'), '%Y.%m.%d'), 'created_at'],
     ],
     order: [['created_at', 'DESC']],
   });
 };
 
-const creatPost = ({ title, tag, content, category }, writer) => {
+const creatPost = ({ title, content }, writer) => {
   return Posts.create({
     title,
-    tag,
     content,
-    category_no: category,
     writer,
   });
 };
@@ -59,13 +53,9 @@ const postFindById = id => {
     attributes: [
       'no',
       'title',
-      'tag',
       'content',
       'count',
-      [
-        Posts.sequelize.fn('date_format', Posts.sequelize.col('created_at'), '%Y-%m-%d'),
-        'created_at',
-      ],
+      [Posts.sequelize.fn('date_format', Posts.sequelize.col('created_at'), '%Y-%m-%d'), 'created_at'],
     ],
   });
 };

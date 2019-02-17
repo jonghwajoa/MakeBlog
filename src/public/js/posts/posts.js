@@ -53,17 +53,58 @@ class Post {
 
   writeInit() {
     this.postTitle = document.getElementById('title');
-    this.categorySelect = document.getElementById('category-select');
-    this.deleteSelect = document.getElementById('category-delete');
-    this.categoryAdd = document.getElementById('category-add');
     this.tag = document.getElementById('tag');
     this.writeEditor();
+    this.writeEventInit();
+  }
 
+  writeEventInit() {
     let tagAddBtn = document.getElementById('tagAddBtn');
     let tagAddName = document.getElementById('tagAddName');
+    let submitBtn = document.getElementById('submit');
 
-    tagAddBtn.addEventListener('click', e => {
-      this.addTag(tagAddName.value);
+    tagAddBtn.addEventListener('click', () => {
+      this.addTag(tagAddName.value.trim());
+    });
+
+    submitBtn.addEventListener('click', async () => {
+      const title = this.postTitle.value;
+      const content = this.editor.getMarkdown().trim();
+      let tagsElement = Array.from(document.getElementsByClassName('tag-item'));
+      let tags = [];
+
+      for (let tag of tagsElement) {
+        tags.push(tag.innerText.trim());
+      }
+
+      if (!title) {
+        alert('제목을 입력하세요..');
+        return false;
+      }
+
+      if (!content) {
+        alert('내용을 입력하세요.');
+        return false;
+      }
+
+      if (!tags.length) {
+        alert('TAG를 입력하세요.');
+        return false;
+      }
+
+      const params = {
+        title,
+        tags,
+        content,
+      };
+
+      let postCreateResult;
+      try {
+        postCreateResult = await ajaxUtil.sendPostAjax('/posts/', params);
+        location.href = `/posts/${JSON.parse(postCreateResult).no}`;
+      } catch (e) {
+        alert(`작성 실패\n${e.responseText}`);
+      }
     });
   }
 
@@ -111,45 +152,6 @@ class Post {
       tagVal.shift();
 
       this.tag.value = tagVal.map(item => item.substr(1, item.length)).join(' ');
-    }
-  }
-
-  async submit() {
-    const title = this.postTitle.value;
-    const content = this.editor.getMarkdown().trim();
-    const category = this.categorySelect;
-    const categoryText = '#' + category[category.selectedIndex].text;
-    let tag = this.tag.value.trim().replace(/\s*,+\s*|\s+/g, ' #');
-
-    if (!title) {
-      alert('제목을 입력하세요..');
-      return false;
-    }
-
-    if (!content) {
-      alert('내용을 입력하세요.');
-      return false;
-    }
-
-    if (tag) {
-      tag = categoryText + ' #' + tag;
-    } else {
-      tag = categoryText;
-    }
-
-    const params = {
-      title,
-      tag,
-      content,
-      category: category.value,
-    };
-
-    let createResult;
-    try {
-      createResult = await ajaxUtil.sendPostAjax('/posts/', params);
-      location.href = `/posts/${JSON.parse(createResult).no}`;
-    } catch (e) {
-      alert(`작성 실패\n${e.responseText}`);
     }
   }
 
@@ -311,58 +313,6 @@ class Post {
     }
   }
 
-  /**
-   * @deprecated
-   */
-  async addCategory() {
-    let requestCategoryName = this.categoryAdd.value;
-
-    let result;
-    try {
-      result = await ajaxUtil.sendPostAjax('/posts/category/', { requestCategoryName });
-    } catch (e) {
-      alert(`${e.message}`);
-      return;
-    }
-
-    let newSelect = document.createElement('option');
-    let newSelect2 = document.createElement('option');
-    let { no, message } = JSON.parse(result);
-
-    newSelect.text = requestCategoryName;
-    newSelect.value = no;
-    newSelect2.text = requestCategoryName;
-    newSelect2.value = no;
-    this.categorySelect.options.add(newSelect);
-    this.deleteSelect.options.add(newSelect2);
-    alert(message);
-  }
-
-  /**
-   * @deprecated
-   */
-  async deleteCategory() {
-    let deleteSelect = this.deleteSelect;
-
-    let reqeustDeleteCategoryName = deleteSelect.value;
-
-    try {
-      await ajaxUtil.sendDeleteAjax(`/posts/category/${reqeustDeleteCategoryName}`);
-    } catch (e) {
-      alert(`${e.message}`);
-      return;
-    }
-
-    for (let i = 0; i < deleteSelect.length; i++) {
-      if (deleteSelect.options[i].value == reqeustDeleteCategoryName) {
-        deleteSelect.remove(i);
-        this.categorySelect.remove(i);
-      }
-    }
-
-    alert('카테고리 삭제 성공');
-  }
-
   backLoadContent(prevState) {
     if (!prevState) {
       location.reload();
@@ -393,7 +343,7 @@ class Post {
 
   writeEditor() {
     this.editor = new tui.Editor({
-      el: document.getElementById('editSection'),
+      el: document.getElementById('content-content'),
       initialEditType: 'markdown',
       previewStyle: 'vertical',
       height: '100vh',

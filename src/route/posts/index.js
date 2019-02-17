@@ -41,7 +41,7 @@ router.get(['/:id/new', '/:id/edit', '/:id/:subId/edit'], needsAuth);
 router
   .route('/')
   .get(ctrl.list)
-  .post(ctrl.create);
+  .post(ctrl.createTest);
 
 router.get('/new', ctrl.createView);
 router.post('/file', upload.array('photo'), ctrl.uploadImage);
