@@ -30,8 +30,8 @@
             <button id="tagAddBtn">추가</button>
           </div>
           <div class="tag" id="tag">
-            <% post.Tags.forEach(e => { %>
-            <input type="hidden" class="hiddenTag" value="<%= e.name%>" />
+            <% post.tag.forEach(e => { %>
+            <input type="hidden" class="hiddenTag" value="<%= e.Tag.name%>" />
             <% }) %>
           </div>
         </div>

@@ -4,6 +4,22 @@ const db = require('../../db');
 const paging = require('../../lib/paging');
 const paramCheck = require('../../lib/validation');
 
+async function tagFindOrCreateByName(tags) {
+  const tagsUUID = [];
+
+  try {
+    for (let e of tags) {
+      let result = await db.Tags.findOrCreateByName(e);
+      tagsUUID.push(result[0].getNo());
+    }
+  } catch (e) {
+    let error = new Error('태그 생성실패');
+    error.status = 500;
+    throw error;
+  }
+  return tagsUUID;
+}
+
 const createView = async (req, res, next) => {
   try {
     return res.render('team/posts/new');
@@ -16,7 +32,7 @@ const createSubView = async (req, res, next) => {
   let no = req.params.id;
   let result;
   try {
-    result = await db.Posts.findByIdCustom(no);
+    result = await db.Posts.findById(no);
   } catch (e) {
     return next(e);
   }
@@ -27,32 +43,28 @@ const createSubView = async (req, res, next) => {
   return res.render('team/subpost/write', { no: req.params.id });
 };
 
-// TODO VALIDATION 진행
 const create = async (req, res, next) => {
   let body = req.body;
-  let { title, tags, content } = body;
+  let { tags } = body;
 
   let validation = paramCheck.postValidationV2(body);
   if (!validation[0]) {
     return res.status(400).send(validation[1]);
   }
-
-  const tagsUUID = [];
+  let transaction;
   try {
-    for (let e of tags) {
-      let result = await db.Tags.findOrCreateByName(e);
-      tagsUUID.push(result[0].getNo());
-    }
-
+    transaction = await db.sequelize.transaction();
+    let tagsUUID = await tagFindOrCreateByName(tags);
     let createPostResult = await db.Posts.createPost(req.body, req.session.userid);
     let createPostNo = createPostResult.getNo();
 
     for (let e of tagsUUID) {
-      await db.AssociationTag.createIfnotExistByCompositeKey(createPostNo, e);
+      await db.AssociationTag.createCompositeKey(createPostNo, e);
     }
-
+    await transaction.commit();
     return res.status(201).json({ no: createPostNo });
   } catch (e) {
+    await transaction.rollback();
     return next(e);
   }
 };
@@ -64,7 +76,7 @@ const createSubPost = async (req, res, next) => {
   }
 
   try {
-    let isExist = await db.Posts.findByIdCustom(id);
+    let isExist = await db.Posts.findById(id);
     if (isExist == null) {
       return next();
     }
@@ -219,7 +231,7 @@ const updateView = async (req, res, next) => {
   let post;
 
   try {
-    post = await db.Posts.findByIdCustom(id);
+    post = await db.Posts.findByIdForUpdate(id);
   } catch (e) {
     return next(e);
   }
@@ -233,24 +245,34 @@ const updateView = async (req, res, next) => {
 };
 
 const update = async (req, res, next) => {
-  let { id } = req.params;
-  let { title, content } = req.body;
-
-  // if (!paramCheck.postValidation(req.body)) {
-  //   return res.status(400).json('입력이 올바르지 않습니다.');
-  // }
-
-  let result;
-  let updateVal = { title, content };
-
-  try {
-    result = await db.Posts.findById(id);
-    if (!result) return next();
-    result = await result.update(updateVal);
-  } catch (e) {
-    return next(e);
+  const { id } = req.params;
+  const { title, tags, content } = req.body;
+  const validation = paramCheck.postValidationV2(req.body);
+  if (!validation[0]) {
+    return res.status(400).send(validation[1]);
   }
 
+  let postFindResult, transaction;
+  let updateParams = { title, content };
+  try {
+    postFindResult = await db.Posts.findById(id);
+    if (!postFindResult) return next();
+    const tagsUUID = await tagFindOrCreateByName(tags);
+
+    transaction = await db.sequelize.transaction();
+    await db.AssociationTag.deleteByPostNoTransaction(id, transaction);
+    for (let e of tagsUUID) {
+      await db.AssociationTag.createCompositeKeyTransaction(id, e, transaction);
+    }
+    await transaction.commit();
+
+    // update include 알아보기
+    await db.Posts.updateTransaction(id, updateParams, transaction);
+  } catch (e) {
+    await transaction.rollback();
+    console.log(e);
+    return next(e);
+  }
   return res.status(204).end();
 };
 
@@ -293,13 +315,15 @@ const remove = async (req, res, next) => {
   let result, transaction;
 
   try {
-    result = await db.Posts.findByIdCustom(id);
+    result = await db.Posts.findById(id);
     if (!result) return next();
     transaction = await db.sequelize.transaction();
     await subPostDB.deleteByForeignkey(id, transaction);
+    await db.AssociationTag.deleteByPostNoTransaction(id, transaction);
     await result.destroy();
     await transaction.commit();
   } catch (e) {
+    console.log(e);
     await transaction.rollback();
     return next(e);
   }
@@ -406,22 +430,25 @@ const removeCategory = async (req, res, next) => {
 };
 
 module.exports = {
-  list,
-  createView,
-  read,
   updateView,
-  update,
-  remove,
   createSubView,
   createSubPost,
   showSubPost,
   updateSubView,
   updateSubPost,
   removeSubPost,
+  list,
+  create,
+  createView,
+  read,
+  update,
+  remove,
+  addTag,
   uploadImage,
+
+  /**
+   * @deprecated
+   */
   addCategory,
   removeCategory,
-  addTag,
-  /** refactoring 진행한것들 */
-  create,
 };

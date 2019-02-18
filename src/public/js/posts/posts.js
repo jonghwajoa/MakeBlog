@@ -128,7 +128,7 @@ class Post {
         postCreateResult = await ajaxUtil.sendPostAjax('/posts/', params);
         location.href = `/posts/${JSON.parse(postCreateResult).no}`;
       } catch (e) {
-        alert(`작성 실패\n${e.responseText}`);
+        alert(e.message);
       }
     });
   }
@@ -160,7 +160,7 @@ class Post {
 
     tagE.addEventListener('click', () => {
       tagE.remove();
-      this.tags = tags.filter(e => e != requestTagName);
+      this.tags = this.tags.filter(e => e != requestTagName);
     });
     this.tag.append(tagE);
     tagAddName.value = '';
@@ -251,7 +251,7 @@ class Post {
       await ajaxUtil.sendPostAjax(`/posts/${postNo}`, params);
       location.href = `/posts/${postNo}`;
     } catch (e) {
-      alert(`작성 실패\n${e.responseText}`);
+      alert(`작성 실패\n${e.message}`);
     }
   }
 
@@ -272,6 +272,7 @@ class Post {
     const params = {
       title,
       content,
+      tags: this.tags,
     };
 
     let url = `/posts/${postNo}`;
@@ -279,7 +280,7 @@ class Post {
       await ajaxUtil.sendPutAjax(url, params);
       location.href = `/posts/${postNo}`;
     } catch (e) {
-      alert(`업데이트 실패\n${e.responseText}`);
+      alert(`업데이트 실패\n${e.message}`);
     }
   }
 
@@ -308,7 +309,7 @@ class Post {
       await ajaxUtil.sendPutAjax(url, params);
       location.href = `/posts/${postNo}/${subNo}`;
     } catch (e) {
-      alert(`업데이트 실패\n${e.responseText}`);
+      alert(`업데이트 실패\n${e.message}`);
     }
   }
 

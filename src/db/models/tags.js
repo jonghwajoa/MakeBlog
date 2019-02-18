@@ -27,8 +27,7 @@ module.exports = (sequelize, DataTypes) => {
 
   /*  Associate */
   Tags.associate = function(models) {
-    Tags.belongsToMany(models.Posts, { through: models.AssociationTag, foreignKey: 'tag_no' });
-    Tags.hasMany(models.AssociationTag, { foreignKey: 'tag_no' });
+    Tags.hasMany(models.AssociationTag, { foreignKey: 'tag_no', as: 'tag' });
   };
 
   /* instance Method */
@@ -42,6 +41,14 @@ module.exports = (sequelize, DataTypes) => {
   Tags.findAllWithCount = () => {
     return Tags.findAll({
       attributes: ['name'],
+      include: [
+        {
+          model: sequelize.models.AssociationTag,
+          attributes: ['post_no'],
+          required: true,
+          as: 'tag',
+        },
+      ],
     });
   };
 

@@ -41,9 +41,9 @@ module.exports = (sequelize, DataTypes) => {
       hooks: true,
     });
 
-    Posts.belongsToMany(models.Tags, {
-      through: models.AssociationTag,
+    Posts.hasMany(models.AssociationTag, {
       foreignKey: 'post_no',
+      as: 'tag',
     });
   };
 
@@ -65,7 +65,7 @@ module.exports = (sequelize, DataTypes) => {
     });
   };
 
-  Posts.findAllWithPaging = (pageNum = 10, offset = 0) => {
+  Posts.findAllWithPaging = (pageNum = 20, offset = 0) => {
     return Posts.findAll({
       limit: pageNum,
       offset,
@@ -75,8 +75,15 @@ module.exports = (sequelize, DataTypes) => {
         'count',
         [sequelize.fn('date_format', sequelize.col('created_at'), '%Y.%m.%d'), 'created_at'],
       ],
-      order: [['created_at', 'DESC']],
-      include: [{ model: sequelize.models.Tags, attributes: ['name'], through: { attributes: [] } }],
+      order: [['no', 'DESC']],
+      include: [
+        {
+          model: sequelize.models.AssociationTag,
+          as: 'tag',
+          attributes: ['tag_no'],
+          include: [{ model: sequelize.models.Tags, attributes: ['name'] }],
+        },
+      ],
     });
   };
 
@@ -89,14 +96,28 @@ module.exports = (sequelize, DataTypes) => {
         'count',
         [sequelize.fn('date_format', sequelize.col('created_at'), '%Y-%m-%d'), 'created_at'],
       ],
-      include: [{ model: sequelize.models.Tags, attributes: ['name'], through: { attributes: [] } }],
+      include: [
+        {
+          model: sequelize.models.AssociationTag,
+          as: 'tag',
+          attributes: ['tag_no'],
+          include: [{ model: sequelize.models.Tags, attributes: ['name'] }],
+        },
+      ],
     });
   };
 
-  Posts.findByIdCustom = id => {
+  Posts.findByIdForUpdate = id => {
     return Posts.findById(id, {
       attributes: ['no', 'title', 'content'],
-      include: [{ model: sequelize.models.Tags, attributes: ['name'], through: { attributes: [] } }],
+      include: [
+        {
+          model: sequelize.models.AssociationTag,
+          as: 'tag',
+          attributes: ['tag_no'],
+          include: [{ model: sequelize.models.Tags, attributes: ['name'] }],
+        },
+      ],
     });
   };
 
@@ -110,6 +131,20 @@ module.exports = (sequelize, DataTypes) => {
 
   Posts.totalCount = () => {
     return Posts.count();
+  };
+
+  Posts.updateTransaction = (no, params, transaction) => {
+    return Posts.update(
+      {
+        ...params,
+        include: [{ model: sequelize.models.AssociationTag }],
+      },
+      {
+        where: { no },
+      },
+
+      transaction,
+    );
   };
 
   return Posts;

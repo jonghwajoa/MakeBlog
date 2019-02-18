@@ -28,8 +28,8 @@
             <!-- postTag -->
             <div class="postTag">
                 <ul>
-                  <% item.Tags.forEach(e => { %>
-                    <li>#<%= e.name %></li>
+                  <% item.tag.forEach(e => { %>
+                    <li>&#8917;<%= e.Tag.name %></li>
                   <% }) %>
                 </ul>
             </div>
@@ -97,7 +97,7 @@
               <h2>태그 목록</h2>
               <ul>
                 <% allTag.forEach(e => { %>
-                  <li>&#8917;<%= e.name %></li>
+                  <li>&#8917;<%= e.name %> <%= e.tag.length %></li>
                 <% }) %>
               </ul>
             </div>
