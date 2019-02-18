@@ -7,6 +7,7 @@ const {
   postValidation,
   subPostValidation,
   solvingValidation,
+  postValidationV2,
 } = require('../lib/validation');
 
 const content = 'content 입니다..';
@@ -14,6 +15,7 @@ const tag = '#헤헤 #호호';
 const category = '1';
 const title = 'title입니다.';
 const url = 'www';
+const tags = ['태그1', '태그2', ' 태그3', '  태그4  '];
 
 describe('벨리데이션 함수 검증테스트......', () => {
   describe('arrayElementIsString 함수는...', () => {
@@ -159,6 +161,44 @@ describe('벨리데이션 함수 검증테스트......', () => {
 
     it('성공시 true를 응답한다 ', () => {
       solvingValidation({ title, content, category, url, problemNum: '99999' }).should.be.true();
+    });
+  });
+
+  describe('postValidationV2 함수는....', () => {
+    it('성공시 true를 반환한다..', () => {
+      postValidationV2({ content, title, tags })[0].should.be.true;
+    });
+
+    it('title이 null이면 false를 반환한다..', () => {
+      postValidationV2({ content, tags })[0].should.be.false();
+    });
+
+    it('title의 길이가 100이 넘으면 false를 반환한다..', () => {
+      let title = 'da'.repeat(51);
+      postValidationV2({ content, tags, title })[0].should.be.false();
+    });
+
+    it('TAG가 null이면 false를 반환한다..', () => {
+      postValidationV2({ content, title })[0].should.be.false();
+    });
+
+    it('TAG가 빈값만 넘겨주면 false를 반환한다..', () => {
+      let tags = ['', ''];
+      postValidationV2({ content, title, tags })[0].should.be.false();
+    });
+
+    it('TAG가 빈값만 넘겨주면 false를 반환한다..', () => {
+      let tags = [' ', '  '];
+      postValidationV2({ title, tags, content })[0].should.be.false();
+    });
+
+    it('content가 null이면  false를 반환한다..', () => {
+      postValidationV2({ title, tags })[0].should.be.false();
+    });
+
+    it('content가 null이면  false를 반환한다..', () => {
+      let content = ' ';
+      postValidationV2({ title, tags, content })[0].should.be.false();
     });
   });
 });

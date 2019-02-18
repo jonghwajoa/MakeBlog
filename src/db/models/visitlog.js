@@ -40,14 +40,32 @@ module.exports = (sequelize, DataTypes) => {
       year: {
         type: DataTypes.STRING(4),
         allowNull: false,
+        validate: {
+          len: {
+            min: 1,
+            max: 4,
+          },
+        },
       },
       month: {
         type: DataTypes.STRING(2),
         allowNull: false,
+        validate: {
+          len: {
+            min: 1,
+            max: 2,
+          },
+        },
       },
       day: {
         type: DataTypes.STRING(2),
         allowNull: false,
+        validate: {
+          len: {
+            min: 1,
+            max: 2,
+          },
+        },
       },
     },
     {

@@ -50,12 +50,41 @@ const isUINT = num => {
   return num > 0;
 };
 
+/**
+ * @deprecated
+ */
 const checkTag = tag => {
   let array = tag.split(' ');
   for (let item of array) {
     if (item[0] !== '#') return false;
   }
   return true;
+};
+
+const checkArrayTag = tag => {
+  if (!tag) return false;
+
+  for (let e of tag) {
+    if (!e.trim().length) {
+      return false;
+    }
+  }
+  return true;
+};
+
+const postValidationV2 = ({ title = '', tags, content = '' }) => {
+  content = content.trim();
+  if (!content) return [false, 'content가 올바르지 않습니다.'];
+
+  if (!checkArrayTag(tags)) {
+    return [false, 'tag가 올바르지 않습니다.'];
+  }
+
+  if (!isLength(title, 1, 100)) {
+    return [false, 'title이 올바르지 않습니다.'];
+  }
+
+  return [true];
 };
 
 const postValidation = ({ title, tag, content = '', category }) => {
@@ -115,4 +144,5 @@ module.exports = {
   postValidation,
   subPostValidation,
   solvingValidation,
+  postValidationV2,
 };

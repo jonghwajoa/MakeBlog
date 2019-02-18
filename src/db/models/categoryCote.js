@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
       },
       order: {
-        type: DataTypes.INTEGER(3),
+        type: DataTypes.INTEGER,
         allowNull: false,
       },
     },

@@ -100,6 +100,7 @@
   bottom: 50px;
   right: 50px;
   text-align: center;
+  min-width: 130px;
 }
 
 .content-side > h2 {
@@ -118,6 +119,7 @@
   text-align: left;
   box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.12);
   display: none;
+  min-width: 200px;
 }
 
 .content-side .sidepost h2 {

@@ -12,11 +12,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         unique: true,
         validate: {
-          len: {
-            min: 1,
-            max: 100,
-            msg: 'Tag 이름의 길이는 1 이상 100 이하 입니다.',
-          },
+          len: [1, 100],
         },
       },
     },

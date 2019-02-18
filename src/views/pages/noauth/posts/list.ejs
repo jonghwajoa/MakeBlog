@@ -4,7 +4,7 @@
     <title>WeKnowJS</title>
     <meta charset="UTF-8" />
     <meta name="author" content="JongHwa" />
-    <meta name="description" content="게시글 리스트 페이지, Posts List Page" />
+    <meta name="description" content="JONGHWA BLOG" />
     <meta name="generator" content="Visual Studio Code" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
@@ -44,28 +44,7 @@
           </div>
           <% }) %>
           <!-- //post -->
-
-          <!-- paging -->
-          <div class="paging">
-            <% if(pagingInfo.page >10) { %>
-            <div class="pagingArrow">
-              <a href="/posts?page=<%=pagingInfo.startPage -1%>">&lt;</a>
-            </div>
-            <% } %> <% for (let i=pagingInfo.startPage; i <= pagingInfo.endPage
-            ; i++) { %>
-            <div class="pagingNum">
-              <% if(parseInt(pagingInfo.page) === i) { %>
-              <a href="/posts?page=<%=i%>" class="targetPage"><%= i %></a> <%
-              }else { %> <a href="/posts?page=<%=i%>"><%= i %></a> <% } %>
-            </div>
-
-            <% } %> <% if (pagingInfo.endPage < pagingInfo.totalPage) { %>
-            <div class="pagingArrow">
-              <a href="/posts?page=<%=pagingInfo.endPage +1%>">&gt;</a>
-            </div>
-            <% } %>
-          </div>
-          <!-- //paging -->
+  
         </section>
       </div>
 

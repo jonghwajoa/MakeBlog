@@ -8,7 +8,13 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         autoIncrement: true,
       },
-      title: { type: DataTypes.STRING(100), allowNull: false },
+      title: {
+        type: DataTypes.STRING(100),
+        allowNull: false,
+        validate: {
+          len: [1, 100],
+        },
+      },
       content: {
         type: DataTypes.TEXT('long'),
         allowNull: false,

@@ -16,7 +16,7 @@ const createSubView = async (req, res, next) => {
   let no = req.params.id;
   let result;
   try {
-    result = await db.Posts.findByIdCustom(id);
+    result = await db.Posts.findByIdCustom(no);
   } catch (e) {
     return next(e);
   }
@@ -29,7 +29,13 @@ const createSubView = async (req, res, next) => {
 
 // TODO VALIDATION 진행
 const create = async (req, res, next) => {
-  let { title, tags, content } = req.body;
+  let body = req.body;
+  let { title, tags, content } = body;
+
+  let validation = paramCheck.postValidationV2(body);
+  if (!validation[0]) {
+    return res.status(400).send(validation[1]);
+  }
 
   const tagsUUID = [];
   try {
