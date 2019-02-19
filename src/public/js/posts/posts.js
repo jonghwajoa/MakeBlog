@@ -9,24 +9,52 @@ class Post {
   }
 
   async listInit() {
-    let reqeustListData;
     this.postInsertArea = document.getElementById('post-area');
+    let tagQuery = this.getQueryStringValue('tag').trim();
+
+    if (tagQuery) {
+      this.tagFilter(tagQuery);
+    } else {
+      this.tagFilter('notFilter');
+    }
+
+    let initPath = tagQuery ? `/posts?tag=${tagQuery}` : '/posts';
+    window.history.replaceState(this.listData, '', initPath);
+  }
+
+  /* 리스트 페이지 전체 게시글 보기 버튼 이벤트 */
+  listPageEventInit() {
+    const showAllPost = document.getElementById('showAllPost');
+    showAllPost.addEventListener('click', () => {
+      this.tagFilter('notFilter');
+      window.history.pushState(this.listData, '', '/posts');
+    });
+  }
+
+  /**
+   * @returns boolean
+   */
+  async listPageGetDate() {
+    let reqeustListData;
     try {
       reqeustListData = await ajaxUtil.sendGetAjax(`/posts`);
       reqeustListData = JSON.parse(reqeustListData);
       this.listData = reqeustListData;
+      return true;
     } catch (e) {
-      alert(`Server Error(${e.status})`);
-      return;
+      alert(`Server Error(${e.message})`);
+      return false;
     }
-    this.drawListView(this.listData);
-    window.history.pushState(this.listData, '', '/posts');
   }
 
-  drawListView(requestTagData) {
+  /**
+   * @param {Array} requestTagDataArray
+   */
+  listPageDrawPost(requestTagDataArray) {
     let postInsert = this.postInsertArea;
     let postHtml = '';
-    for (let post of requestTagData) {
+
+    for (let post of requestTagDataArray) {
       postHtml += '<div class=post><div class=postTag><ul>';
       for (let tag of post.tag) {
         postHtml += `<li><a class='tagEvent'>&#8917;${tag.Tag.name}</a></li>`;
@@ -43,25 +71,33 @@ class Post {
         this.tagFilter(e.innerHTML.substr(1));
       });
     }
+    window.scrollTo(0, 0);
   }
 
-  tagFilter(reqeustTag) {
-    let requestTagData = [];
-    requestTagData = this.listData.filter(e => {
-      for (let tag of e.tag) {
-        if (tag.Tag.name == reqeustTag) return true;
-      }
-    });
-
+  listPagePostAllRemove() {
     let postInsert = this.postInsertArea;
     while (postInsert.firstChild) {
       postInsert.removeChild(postInsert.firstChild);
     }
-    window.history.pushState(requestTagData, '', `/posts?tag=${reqeustTag}`);
-    this.drawListView(requestTagData);
+  }
+
+  /**
+   * @param {String} reqeustTagName
+   * @returns Array
+   */
+  listPagetagFilter(reqeustTagName) {
+    return this.listData.filter(e => {
+      for (let tag of e.tag) {
+        if (tag.Tag.name == reqeustTagName) return true;
+      }
+    });
+
+    // window.history.pushState(requestTagData, '', `/posts?tag=${reqeustTag}`);
+    // this.drawListView(requestTagData);
   }
 
   backLoadList(prevState) {
+    console.log(prevState);
     this.postInsertArea.innerHTML = prevState;
   }
 
@@ -430,6 +466,15 @@ class Post {
         },
       },
     });
+  }
+
+  getQueryStringValue(key) {
+    return decodeURIComponent(
+      window.location.search.replace(
+        new RegExp('^(?:.*[&\\?]' + encodeURIComponent(key).replace(/[\.\+\*]/g, '\\$&') + '(?:\\=([^&]*))?)?.*$', 'i'),
+        '$1',
+      ),
+    );
   }
 }
 

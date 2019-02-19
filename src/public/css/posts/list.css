@@ -188,9 +188,24 @@ aside .aside-container > div {
   cursor: pointer;
 }
 
+.aside-container .allTag li:first-child {
+  width: 100%;
+  text-align: center;
+  box-sizing: border-box;
+  background: white;
+}
+
+.aside-container .allTag li:hover {
+  border: 2px solid violet;
+}
+
 .aside-container .allTag li span {
   color: #888888;
   font-size: 0.8rem;
+}
+
+.aside-container .allTag li a:hover {
+  color: black;
 }
 
 @media (max-width: 780px) {

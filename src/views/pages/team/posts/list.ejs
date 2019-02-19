@@ -17,72 +17,75 @@
 
     <div class="content-wrap">
       <div class="flex-container">
-        <div class="post-area">
+        <div class="post-area" id="post-area">
           <div class="create-btn">
             <a href="/posts/new"> <input type="button" value="글등록" /> </a>
           </div>
         </div>
+
+        <aside>
+          <!-- aside-ontainer -->
+          <div class="aside-container">
+            <!-- visit-count -->
+            <div class="visit-count">
+              <div class="gridItem title">total</div>
+              <div class="gridItem title">monthly</div>
+              <div class="gridItem title">today</div>
+              <div class="gridItem"><%= totalCount %></div>
+              <div class="gridItem"><%= monthCount %></div>
+              <div class="gridItem"><%=today%></div>
+            </div>
+            <!-- //visit-count -->
+
+            <!-- hotPost -->
+            <div class="hotPost">
+              <h2>Post TOP5</h2>
+              <ul>
+                <% hotPost.forEach((item,index) => { %>
+                <li>
+                  <a href="/posts/<%=item.no%>">
+                    <span><%= index+1 %> <%= item.title %></span>
+                  </a>
+                </li>
+                <% }) %>
+              </ul>
+            </div>
+            <!-- //hotPost -->
+
+            <!-- hotSubPost -->
+            <div class="hotSubPost">
+              <h2>SubPost TOP5</h2>
+              <ul>
+                <% hotSubPost.forEach((item,index) => { %>
+                <li>
+                  <a href="/posts/<%=item.post_no%>/<%=item.sub_no%>">
+                    <span><%= index+1 %></span> <span><%= item.title %></span>
+                  </a>
+                </li>
+                <% }) %>
+              </ul>
+            </div>
+            <!-- //hotSubPost -->
+
+            <!-- allTag -->
+            <div class="allTag">
+              <h2>태그 목록</h2>
+              <ul>
+                <% allTag.forEach(e => { %>
+                <li>
+                  <a onclick="post.tagFilter('<%= e.Tag.name %>')"
+                    >&#8917;<%= e.Tag.name %> <span><%= e.dataValues.count %></span></a
+                  >
+                </li>
+                <% }) %>
+              </ul>
+            </div>
+            <!-- //allTag -->
+          </div>
+        </aside>
+        <div class="moveTop-btn" id="moveTop-btn">&#x2912;</div>
       </div>
-
-      <aside>
-        <!-- aside-ontainer -->
-        <div class="aside-container">
-          <!-- visit-count -->
-          <div class="visit-count">
-            <div class="gridItem title">total</div>
-            <div class="gridItem title">monthly</div>
-            <div class="gridItem title">today</div>
-            <div class="gridItem"><%= totalCount %></div>
-            <div class="gridItem"><%= monthCount %></div>
-            <div class="gridItem"><%=today%></div>
-          </div>
-          <!-- //visit-count -->
-
-          <!-- hotPost -->
-          <div class="hotPost">
-            <h2>Post TOP5</h2>
-            <ul>
-              <% hotPost.forEach((item,index) => { %>
-              <li>
-                <a href="/posts/<%=item.no%>">
-                  <span><%= index+1 %> <%= item.title %></span>
-                </a>
-              </li>
-              <% }) %>
-            </ul>
-          </div>
-          <!-- //hotPost -->
-
-          <!-- hotSubPost -->
-          <div class="hotSubPost">
-            <h2>SubPost TOP5</h2>
-            <ul>
-              <% hotSubPost.forEach((item,index) => { %>
-              <li>
-                <a href="/posts/<%=item.post_no%>/<%=item.sub_no%>">
-                  <span><%= index+1 %></span> <span><%= item.title %></span>
-                </a>
-              </li>
-              <% }) %>
-            </ul>
-          </div>
-          <!-- //hotSubPost -->
-
-          <!-- allTag -->
-          <div class="allTag">
-            <h2>태그 목록</h2>
-            <ul>
-              <% allTag.forEach(e => { %>
-              <li>&#8917;<%= e.name %> <%= e.tag.length %></li>
-              <% }) %>
-            </ul>
-          </div>
-          <!-- //allTag -->
-        </div>
-      </aside>
-      <div class="moveTop-btn" id="moveTop-btn">&#x2912;</div>
     </div>
-
     <script src="/js/nav/nav.js"></script>
     <script src="/js/util/ajaxUtil.js"></script>
     <script src="/js/posts/posts.js"></script>
@@ -91,7 +94,7 @@
         post.listInit();
 
         window.onpopstate = function(e) {
-          console.log(e);
+          post.drawListView(e.state);
         };
       });
     </script>

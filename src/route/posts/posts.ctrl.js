@@ -105,7 +105,6 @@ const list = async (req, res, next) => {
 
       return res.json(result);
     } catch (e) {
-      console.log(e);
       return next(e);
     }
   }

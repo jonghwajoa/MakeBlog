@@ -73,8 +73,9 @@
         <div class='allTag'>
           <h2>태그 목록</h2>
           <ul>
+            <li id='showAllPost'>전체 게시글 보기</li>
             <% allTag.forEach(e => { %>
-              <li>&#8917;<%= e.Tag.name %>  <span><%= e.dataValues.count %></span></li>
+              <li><a onclick="post.tagAreaEvent('<%= e.Tag.name %>')">&#8917;<%= e.Tag.name %>  <span><%= e.dataValues.count %></span></a></li>
             <% }) %>
           </ul>
         </div>
@@ -89,14 +90,10 @@
     <% include ../../../partials/footer.ejs %>
     <script src="/js/nav/nav.js"></script>
     <script src="/js/util/ajaxUtil.js"></script>
-    <script src="/js/posts/posts.js"></script>
+    <script src="/js/posts/list.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
         post.listInit();
-
-        window.onpopstate = function(e) {
-          post.drawListView(e.state)
-        };
       });
   </script>
   </body>
