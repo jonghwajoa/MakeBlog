@@ -3,7 +3,7 @@ module.exports = (sequelize, DataTypes) => {
     'Users',
     {
       no: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.INTEGER.UNSIGNED,
         primaryKey: true,
         allowNull: false,
       },
@@ -18,7 +18,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: true,
       },
       grade: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.INTEGER.UNSIGNED,
         allowNull: false,
         defaultValue: 2,
       },

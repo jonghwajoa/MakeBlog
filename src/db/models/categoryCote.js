@@ -3,7 +3,7 @@ module.exports = (sequelize, DataTypes) => {
     'CategoryCote',
     {
       no: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.INTEGER.UNSIGNED,
         primaryKey: true,
         allowNull: false,
         autoIncrement: true,
@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
       },
       order: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.INTEGER.UNSIGNED,
         allowNull: false,
       },
     },

@@ -3,7 +3,7 @@ module.exports = (sequelize, DataTypes) => {
     'Posts',
     {
       no: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.INTEGER.UNSIGNED,
         primaryKey: true,
         allowNull: false,
         autoIncrement: true,
@@ -67,7 +67,7 @@ module.exports = (sequelize, DataTypes) => {
 
   Posts.findAllWithPaging = (pageNum = 20, offset = 0) => {
     return Posts.findAll({
-      limit: pageNum,
+      // limit: pageNum,
       offset,
       attributes: [
         'no',

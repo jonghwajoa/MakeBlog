@@ -3,7 +3,7 @@ module.exports = (sequelize, DataTypes) => {
     'VisitLog',
     {
       no: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.INTEGER.UNSIGNED,
         primaryKey: true,
         autoIncrement: true,
       },

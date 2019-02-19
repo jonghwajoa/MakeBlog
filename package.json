@@ -11,7 +11,8 @@
     "test": "set NODE_ENV=test&&mocha -w src/test/validation.spec.js",
     "testall": "set NODE_ENV=test&&mocha -w src/test/index.spec.js",
     "test2": "set NODE_ENV=test&&mocha -w src/test/db/tag.spec.js",
-    "test3": "set NODE_ENV=test&&mocha -w src/test/validation.spec.js"
+    "test3": "set NODE_ENV=test&&mocha -w src/test/validation.spec.js",
+    "test4": "set NODE_ENV=test&&mocha -w src/test/pages/subpost.spec.js"
   },
   "keywords": [],
   "author": "",

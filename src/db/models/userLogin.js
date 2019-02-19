@@ -3,7 +3,7 @@ module.exports = (sequelize, DataTypes) => {
     'UserLogin',
     {
       no: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.INTEGER.UNSIGNED,
         primaryKey: true,
         allowNull: false,
         autoIncrement: true,

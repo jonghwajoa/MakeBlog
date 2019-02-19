@@ -1,4 +1,3 @@
-const postDB = require('../../db/repository/post');
 const subPostDB = require('../../db/repository/subPost');
 const db = require('../../db');
 const paging = require('../../lib/paging');
@@ -106,12 +105,13 @@ const list = async (req, res, next) => {
       subPostDB.findHotPost(),
       db.VisitCount.findMonthCount(req.year, req.month),
       db.VisitCount.sum('count'),
-      db.Tags.findAllWithCount(),
+      db.AssociationTag.findAllOrderLength(),
     ]);
   } catch (e) {
     return next(e);
   }
 
+  
   pagingInfo = paging(totalCnt, req.query);
   const offset = (pagingInfo.page - 1) * pagingInfo.perPageNum;
   try {
@@ -168,7 +168,7 @@ const read = async (req, res, next) => {
 
 const showSubPost = async (req, res, next) => {
   const { id, subId } = req.params;
-  // json으로 컨텐츠 요청할 경우
+
   if (req.headers['content-type'] === 'application/json') {
     return getContent(req, res, next);
   }
@@ -266,7 +266,7 @@ const update = async (req, res, next) => {
     }
     await transaction.commit();
 
-    // update include 알아보기
+    // TODO update include 알아보기
     await db.Posts.updateTransaction(id, updateParams, transaction);
   } catch (e) {
     await transaction.rollback();
@@ -323,7 +323,6 @@ const remove = async (req, res, next) => {
     await result.destroy();
     await transaction.commit();
   } catch (e) {
-    console.log(e);
     await transaction.rollback();
     return next(e);
   }
@@ -373,62 +372,6 @@ const addTag = async (req, res, next) => {
   });
 };
 
-/**
- * @deprecated
- * 카테고리 기능 없애고 TAG로 교체
- */
-const addCategory = async (req, res, next) => {
-  const { requestCategoryName } = req.body;
-  let result;
-
-  if (!requestCategoryName) {
-    return res.status(400).end();
-  }
-
-  try {
-    result = await categoryDB.find(requestCategoryName);
-    if (result !== null) {
-      return res.status(400).json('이미 존재하는 카테고리 입니다.');
-    }
-    result = await categoryDB.create(requestCategoryName);
-  } catch (e) {
-    e.message = '카테고리 추가 실패';
-    next(e);
-  }
-
-  return res.status(201).json({
-    message: '카테고리 추가 성공',
-    no: result.dataValues.no,
-  });
-};
-
-/**
- * @deprecated
- * 카테고리 기능 없애고 TAG로 교체
- */
-const removeCategory = async (req, res, next) => {
-  let { id } = req.params;
-
-  let categoryResult, postResult;
-
-  try {
-    categoryResult = await categoryDB.findById(id);
-    if (!categoryResult) {
-      return res.status(404).json({ message: '없는 카테고리 입니다.' });
-    }
-    postResult = await postDB.findByCategoryId(id);
-    if (postResult) {
-      return res.status(409).json({ message: '사용중인 카테고리는 삭제할 수 없습니다.' });
-    }
-
-    await categoryResult.destroy();
-  } catch (e) {
-    return next(e);
-  }
-
-  return res.status(204).end();
-};
-
 module.exports = {
   updateView,
   createSubView,
@@ -445,10 +388,4 @@ module.exports = {
   remove,
   addTag,
   uploadImage,
-
-  /**
-   * @deprecated
-   */
-  addCategory,
-  removeCategory,
 };

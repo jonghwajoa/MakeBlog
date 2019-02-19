@@ -3,12 +3,12 @@ module.exports = (sequelize, DataTypes) => {
     'AssociationTag',
     {
       post_no: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.INTEGER.UNSIGNED,
         primaryKey: true,
       },
 
       tag_no: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.INTEGER.UNSIGNED,
         primaryKey: true,
       },
     },
@@ -78,6 +78,15 @@ module.exports = (sequelize, DataTypes) => {
       },
       { transaction },
     );
+  };
+
+  AssociationTag.findAllOrderLength = () => {
+    return AssociationTag.findAll({
+      attributes: [[sequelize.fn('COUNT', 'tag_no'), 'count']],
+      include: [{ model: sequelize.models.Tags, attributes: ['name'] }],
+      group: ['tag_no'],
+      order: [[[sequelize.literal('count'), 'desc']]],
+    });
   };
 
   return AssociationTag;

@@ -3,7 +3,7 @@ module.exports = (sequelize, DataTypes) => {
     'ErrorLog',
     {
       no: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.INTEGER.UNSIGNED,
         primaryKey: true,
         allowNull: false,
         autoIncrement: true,

@@ -49,6 +49,11 @@
   color: #495057;
   border: 1px solid #dee2e6;
   font-size: 0.8rem;
+  cursor: pointer;
+}
+
+.post .postTag li:hover {
+  border: 2px solid violet;
 }
 
 .post h3 {
@@ -178,8 +183,13 @@ aside .aside-container > div {
   background: #f8f9fa;
   color: black;
   border: 1px solid #dee2e6;
-
   font-size: 1rem;
+  cursor: pointer;
+}
+
+.aside-container .allTag li span {
+  color: #888888;
+  font-size: 0.8rem;
 }
 
 @media (max-width: 780px) {

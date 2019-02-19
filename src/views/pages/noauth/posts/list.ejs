@@ -98,7 +98,7 @@
           <h2>태그 목록</h2>
           <ul>
             <% allTag.forEach(e => { %>
-              <li>&#8917;<%= e.name %> <%= e.tag.length %></li>
+              <li>&#8917;<%= e.Tag.name %>  <span><%= e.dataValues.count %></span></li>
             <% }) %>
           </ul>
         </div>

@@ -3,7 +3,7 @@ module.exports = (sequelize, DataTypes) => {
     'Tags',
     {
       no: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.INTEGER.UNSIGNED,
         primaryKey: true,
         autoIncrement: true,
       },
@@ -36,8 +36,15 @@ module.exports = (sequelize, DataTypes) => {
     return this.no;
   };
 
+  Tags.prototype.getName = function() {
+    return this.name;
+  };
+
   /* class Method */
 
+  /**
+   * @deprecated
+   */
   Tags.findAllWithCount = () => {
     return Tags.findAll({
       attributes: ['name'],
