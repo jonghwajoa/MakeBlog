@@ -52,7 +52,7 @@
             <!-- content-content -->
             <div class='content-content'>
                 <!-- content-text -->
-                <div class="content-text" id ='content-content'>
+                <div class="content-text" id ='content-text'>
                     <input type="hidden" id="postContent" value="<%= post.content %>" />
                 </div>
                 <!--  //content-text -->
@@ -88,14 +88,16 @@
         <!-- <link rel="preload" href="/js/disqus/disqus.js" as="script"> -->
         <script src="/js/disqus/disqus.js"></script>
         <script src="/js/util/ajaxUtil.js"></script>
-        <script src="/js/posts/posts.js"></script>
         <script src="/js/nav/nav.js"></script>
+        <script src="/js/posts/posts.js"></script>
         <script>
-                document.addEventListener("DOMContentLoaded", function(){
-                    let disqus = new Disqus("https://weknowjs-xyz/posts/<%=home%>",'<%=home%>')
-                    post.readInit();
-                })
-
+               document.addEventListener("DOMContentLoaded", function(){ 
+                let disqus = new Disqus(`<%=home%>/<%=post.sub_no %>`,'<%=home%>')
+                post.readInit();
+                window.onpopstate = function(e) {
+                post.backLoadContent(e.state);
+                } 
+            })
         </script>
 
 

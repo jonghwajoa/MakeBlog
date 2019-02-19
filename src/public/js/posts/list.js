@@ -7,8 +7,8 @@ class Post {
   async listInit() {
     let tagQuery = this.getQueryStringValue('tag').trim();
 
-    if (!(await this.listPageGetDate())) return;
-    this.showAllPostEvent();
+    if (!(await this.getAllPost())) return;
+    this.showAllBtnEvent();
 
     let drawData = this.listData;
     if (tagQuery) {
@@ -24,10 +24,9 @@ class Post {
   }
 
   /* 리스트 페이지 전체 게시글 보기 버튼 이벤트 */
-  showAllPostEvent() {
+  showAllBtnEvent() {
     const showAllPost = document.getElementById('showAllPost');
     showAllPost.addEventListener('click', () => {
-      this.postAllRemove();
       this.drawPost(this.listData);
       window.history.pushState(this.listData, '', '/posts');
     });
@@ -36,7 +35,7 @@ class Post {
   /**
    * @returns boolean
    */
-  async listPageGetDate() {
+  async getAllPost() {
     let reqeustListData;
     try {
       reqeustListData = await ajaxUtil.sendGetAjax(`/posts`);
@@ -44,7 +43,7 @@ class Post {
       this.listData = reqeustListData;
       return true;
     } catch (e) {
-      alert(`Server Error(${e.message})`);
+      alert(`Server Error\n${e.message}`);
       return false;
     }
   }
@@ -64,7 +63,7 @@ class Post {
       postHtml += `<h3><a href=/posts/${post.no}>${post.title}</a></h3>`;
       postHtml += `<div class=postInfo><span>${post.created_at} | view ${post.count}</span></div></div>`;
     }
-    this.postArea.innerHTML += postHtml;
+    this.postArea.innerHTML = postHtml;
 
     this.postTagEventInit();
 
@@ -77,14 +76,13 @@ class Post {
       e.addEventListener('click', () => {
         const tagName = e.innerHTML.substr(1);
         const filterData = this.tagFilter(tagName);
-        this.postAllRemove();
         this.drawPost(filterData);
         window.history.pushState(filterData, '', `/posts?tag=${tagName}`);
       });
     }
   }
 
-  postAllRemove() {
+  postRemoveAll() {
     let postArea = this.postArea;
     while (postArea.firstChild) {
       postArea.removeChild(postArea.firstChild);
@@ -108,13 +106,11 @@ class Post {
    */
   tagAreaEvent(tagName) {
     let filterData = this.tagFilter(tagName);
-    this.postAllRemove();
     this.drawPost(filterData);
     window.history.pushState(filterData, '', `/posts?tag=${tagName}`);
   }
 
   backEvent(prevState) {
-    this.postAllRemove();
     this.drawPost(prevState);
   }
 

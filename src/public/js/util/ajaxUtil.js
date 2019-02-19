@@ -10,7 +10,6 @@ const ajaxUtil = {
         if (xhr.status === 200) {
           resolve(xhr.responseText);
         } else {
-          console.log(xhr.status);
           reject({ status: xhr.status, message: xhr.responseText });
         }
       };

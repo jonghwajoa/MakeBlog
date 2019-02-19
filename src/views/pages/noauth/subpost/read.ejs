@@ -24,74 +24,71 @@
         <div class='content-header'>
             <div class='post-intro'>
                 <h1 id="title"><%= post.title %></h1>
-                    <dl class=postInfo>
-                        <dt>
-                            <dd id="createDate">
-                                <%= post.created_at %> |
-                            </dd>
-                        </dt>
-                        <dt>
-                            <dd id="viewCount">
-                                View <%= post.count %>
-                                <input type="hidden" id='cur' value="<%=home%>/<%=post.sub_no %>" />
-                            </dd>
-                        </dt>
-                    </dl>
-                </div>
-                
+                <dl class=postInfo>
+                    <dt>
+                        <dd id="createDate">
+                            <%= post.created_at %> |
+                        </dd>
+                    </dt>
+                    <dt>
+                        <dd id="viewCount">
+                            View <%= post.count %>
+                            <input type="hidden" id='cur' value="<%=home%>/<%=post.sub_no %>" />
+                        </dd>
+                    </dt>
+                </dl>
             </div>
-
-            <!-- content-content -->
-            <div class='content-content'>
-                <!-- content-text -->
-                <div class="content-text" id ='content-text'>
-                    <input type="hidden" id="postContent" value="<%= post.content %>" />
-                </div>
-                <!--  //content-text -->
-                
-            </div>
-            <!-- //content-content -->
-
-            <div class='reply-wrap'>
-                <div id="disqus_thread"></div>
-            </div>
-            <div class="moveTop-btn" id="moveTop-btn">&#x2912;</div>
-            
-
-            <!-- content-side -->
-        <div class="content-side">
-                <h2 id='subPostBtn'>하위 게시글</h2>
-                <div class='sidepost'>
-                    <h2>하위 게시글</h2>
-                    <ul>
-                        <li><a onclick="post.getContent('<%=home%>')">Home</a></li>
-                        <% subPost.forEach((item,index) => { %>
-                            <li><a onclick="post.getContent('<%=home%>','<%=item.sub_no %>')" class="subpost_element"><%=item.title %></a>
-                            </li>
-                        <% }) %>
-                    </ul>
-                </div>
-            </div>
-            <!-- //cotent-side -->
         </div>
 
+        <!-- content-content -->
+        <div class='content-content'>
+            <!-- content-text -->
+            <div class="content-text" id ='content-text'>
+                <input type="hidden" id="postContent" value="<%= post.content %>" />
+            </div>
+            <!--  //content-text -->
+        </div>
+        <!-- //content-content -->
 
-        <% include ../../../partials/footer.ejs %>
-        
-        <noscript>Please enable JavaScript</noscript>
-        <script src="/js/nav/nav.js"></script>
-        <script src="/js/disqus/disqus.js"></script>
-        <script src="/js/util/ajaxUtil.js"></script>
-        <script src="/js/posts/posts.js"></script>
-        <script>
-            document.addEventListener("DOMContentLoaded", function(){ 
-                let disqus = new Disqus(`<%=home%>/<%=post.sub_no %>`,'<%=home%>')
-                post.readInit();
-                window.onpopstate = function(e) {
-                post.backLoadContent(e.state);
-                } 
-            })
-        </script>
+        <div class='reply-wrap'>
+            <div id="disqus_thread"></div>
+        </div>
+        <div class="moveTop-btn" id="moveTop-btn">&#x2912;</div>
+
+        <!-- content-side -->
+        <div class="content-side">
+            <h2 id='subPostBtn'>하위 게시글</h2>
+            <div class='sidepost'>
+                <h2>하위 게시글</h2>
+                <ul>
+                    <li><a onclick="post.getContent('<%=home%>')">Home</a></li>
+                    <% subPost.forEach((item,index) => { %>
+                        <li><a onclick="post.getContent('<%=home%>','<%=item.sub_no %>')" class="subpost_element"><%=item.title %></a>
+                        </li>
+                    <% }) %>
+                </ul>
+            </div>
+        </div>
+            <!-- //cotent-side -->
+    </div>
+
+
+    <% include ../../../partials/footer.ejs %>
+    
+    <noscript>Please enable JavaScript</noscript>
+    <script src="/js/nav/nav.js"></script>
+    <script src="/js/disqus/disqus.js"></script>
+    <script src="/js/util/ajaxUtil.js"></script>
+    <script src="/js/posts/posts.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function(){ 
+            let disqus = new Disqus(`<%=home%>/<%=post.sub_no %>`,'<%=home%>')
+            post.readInit();
+            window.onpopstate = function(e) {
+            post.backLoadContent(e.state);
+            } 
+        })
+    </script>
 </body>
 
 </html>

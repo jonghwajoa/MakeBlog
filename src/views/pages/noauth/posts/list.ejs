@@ -36,6 +36,22 @@
             </div>
             <!-- //visit-count -->
 
+            <!-- allTag -->
+            <div class="allTag">
+              <h2>태그 목록</h2>
+              <ul>
+                <li id="showAllPost">전체 게시글 보기</li>
+                <% allTag.forEach(e => { %>
+                <li>
+                  <a onclick="post.tagAreaEvent('<%= e.Tag.name %>')"
+                    >&#8917;<%= e.Tag.name %> <span><%= e.dataValues.count %></span></a
+                  >
+                </li>
+                <% }) %>
+              </ul>
+            </div>
+            <!-- //allTag -->
+
             <!-- hotPost -->
             <div class="hotPost">
               <h2>Post TOP5</h2>
@@ -65,22 +81,6 @@
               </ul>
             </div>
             <!-- //hotSubPost -->
-
-            <!-- allTag -->
-            <div class="allTag">
-              <h2>태그 목록</h2>
-              <ul>
-                <li id="showAllPost">전체 게시글 보기</li>
-                <% allTag.forEach(e => { %>
-                <li>
-                  <a onclick="post.tagAreaEvent('<%= e.Tag.name %>')"
-                    >&#8917;<%= e.Tag.name %> <span><%= e.dataValues.count %></span></a
-                  >
-                </li>
-                <% }) %>
-              </ul>
-            </div>
-            <!-- //allTag -->
           </div>
           <!-- //aside-ontainer -->
         </aside>

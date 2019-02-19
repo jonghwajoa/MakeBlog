@@ -172,7 +172,6 @@ aside .aside-container > div {
 }
 
 .aside-container .allTag {
-  box-shadow: none;
 }
 
 .aside-container .allTag li {
@@ -181,7 +180,7 @@ aside .aside-container > div {
   padding: 5px 12px;
   font-weight: bold;
   font-family: 'Nanum Gothic', sans-serif;
-  background: #f8f9fa;
+  background: white;
   color: black;
   border: 1px solid #dee2e6;
   font-size: 1rem;

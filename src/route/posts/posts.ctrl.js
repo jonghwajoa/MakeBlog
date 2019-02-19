@@ -98,11 +98,9 @@ const list = async (req, res, next) => {
   let hotPost, hotSubPost, monthCount, totalCount;
 
   headerNoCache(res);
-
   if (req.headers['content-type'] === 'application/json') {
     try {
       let result = await db.Posts.findAllWithPaging();
-
       return res.json(result);
     } catch (e) {
       return next(e);
