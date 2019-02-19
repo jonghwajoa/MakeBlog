@@ -19,6 +19,12 @@ async function tagFindOrCreateByName(tags) {
   return tagsUUID;
 }
 
+function headerNoCache(res) {
+  res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate');
+  res.header('Expires', '-1');
+  res.header('Pragma', 'no-cache');
+}
+
 const createView = async (req, res, next) => {
   try {
     return res.render('team/posts/new');
@@ -89,18 +95,23 @@ const createSubPost = async (req, res, next) => {
 };
 
 const list = async (req, res, next) => {
-  let postList, totalCnt, pagingInfo;
   let hotPost, hotSubPost, monthCount, totalCount;
-  let requestPage = req.query.page || 1;
-  if (!paramCheck.isUINT(requestPage)) {
-    const err = new Error('Bad Request');
-    err.status = 400;
-    return next(err);
+
+  headerNoCache(res);
+
+  if (req.headers['content-type'] === 'application/json') {
+    try {
+      let result = await db.Posts.findAllWithPaging();
+
+      return res.json(result);
+    } catch (e) {
+      console.log(e);
+      return next(e);
+    }
   }
 
   try {
-    [totalCnt, hotPost, hotSubPost, monthCount, totalCount, allTag] = await Promise.all([
-      db.Posts.count(),
+    [hotPost, hotSubPost, monthCount, totalCount, allTag] = await Promise.all([
       db.Posts.findHotPost(),
       subPostDB.findHotPost(),
       db.VisitCount.findMonthCount(req.year, req.month),
@@ -111,18 +122,7 @@ const list = async (req, res, next) => {
     return next(e);
   }
 
-  
-  pagingInfo = paging(totalCnt, req.query);
-  const offset = (pagingInfo.page - 1) * pagingInfo.perPageNum;
-  try {
-    postList = await db.Posts.findAllWithPaging(pagingInfo.perPageNum, offset);
-  } catch (e) {
-    return next(e);
-  }
-
   let returnObj = {
-    postList,
-    pagingInfo,
     hotPost,
     hotSubPost,
     monthCount,
@@ -220,9 +220,7 @@ const getContent = async (req, res, next) => {
     return next(e);
   }
 
-  res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate');
-  res.header('Expires', '-1');
-  res.header('Pragma', 'no-cache');
+  headerNoCache(res);
   return res.json(post);
 };
 

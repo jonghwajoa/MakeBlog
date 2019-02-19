@@ -20,33 +20,9 @@
       <!-- flex-container -->
       <div class="flex-container">
         <!-- post-area -->
-        <div class='post-area'>
-          <% postList.forEach((item,index) => { %>
-          <div class="post">
-            
-            <!-- postTag -->
-            <div class="postTag">
-              <ul>
-                <% item.tag.forEach(e => { %>
-                  <li>&#8917;<%= e.Tag.name %></li>
-                <% }) %>
-              </ul>
-            </div>
-            <!-- //postTag -->
+        <div class='post-area' id='post-area'>
 
-            <h3><a href="/posts/<%=item.no %>"><%= item.title %></a></h3>
-
-            <!-- postInfo -->
-            <div class="postInfo">
-              <span><%= item.created_at %> | view <%= item.count %> </span>
-            </div>
-            <!-- //postInfo -->
-          </div>
-          <% }) %>
-          <!-- //post -->
-  
-        </section>
-      </div>
+        </div>
 
       <aside>
         <!-- aside-ontainer -->
@@ -112,6 +88,17 @@
 
     <% include ../../../partials/footer.ejs %>
     <script src="/js/nav/nav.js"></script>
+    <script src="/js/util/ajaxUtil.js"></script>
+    <script src="/js/posts/posts.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+        post.listInit();
+
+        window.onpopstate = function(e) {
+          post.drawListView(e.state)
+        };
+      });
+  </script>
   </body>
   
 </html>

@@ -5,6 +5,64 @@ class Post {
     this.subPost = document.getElementsByClassName('subpost_element');
     this.editor;
     this.tags = [];
+    this.listData;
+  }
+
+  async listInit() {
+    let reqeustListData;
+    this.postInsertArea = document.getElementById('post-area');
+    try {
+      reqeustListData = await ajaxUtil.sendGetAjax(`/posts`);
+      reqeustListData = JSON.parse(reqeustListData);
+      this.listData = reqeustListData;
+    } catch (e) {
+      alert(`Server Error(${e.status})`);
+      return;
+    }
+    this.drawListView(this.listData);
+    window.history.pushState(this.listData, '', '/posts');
+  }
+
+  drawListView(requestTagData) {
+    let postInsert = this.postInsertArea;
+    let postHtml = '';
+    for (let post of requestTagData) {
+      postHtml += '<div class=post><div class=postTag><ul>';
+      for (let tag of post.tag) {
+        postHtml += `<li><a class='tagEvent'>&#8917;${tag.Tag.name}</a></li>`;
+      }
+      postHtml += '</ul></div>';
+      postHtml += `<h3><a href=/posts/${post.no}>${post.title}</a></h3>`;
+      postHtml += `<div class=postInfo><span>${post.created_at} | view ${post.count}</span></div></div>`;
+    }
+    postInsert.innerHTML += postHtml;
+
+    const tagEvent = Array.from(document.getElementsByClassName('tagEvent'));
+    for (let e of tagEvent) {
+      e.addEventListener('click', () => {
+        this.tagFilter(e.innerHTML.substr(1));
+      });
+    }
+  }
+
+  tagFilter(reqeustTag) {
+    let requestTagData = [];
+    requestTagData = this.listData.filter(e => {
+      for (let tag of e.tag) {
+        if (tag.Tag.name == reqeustTag) return true;
+      }
+    });
+
+    let postInsert = this.postInsertArea;
+    while (postInsert.firstChild) {
+      postInsert.removeChild(postInsert.firstChild);
+    }
+    window.history.pushState(requestTagData, '', `/posts?tag=${reqeustTag}`);
+    this.drawListView(requestTagData);
+  }
+
+  backLoadList(prevState) {
+    this.postInsertArea.innerHTML = prevState;
   }
 
   readInit() {

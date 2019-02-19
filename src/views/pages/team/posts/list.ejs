@@ -7,7 +7,7 @@
     <meta name="description" content="JONGHWA BLOG" />
     <meta name="generator" content="Visual Studio Code" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-   
+
     <% include ../../../partials/essentialCss.ejs %>
     <link rel="stylesheet" href="/css/posts/list.css" />
   </head>
@@ -17,97 +17,83 @@
 
     <div class="content-wrap">
       <div class="flex-container">
-        <div class='post-area'>
+        <div class="post-area">
           <div class="create-btn">
             <a href="/posts/new"> <input type="button" value="글등록" /> </a>
           </div>
-
-
-          <% postList.forEach((item,index) => { %>
-          <div class="post">
-            <!-- postTag -->
-            <div class="postTag">
-                <ul>
-                  <% item.tag.forEach(e => { %>
-                    <li>&#8917;<%= e.Tag.name %></li>
-                  <% }) %>
-                </ul>
-            </div>
-            <!-- //postTag -->
-
-
-            <h3><a href="/posts/<%=item.no %>"><%= item.title %></a></h3>
-
-            <div class="postInfo">
-              <span><%= item.created_at %> | view <%= item.count %> </span>
-            </div>
-          </div>
-          <% }) %>
-
-        </section>
+        </div>
       </div>
 
       <aside>
         <!-- aside-ontainer -->
-        <div class="aside-container"> 
-        
-        <!-- visit-count -->
-        <div class="visit-count">
-          <div class="gridItem title">total</div>
-          <div class="gridItem title">monthly</div>
-          <div class="gridItem title">today</div>
-          <div class="gridItem"><%= totalCount %></div>
-          <div class="gridItem"><%= monthCount %></div>
-          <div class="gridItem"><%=today%></div>
-        </div>
-        <!-- //visit-count -->
-        
-        <!-- hotPost -->
-        <div class="hotPost">
-          <h2>Post TOP5</h2>
-          <ul>
-            <% hotPost.forEach((item,index) => { %>
-            <li>
-              <a href="/posts/<%=item.no%>">
-                <span><%= index+1 %> <%= item.title %></span>
-              </a>
-            </li>
-            <% }) %>
-          </ul>
-        </div>
-        <!-- //hotPost -->
+        <div class="aside-container">
+          <!-- visit-count -->
+          <div class="visit-count">
+            <div class="gridItem title">total</div>
+            <div class="gridItem title">monthly</div>
+            <div class="gridItem title">today</div>
+            <div class="gridItem"><%= totalCount %></div>
+            <div class="gridItem"><%= monthCount %></div>
+            <div class="gridItem"><%=today%></div>
+          </div>
+          <!-- //visit-count -->
 
-        <!-- hotSubPost -->
-        <div class="hotSubPost">
-          <h2>SubPost TOP5</h2>
-          <ul>
-            <% hotSubPost.forEach((item,index) => { %>
-            <li>
-              <a href="/posts/<%=item.post_no%>/<%=item.sub_no%>">
-                <span><%= index+1 %></span> <span><%= item.title %></span>
-              </a>
-            </li>
-            <% }) %>
-          </ul>
-        </div> 
-        <!-- //hotSubPost -->
+          <!-- hotPost -->
+          <div class="hotPost">
+            <h2>Post TOP5</h2>
+            <ul>
+              <% hotPost.forEach((item,index) => { %>
+              <li>
+                <a href="/posts/<%=item.no%>">
+                  <span><%= index+1 %> <%= item.title %></span>
+                </a>
+              </li>
+              <% }) %>
+            </ul>
+          </div>
+          <!-- //hotPost -->
+
+          <!-- hotSubPost -->
+          <div class="hotSubPost">
+            <h2>SubPost TOP5</h2>
+            <ul>
+              <% hotSubPost.forEach((item,index) => { %>
+              <li>
+                <a href="/posts/<%=item.post_no%>/<%=item.sub_no%>">
+                  <span><%= index+1 %></span> <span><%= item.title %></span>
+                </a>
+              </li>
+              <% }) %>
+            </ul>
+          </div>
+          <!-- //hotSubPost -->
 
           <!-- allTag -->
-          <div class='allTag'>
-              <h2>태그 목록</h2>
-              <ul>
-                <% allTag.forEach(e => { %>
-                  <li>&#8917;<%= e.name %> <%= e.tag.length %></li>
-                <% }) %>
-              </ul>
-            </div>
-            <!-- //allTag -->
-      </div>
+          <div class="allTag">
+            <h2>태그 목록</h2>
+            <ul>
+              <% allTag.forEach(e => { %>
+              <li>&#8917;<%= e.name %> <%= e.tag.length %></li>
+              <% }) %>
+            </ul>
+          </div>
+          <!-- //allTag -->
+        </div>
       </aside>
       <div class="moveTop-btn" id="moveTop-btn">&#x2912;</div>
     </div>
 
-    <% include ../../../partials/footer.ejs %>
     <script src="/js/nav/nav.js"></script>
+    <script src="/js/util/ajaxUtil.js"></script>
+    <script src="/js/posts/posts.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        post.listInit();
+
+        window.onpopstate = function(e) {
+          console.log(e);
+        };
+      });
+    </script>
   </body>
 </html>
