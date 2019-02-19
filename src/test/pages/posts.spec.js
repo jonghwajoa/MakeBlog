@@ -3,15 +3,13 @@ const request = require('supertest');
 const app = require('../../app');
 const models = require('../../db');
 
-const WritePostVal = {
-  title: '5번글 입니다.',
-  tag: '#아무거나 #갑시다 #히히',
-  content: '1번글 content입니다.',
-  category_no: 5,
-  writer: 5,
-};
+const title = '5번글 입니다.';
+const content = '1번글 content입니다.';
+const tags = ['spirng', 'nodejs'];
 
 let deleteNo;
+
+let agent = request.agent(app);
 
 /** 테스트 케이스
  * 생성뷰
@@ -23,9 +21,6 @@ let deleteNo;
  * 업데이터
  * 제거
  */
-
-let agent = request.agent(app);
-
 describe('/Posts는********************************', () => {
   before(done => {
     agent
@@ -58,10 +53,16 @@ describe('/Posts는********************************', () => {
         .get('/posts')
         .expect('Content-Type', /html/)
         .expect(200)
-        .end((err, res) => {
-          body = res.body;
-          done();
-        });
+        .end(done);
+    });
+
+    it('비로그인시 JSON으로 요청시 JSON으로 응답한다.', done => {
+      request(app)
+        .get('/posts')
+        .set('Content-Type', 'application/json')
+        .expect('Content-Type', /json/)
+        .expect(200)
+        .end(done);
     });
 
     it('로그인하고 list page요청시 html로 200을 응답한다.', done => {
@@ -72,26 +73,13 @@ describe('/Posts는********************************', () => {
         .end(done);
     });
 
-    it('page가 자연수가 아니면 400을 반환한다.', done => {
-      request(app)
-        .get('/posts?page=-1')
-        .expect('Content-Type', /html/)
-        .expect(400)
-        .end((err, res) => {
-          body = res.body;
-          done();
-        });
-    });
-
-    it('page가 자연수가 아니면 400을 반환한다.', done => {
-      request(app)
-        .get('/posts?page=dasa')
-        .expect('Content-Type', /html/)
-        .expect(400)
-        .end((err, res) => {
-          body = res.body;
-          done();
-        });
+    it('로그인하고 JSON으로 요청시 JSON으로 응답한다.', done => {
+      agent
+        .get('/posts')
+        .set('Content-Type', 'application/json')
+        .expect(200)
+        .expect('Content-Type', /json/)
+        .end(done);
     });
   });
 
@@ -126,6 +114,142 @@ describe('/Posts는********************************', () => {
           .expect(200)
           .expect('Content-Type', /html/)
           .end(done);
+      });
+    });
+  });
+
+  /** POST /posts/ 요청시
+   * case success : 로그인상태
+   * case fail : 비로그인, title,tag,content,누락
+   */
+  describe('POST /posts/ 요청시....', () => {
+    describe('비로그인 상태에서...', () => {
+      it('권한없음 401과 unauthorized 반환한다.', done => {
+        request(app)
+          .post('/posts')
+          .send({ title, tags, content })
+          .expect(401)
+          .expect('Content-Type', /json/)
+          .end((err, res) => {
+            res.body.should.property('message', 'UnAuthorized');
+            done();
+          });
+      });
+    });
+
+    describe('로그인 상태에서...', () => {
+      describe('실패시...', () => {
+        it('tag가 누락되면 400을 json형식으로 반환한다.', done => {
+          agent
+            .post('/posts')
+            .send({
+              title: '5번',
+              content: '1번글 content입니다.',
+            })
+            .expect(400)
+            .expect('Content-Type', /json/)
+            .end((err, res) => {
+              res.text.should.be.equals('"tag가 올바르지 않습니다."');
+              done();
+            });
+        });
+
+        it('tag가 누락되면 "tag가 올바르지 않습니다."를 응답한다.', done => {
+          agent
+            .post('/posts')
+            .send({
+              title,
+              content,
+            })
+            .end((err, res) => {
+              res.text.should.be.equals('"tag가 올바르지 않습니다."');
+              done();
+            });
+        });
+
+        it('title 누락시 400을 반환', done => {
+          agent
+            .post('/posts')
+            .send({
+              tags,
+              content,
+            })
+            .expect(400)
+            .expect('Content-Type', /json/)
+            .end(done);
+        });
+
+        it('title 누락시 "title이 올바르지 않습니다.를 응답한다.', done => {
+          agent
+            .post('/posts')
+            .send({
+              tags,
+              content,
+            })
+            .end((err, res) => {
+              res.text.should.be.equal('"title이 올바르지 않습니다."');
+              done();
+            });
+        });
+
+        it('cotent 누락시 400을 반환', done => {
+          agent
+            .post('/posts')
+            .send({
+              title,
+              tags,
+            })
+            .expect(400)
+            .expect('Content-Type', /json/)
+            .end(done);
+        });
+
+        it('cotent 누락시 "content가 올바르지 않습니다."를 응답한다.', done => {
+          agent
+            .post('/posts')
+            .send({
+              title,
+              tags,
+            })
+            .expect(400)
+            .expect('Content-Type', /json/)
+            .end((err, res) => {
+              res.text.should.be.equal('"content가 올바르지 않습니다."');
+              done();
+            });
+        });
+      });
+
+      describe('성공시...', () => {
+        let body;
+        it('201을 Json 타입을 반환한다.', done => {
+          agent
+            .post('/posts')
+            .send({
+              title,
+              content,
+              tags,
+            })
+            .expect(201)
+            .expect('Content-Type', /json/)
+            .end(done);
+        });
+
+        it('201을 Json 타입을 반환한다.', done => {
+          agent
+            .post('/posts')
+            .send({
+              title,
+              content,
+              tags,
+            })
+            .end((err, res) => {
+              body = res.body;
+              deleteNo = body.no;
+              body.should.have.property('no');
+              done();
+            });
+        });
       });
     });
   });
@@ -187,7 +311,33 @@ describe('/Posts는********************************', () => {
           it('id가 자연수가 아닌경우 400을 응답한다', done => {
             request(app)
               .get('/posts/-1')
-              .send({})
+              .set('Content-Type', 'application/json')
+              .expect(400)
+              .expect('Content-Type', /json/)
+              .end(done);
+          });
+
+          it('id가 없을경우 404로 응답한다.', done => {
+            request(app)
+              .get('/posts/99999')
+              .set('Content-Type', 'application/json')
+              .expect(404)
+              .end(done);
+          });
+
+          it('id가 없을 경우 상태코드404과 JSON 을 응답한다.', done => {
+            request(app)
+              .get('/posts/6688')
+              .set('Content-Type', 'application/json')
+              .expect(404)
+              .expect('Content-Type', /json/)
+              .end(done);
+          });
+
+          it('id가 자연수가 아닌경우 400을 응답한다', done => {
+            request(app)
+              .get('/posts/-1')
+              .set('Content-Type', 'application/json')
               .expect(400)
               .expect('Content-Type', /json/)
               .end(done);
@@ -235,108 +385,6 @@ describe('/Posts는********************************', () => {
 
           it('id에 대한 no를 반환한다', () => {
             body.should.property('no', 1);
-          });
-        });
-      });
-    });
-  });
-
-  /** POST /posts/ 요청시
-   * case success : 로그인상태
-   * case fail : 비로그인, title,tag,content,category 누락
-   */
-  describe('POST /posts/ 요청시....', () => {
-    describe('비로그인 상태에서...', () => {
-      it('권한없음 401과 unauthorized 반환한다.', done => {
-        request(app)
-          .post('/posts')
-          .send(WritePostVal)
-          .expect(401)
-          .expect('Content-Type', /json/)
-          .end((err, res) => {
-            res.body.should.property('message', 'UnAuthorized');
-            done();
-          });
-      });
-    });
-
-    describe('로그인 상태에서...', () => {
-      describe('실패시...', () => {
-        it('모든 입력값은 String이지 않으면 400을 반환한다.', done => {
-          agent
-            .post('/posts')
-            .send({
-              title: '5번',
-              tag: '#아무거나 #갑시다 #히히',
-              content: '1번글 content입니다.',
-              category: 1,
-            })
-            .expect(400)
-            .expect('Content-Type', /json/)
-            .end(done);
-        });
-
-        it('title 누락시 400을 반환', done => {
-          agent
-            .post('/posts')
-            .send({
-              tag: '#아무거나 #갑시다 #히히',
-              content: '1번글 content입니다.',
-              category: '1',
-            })
-            .expect(400)
-            .expect('Content-Type', /json/)
-            .end(done);
-        });
-
-        it('tag 누락시 400을 반환', done => {
-          agent
-            .post('/posts')
-            .send({
-              title: '5번',
-              content: '1번글 content입니다.',
-              category: '1',
-            })
-            .expect(400)
-            .expect('Content-Type', /json/)
-            .end(done);
-        });
-
-        it('cotent 누락시 400을 반환', done => {
-          agent
-            .post('/posts')
-            .send({
-              title: '5번',
-              tag: '#아무거나 #갑시다 #히히',
-              category: '1',
-            })
-            .expect(400)
-            .expect('Content-Type', /json/)
-            .end(done);
-        });
-
-        describe('성공시...', () => {
-          let body;
-          it('201을 Json 타입을 반환한다.', done => {
-            agent
-              .post('/posts')
-              .send({
-                title: '5번입니다하하',
-                tag: '#아무거나 #갑시다 #히히',
-                content: '1번글 content입니다.',
-                category: '1',
-              })
-              .expect(201)
-              .expect('Content-Type', /json/)
-              .end((err, res) => {
-                body = res.body;
-                deleteNo = body.no;
-                done();
-              });
-          });
-
-          it('생성된 포스트의 no를 반환한다.', () => {
-            body.should.have.property('no');
           });
         });
       });
@@ -414,27 +462,62 @@ describe('/Posts는********************************', () => {
             .end(done);
         });
 
-        it('모든 입력값은 String이지 않으면 400을 반환한다.', done => {
+        it('content 누락시 400을 반환한다..', done => {
           agent
             .put('/posts/1')
             .send({
-              title: '5번',
-              tag: '#아무거나 #갑시다 #히히',
-              content: '1번글 content입니다.',
-              category: 1,
+              title,
+              tags,
             })
             .expect(400)
             .expect('Content-Type', /json/)
             .end(done);
         });
 
-        it('title 누락시 400을 반환', done => {
+        it('content 누락시 400을 반환한다..', done => {
           agent
             .put('/posts/1')
             .send({
-              tag: '#아무거나 #갑시다 #히히',
-              content: '1번글 content입니다.',
-              category: '1',
+              title,
+              tags,
+            })
+            .end((err, res) => {
+              res.body.should.be.equals('content가 올바르지 않습니다.');
+              done();
+            });
+        });
+
+        it('title 누락시 400을 반환한다..', done => {
+          agent
+            .put('/posts/1')
+            .send({
+              tags,
+              content,
+            })
+            .expect(400)
+            .expect('Content-Type', /json/)
+            .end(done);
+        });
+
+        it('title 누락시 400을 반환한다..', done => {
+          agent
+            .put('/posts/1')
+            .send({
+              tags,
+              content,
+            })
+            .end((err, res) => {
+              res.body.should.be.equals('title이 올바르지 않습니다.');
+              done();
+            });
+        });
+
+        it('tag 누락시 400을 반환', done => {
+          agent
+            .put('/posts/1')
+            .send({
+              title,
+              content,
             })
             .expect(400)
             .expect('Content-Type', /json/)
@@ -445,51 +528,35 @@ describe('/Posts는********************************', () => {
           agent
             .put('/posts/1')
             .send({
-              title: '5번',
-              content: '1번글 content입니다.',
-              category: '1',
+              title,
+              content,
             })
-            .expect(400)
-            .expect('Content-Type', /json/)
-            .end(done);
-        });
-
-        it('cotent 누락시 400을 반환', done => {
-          agent
-            .put('/posts/1')
-            .send({
-              title: '5번',
-              tag: '#아무거나 #갑시다 #히히',
-              category: '1',
-            })
-            .expect(400)
-            .expect('Content-Type', /json/)
-            .end(done);
+            .end((err, res) => {
+              res.body.should.be.equals('tag가 올바르지 않습니다.');
+              done();
+            });
         });
 
         it('존재하지 않는 id 입력시 404를 응답한다....', done => {
           agent
             .put('/posts/999999999')
             .send({
-              title: '5번',
-              tag: '#수정 #성공 #합시다.',
-              content: '1번글 content입니다.',
-              category: '1',
+              title,
+              tags,
+              content,
             })
             .expect(404)
             .end(done);
         });
       });
-
       describe('성공시...', () => {
         it('204를 반환한다...', done => {
           agent
             .put('/posts/1')
             .send({
-              title: '5번',
-              tag: '#수정 #성공 #합시다.',
-              content: '1번글 content입니다.',
-              category: '1',
+              title,
+              tags,
+              content,
             })
             .expect(204)
             .end(done);
@@ -535,7 +602,7 @@ describe('/Posts는********************************', () => {
         it('id값이 없고 JSON으로 요청한경우 404, json 반환한다.', done => {
           agent
             .delete('/posts/999999')
-            .send({})
+            .set('Content-Type', 'application/json')
             .expect(404)
             .expect('Content-Type', /json/)
             .end(done);

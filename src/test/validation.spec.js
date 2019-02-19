@@ -8,6 +8,7 @@ const {
   subPostValidation,
   solvingValidation,
   postValidationV2,
+  checkArrayTag,
 } = require('../lib/validation');
 
 const content = 'content 입니다..';
@@ -199,6 +200,12 @@ describe('벨리데이션 함수 검증테스트......', () => {
     it('content가 null이면  false를 반환한다..', () => {
       let content = ' ';
       postValidationV2({ title, tags, content })[0].should.be.false();
+    });
+  });
+
+  describe('checkArrayTag함수는...', () => {
+    it('빈배열을 주면 false를 반환한다...', () => {
+      checkArrayTag([]).should.be.false();
     });
   });
 });

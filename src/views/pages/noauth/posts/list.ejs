@@ -20,71 +20,72 @@
       <!-- flex-container -->
       <div class="flex-container">
         <!-- post-area -->
-        <div class='post-area' id='post-area'>
+        <div class="post-area" id="post-area"></div>
 
-        </div>
+        <aside>
+          <!-- aside-ontainer -->
+          <div class="aside-container">
+            <!-- visit-count -->
+            <div class="visit-count">
+              <div class="gridItem title">total</div>
+              <div class="gridItem title">monthly</div>
+              <div class="gridItem title">today</div>
+              <div class="gridItem"><%= totalCount %></div>
+              <div class="gridItem"><%= monthCount %></div>
+              <div class="gridItem"><%=today%></div>
+            </div>
+            <!-- //visit-count -->
 
-      <aside>
-        <!-- aside-ontainer -->
-        <div class="aside-container"> 
+            <!-- hotPost -->
+            <div class="hotPost">
+              <h2>Post TOP5</h2>
+              <ul>
+                <% hotPost.forEach((item,index) => { %>
+                <li>
+                  <a href="/posts/<%=item.no%>">
+                    <span><%= index+1 %> <%= item.title %></span>
+                  </a>
+                </li>
+                <% }) %>
+              </ul>
+            </div>
+            <!-- //hotPost -->
 
-        <!-- visit-count -->
-        <div class="visit-count">
-          <div class="gridItem title">total</div>
-          <div class="gridItem title">monthly</div>
-          <div class="gridItem title">today</div>
-          <div class="gridItem"><%= totalCount %></div>
-          <div class="gridItem"><%= monthCount %></div>
-          <div class="gridItem"><%=today%></div>
-        </div>
-        <!-- //visit-count -->
-        
-        <!-- hotPost -->
-        <div class="hotPost">
-          <h2>Post TOP5</h2>
-          <ul>
-            <% hotPost.forEach((item,index) => { %>
-            <li>
-              <a href="/posts/<%=item.no%>">
-                <span><%= index+1 %> <%= item.title %></span>
-              </a>
-            </li>
-            <% }) %>
-          </ul>
-        </div>
-        <!-- //hotPost -->
+            <!-- hotSubPost -->
+            <div class="hotSubPost">
+              <h2>SubPost TOP5</h2>
+              <ul>
+                <% hotSubPost.forEach((item,index) => { %>
+                <li>
+                  <a href="/posts/<%=item.post_no%>/<%=item.sub_no%>">
+                    <span><%= index+1 %></span> <span><%= item.title %></span>
+                  </a>
+                </li>
+                <% }) %>
+              </ul>
+            </div>
+            <!-- //hotSubPost -->
 
-        <!-- hotSubPost -->
-        <div class="hotSubPost">
-          <h2>SubPost TOP5</h2>
-          <ul>
-            <% hotSubPost.forEach((item,index) => { %>
-            <li>
-              <a href="/posts/<%=item.post_no%>/<%=item.sub_no%>">
-                <span><%= index+1 %></span> <span><%= item.title %></span>
-              </a>
-            </li>
-            <% }) %>
-          </ul>
-        </div> 
-        <!-- //hotSubPost -->
-
-        <!-- allTag -->
-        <div class='allTag'>
-          <h2>태그 목록</h2>
-          <ul>
-            <li id='showAllPost'>전체 게시글 보기</li>
-            <% allTag.forEach(e => { %>
-              <li><a onclick="post.tagAreaEvent('<%= e.Tag.name %>')">&#8917;<%= e.Tag.name %>  <span><%= e.dataValues.count %></span></a></li>
-            <% }) %>
-          </ul>
-        </div>
-        <!-- //allTag -->
-
+            <!-- allTag -->
+            <div class="allTag">
+              <h2>태그 목록</h2>
+              <ul>
+                <li id="showAllPost">전체 게시글 보기</li>
+                <% allTag.forEach(e => { %>
+                <li>
+                  <a onclick="post.tagAreaEvent('<%= e.Tag.name %>')"
+                    >&#8917;<%= e.Tag.name %> <span><%= e.dataValues.count %></span></a
+                  >
+                </li>
+                <% }) %>
+              </ul>
+            </div>
+            <!-- //allTag -->
+          </div>
+          <!-- //aside-ontainer -->
+        </aside>
+        <div class="moveTop-btn" id="moveTop-btn">&#x2912;</div>
       </div>
-      <!-- //aside-ontainer -->
-      </aside>
-      <div class="moveTop-btn" id="moveTop-btn">&#x2912;</div>
     </div>
 
     <% include ../../../partials/footer.ejs %>
@@ -92,10 +93,9 @@
     <script src="/js/util/ajaxUtil.js"></script>
     <script src="/js/posts/list.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+      document.addEventListener('DOMContentLoaded', function() {
         post.listInit();
       });
-  </script>
+    </script>
   </body>
-  
 </html>

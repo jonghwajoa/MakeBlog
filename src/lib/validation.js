@@ -1,4 +1,5 @@
 /**
+ * @since version 1.0
  * @deprecated
  */
 const isString = str => {
@@ -6,6 +7,7 @@ const isString = str => {
 };
 
 /**
+ * @since version 1.0
  * @deprecated
  */
 const paramsIsNotNull = params => {
@@ -36,6 +38,7 @@ const arrayElementIsString = strArray => {
  * @param {number} min
  * @param {number} max
  * @returns {Boolean}
+ * @since version 1.0
  */
 const isLength = (val, min, max = Number.MAX_SAFE_INTEGER) => {
   const valLen = val.length;
@@ -51,6 +54,8 @@ const isUINT = num => {
 };
 
 /**
+ * /**
+ * @since version 1.0
  * @deprecated
  */
 const checkTag = tag => {
@@ -61,8 +66,13 @@ const checkTag = tag => {
   return true;
 };
 
+/**
+ * @since version 2.1
+ */
 const checkArrayTag = tag => {
-  if (!tag) return false;
+  if (!tag || tag.length <= 0) {
+    return false;
+  }
 
   for (let e of tag) {
     if (!e.trim().length) {
@@ -72,6 +82,9 @@ const checkArrayTag = tag => {
   return true;
 };
 
+/**
+ * @since version 2.1
+ */
 const postValidationV2 = ({ title = '', tags, content = '' }) => {
   content = content.trim();
   if (!content) return [false, 'content가 올바르지 않습니다.'];
@@ -87,6 +100,10 @@ const postValidationV2 = ({ title = '', tags, content = '' }) => {
   return [true];
 };
 
+/**
+ * @since version 1.0
+ * @deprecated
+ */
 const postValidation = ({ title, tag, content = '', category }) => {
   content = content.trim();
   if (!content) return false;
@@ -145,4 +162,5 @@ module.exports = {
   subPostValidation,
   solvingValidation,
   postValidationV2,
+  checkArrayTag,
 };

@@ -35,7 +35,7 @@ router
   .put(needsAuth)
   .delete(needsAuth);
 //'/new'
-router.get(['/:id/new', '/:id/edit', '/:id/:subId/edit'], needsAuth);
+router.get(['/new', '/:id/new', '/:id/edit', '/:id/:subId/edit'], needsAuth);
 
 /* post route */
 router

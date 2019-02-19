@@ -1,6 +1,5 @@
 const subPostDB = require('../../db/repository/subPost');
 const db = require('../../db');
-const paging = require('../../lib/paging');
 const paramCheck = require('../../lib/validation');
 
 async function tagFindOrCreateByName(tags) {
@@ -54,8 +53,9 @@ const create = async (req, res, next) => {
 
   let validation = paramCheck.postValidationV2(body);
   if (!validation[0]) {
-    return res.status(400).send(validation[1]);
+    return res.status(400).json(validation[1]);
   }
+
   let transaction;
   try {
     transaction = await db.sequelize.transaction();
@@ -174,7 +174,7 @@ const showSubPost = async (req, res, next) => {
 
   // subId=1 : Main Post
   if (subId === '1') {
-    return show(req, res, next);
+    return read(req, res, next);
   }
 
   let post, subPost;
@@ -246,7 +246,7 @@ const update = async (req, res, next) => {
   const { title, tags, content } = req.body;
   const validation = paramCheck.postValidationV2(req.body);
   if (!validation[0]) {
-    return res.status(400).send(validation[1]);
+    return res.status(400).json(validation[1]);
   }
 
   let postFindResult, transaction;
