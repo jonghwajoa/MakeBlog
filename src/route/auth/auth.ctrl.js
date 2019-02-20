@@ -1,5 +1,3 @@
-const userDB = require('../../db/repository/users');
-const loginDB = require('../../db/repository/userLogin');
 const db = require('../../db');
 const validation = require('../../lib/validation');
 const bcrypt = require('bcrypt');
@@ -24,7 +22,7 @@ const login = async (req, res, next) => {
 
   let checkId;
   try {
-    checkId = await loginDB.findById(id);
+    checkId = await db.UserLogin.findOneById(id);
   } catch (e) {
     next(e);
   }
@@ -62,13 +60,7 @@ const register = async (req, res, next) => {
     return res.status(400).json('입력이 올바르지 않습니다.');
   }
 
-  if (
-    !(
-      validation.isLength(id, 5, 20) &&
-      validation.isLength(pw, 5, 20) &&
-      validation.isLength(nickname, 2, 20)
-    )
-  ) {
+  if (!(validation.isLength(id, 5, 20) && validation.isLength(pw, 5, 20) && validation.isLength(nickname, 2, 20))) {
     return res.status(400).json('입력이 올바르지 않습니다.');
   }
 
@@ -76,7 +68,7 @@ const register = async (req, res, next) => {
   pw = pw.toLowerCase();
   let isExistId;
   try {
-    isExistId = await loginDB.findById(id);
+    isExistId = await db.UserLogin.findOneById(id);
   } catch (e) {
     return next(e);
   }
@@ -97,9 +89,9 @@ const register = async (req, res, next) => {
   let result, transaction;
   try {
     transaction = await db.sequelize.transaction();
-    result = await loginDB.create(id, hash, transaction);
+    result = await db.UserLogin.createTransaction(id, hash, transaction);
     const userNo = result.dataValues.no;
-    await userDB.create(userNo, id, nickname, transaction);
+    await db.Users.createTransaction(userNo, id, nickname, transaction);
     await transaction.commit();
   } catch (e) {
     await transaction.rollback();

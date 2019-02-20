@@ -1,6 +1,5 @@
-const CategoryDB = require('../../db/repository/categoryCote');
-const SolvingDB = require('../../db/repository/solving');
 const { solvingValidation } = require('../../lib/validation');
+const db = require('../../db');
 
 const list = async (req, res, next) => {
   req.params = { id: 1 };
@@ -10,7 +9,7 @@ const list = async (req, res, next) => {
 const createView = async (req, res) => {
   let result;
   try {
-    result = await CategoryDB.findAllList();
+    result = await db.CategoryCote.findAllList();
   } catch (e) {
     return next(e);
   }
@@ -26,8 +25,8 @@ const create = async (req, res, next) => {
   }
 
   try {
-    categoryResult = await CategoryDB.findById(category);
-    let result = await SolvingDB.findById(problemNum);
+    categoryResult = await db.CategoryCote.findById(category);
+    let result = await db.Solving.findDetialById(problemNum);
     if (result) {
       return res.status(400).json({ message: '이미 작성한 문제입니다.' });
     }
@@ -42,7 +41,7 @@ const create = async (req, res, next) => {
   let createResult;
   try {
     //req.session.userid
-    createResult = await SolvingDB.create(req.body, 1);
+    createResult = await db.Solving.createByFullColumns(req.body, 1);
   } catch (e) {
     next(e);
   }
@@ -54,7 +53,7 @@ const show = async (req, res, next) => {
   let postResult;
 
   try {
-    postResult = await SolvingDB.findById(id);
+    postResult = await db.Solving.findDetialById(id);
     if (!postResult) {
       return next();
     }
@@ -74,7 +73,7 @@ const show = async (req, res, next) => {
 
   let categoryResult;
   try {
-    categoryResult = await CategoryDB.findAllList();
+    categoryResult = await db.CategoryCote.findAllList();
   } catch (e) {
     return next(e);
   }
@@ -94,8 +93,8 @@ const updateView = async (req, res, next) => {
   let { id } = req.params;
   let postResult, categoryResult;
   try {
-    categoryResult = await CategoryDB.findAllList();
-    postResult = await SolvingDB.findById(id);
+    categoryResult = await db.CategoryCote.findAllList();
+    postResult = await db.Solving.findDetialById(id);
   } catch (e) {
     next(e);
   }
@@ -118,9 +117,9 @@ const update = async (req, res, next) => {
 
   const updateVal = { title, content, category_cote_no: category, url };
   try {
-    let solvingResult = await SolvingDB.findById(problemNum);
+    let solvingResult = await db.Solving.findDetialById(problemNum);
     if (!solvingResult) next(e);
-    let categoryResult = await CategoryDB.findById(category);
+    let categoryResult = await db.CategoryCote.findById(category);
 
     if (!categoryResult) {
       return res.status(400).json({ message: '없는 카테고리 입니다..' });
@@ -136,7 +135,7 @@ const update = async (req, res, next) => {
 const remove = async (req, res, next) => {
   const { id } = req.params;
   try {
-    let solvingResult = await SolvingDB.findById(id);
+    let solvingResult = await db.Solving.findDetialById(id);
     if (!solvingResult) next();
 
     await solvingResult.destroy();
@@ -155,12 +154,12 @@ const addCategory = async (req, res, next) => {
   }
 
   try {
-    categoryResult = await CategoryDB.findByName(requestCategoryName);
+    categoryResult = await db.CategoryCote.findByName(requestCategoryName);
     if (categoryResult !== null) {
       return res.status(400).json('이미 존재하는 카테고리 입니다.');
     }
-    let nextOrder = await CategoryDB.findNextOrder();
-    categoryResult = await CategoryDB.create(requestCategoryName, nextOrder + 1);
+    let nextOrder = await db.CategoryCote.max('order');
+    categoryResult = await db.CategoryCote.createByTitle(requestCategoryName, nextOrder + 1);
   } catch (e) {
     e.message = '카테고리 추가 실패';
     return next(e);
@@ -178,12 +177,12 @@ const removeCategory = async (req, res, next) => {
   let categoryResult, solvingResult;
 
   try {
-    categoryResult = await CategoryDB.findById(id);
+    categoryResult = await db.CategoryCote.findById(id);
     if (!categoryResult) {
       return res.status(404).json({ message: '없는 카테고리 입니다.' });
     }
 
-    solvingResult = await SolvingDB.findByCategoryId(id);
+    solvingResult = await db.Solving.findByCategoryId(id);
     if (solvingResult) {
       return res.status(409).json({ message: '사용중인 카테고리는 삭제할 수 없습니다.' });
     }

@@ -2,9 +2,9 @@
 
 https://www.weknowjs.xyz/
 
-## API
+## Route
 
-| API                    | METHOD | 기능                  | 기타       |
+| Route                  | METHOD | 기능                  | 기타       |
 | ---------------------- | ------ | --------------------- | ---------- |
 | /auth/login            | GET    | 로그인 form           |            |
 | /auth/login            | POST   | 로그인                |            |
@@ -47,7 +47,7 @@ https://www.weknowjs.xyz/
 
 <br>
 
-## v1
+## v 1 
 
 개발기간 : 180814 ~ 180901
 
@@ -72,7 +72,7 @@ https://www.weknowjs.xyz/
 
 <br>
 
-## V2
+## V 2
 
 개발기간 : 19.01.17 ~ 19.02.17
 
@@ -94,8 +94,12 @@ https://www.weknowjs.xyz/
 - page 파라미터 오류 500 error 에러 점검 -> parseint 에서 number 로 대체
 - 업데이트 hidden p tag -> input hidden 으로 수정
 
-## V 2.1
+<br> 
 
-- Post 페이지 카테고리기능 삭제
+## V 2.1 ( 배포 버전 )
+
+개발 기간 : 19.02.18 ~
+
+- Post 페이지 카테고리 기능 삭제
 - TAG 기능 추가
 - Repository 폴더 삭제 진행

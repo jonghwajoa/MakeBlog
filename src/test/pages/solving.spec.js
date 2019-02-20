@@ -357,7 +357,7 @@ describe('/solving은 *********************', () => {
           .send({
             requestCategoryName: 'name1',
           })
-          .expect(200)
+          .expect(201)
           .expect('Content-Type', /json/)
           .end((err, res) => {
             res.body.should.property('no');

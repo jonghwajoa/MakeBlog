@@ -37,5 +37,17 @@ module.exports = (sequelize, DataTypes) => {
     Users.hasMany(models.Solving, { foreignKey: 'writer' });
     Users.belongsTo(models.UserGrade, { target: 'grade' });
   };
+
+  Users.createTransaction = (no, id, nickname, transaction) => {
+    return Users.create(
+      {
+        no,
+        nickname,
+        id,
+      },
+      { transaction },
+    );
+  };
+
   return Users;
 };

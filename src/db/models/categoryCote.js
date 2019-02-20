@@ -28,5 +28,37 @@ module.exports = (sequelize, DataTypes) => {
   CategoryCote.associate = function(models) {
     CategoryCote.hasMany(models.Solving);
   };
+
+  CategoryCote.findAllList = () => {
+    return CategoryCote.findAll({
+      order: [['order']],
+      include: [
+        {
+          model: sequelize.models.Solving,
+          attributes: ['problemNum'],
+        },
+      ],
+    });
+  };
+
+  CategoryCote.findByName = name => {
+    return CategoryCote.findOne({
+      where: {
+        title: name,
+      },
+    });
+  };
+
+  CategoryCote.createByTitle = (title, order) => {
+    return CategoryCote.create({
+      title,
+      order,
+    });
+  };
+
+  CategoryCote.findNextOrder = () => {
+    return CategoryCote.max('order');
+  };
+
   return CategoryCote;
 };

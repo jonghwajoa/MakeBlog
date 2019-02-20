@@ -1,4 +1,3 @@
-const subPostDB = require('../../db/repository/subPost');
 const db = require('../../db');
 const paramCheck = require('../../lib/validation');
 
@@ -85,9 +84,9 @@ const createSubPost = async (req, res, next) => {
     if (isExist == null) {
       return next();
     }
-    let nextNo = await subPostDB.findNextNo(id);
+    let nextNo = await db.SubPosts.findNextNo(id);
     nextNo = isNaN(nextNo) ? 2 : nextNo + 1;
-    let result = await subPostDB.create(id, req.body, nextNo);
+    let result = await db.SubPosts.createSubPost(id, req.body, nextNo);
     return res.status(201).json(result);
   } catch (e) {
     return next(e);
@@ -110,7 +109,7 @@ const list = async (req, res, next) => {
   try {
     [hotPost, hotSubPost, monthCount, totalCount, allTag] = await Promise.all([
       db.Posts.findHotPost(),
-      subPostDB.findHotPost(),
+      db.SubPosts.findHotPost(),
       db.VisitCount.findMonthCount(req.year, req.month),
       db.VisitCount.sum('count'),
       db.AssociationTag.findAllOrderLength(),
@@ -181,11 +180,11 @@ const showSubPost = async (req, res, next) => {
     if (post == null) {
       return next();
     }
-    post = await subPostDB.findDetailByPostNo(id, subId);
+    post = await db.SubPosts.findDetailByCompositeId(id, subId);
     if (!post) return next();
     post.updateAttributes({ count: post.dataValues.count + 1 });
 
-    subPost = await subPostDB.findAllSubPost(id, subId);
+    subPost = await db.SubPosts.findAllForSide(id, subId);
   } catch (e) {
     return next(e);
   }
@@ -206,7 +205,7 @@ const getContent = async (req, res, next) => {
     if (subId === '1') {
       post = await db.Posts.findDetailById(id);
     } else {
-      post = await subPostDB.findDetailByPostNo(id, subId);
+      post = await db.SubPosts.findDetailByCompositeId(id, subId);
     }
 
     if (!post) {
@@ -275,7 +274,7 @@ const updateSubView = async (req, res, next) => {
   const { id, subId } = req.params;
   let post;
   try {
-    post = await subPostDB.findDetailByPostNo(id, subId);
+    post = await db.SubPosts.findDetailByCompositeId(id, subId);
     if (!post) return next();
   } catch (e) {
     return next(e);
@@ -296,7 +295,7 @@ const updateSubPost = async (req, res, next) => {
   let updateVal = { title, content };
 
   try {
-    result = await subPostDB.findByNo(id, subId);
+    result = await db.SubPosts.findOneById(id, subId);
     if (!result) return next();
     result = await result.update(updateVal);
   } catch (e) {
@@ -313,7 +312,7 @@ const remove = async (req, res, next) => {
     result = await db.Posts.findById(id);
     if (!result) return next();
     transaction = await db.sequelize.transaction();
-    await subPostDB.deleteByForeignkey(id, transaction);
+    await db.SubPosts.deleteByPostId(id, transaction);
     await db.AssociationTag.deleteByPostNoTransaction(id, transaction);
     await result.destroy();
     await transaction.commit();
@@ -329,7 +328,7 @@ const removeSubPost = async (req, res, next) => {
   let { id, subId } = req.params;
   let result;
   try {
-    result = await subPostDB.findByNo(id, subId);
+    result = await db.SubPosts.findOneById(id, subId);
     if (!result) return next();
     await result.destroy();
   } catch (e) {

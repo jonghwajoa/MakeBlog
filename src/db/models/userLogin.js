@@ -30,5 +30,24 @@ module.exports = (sequelize, DataTypes) => {
   );
 
   UserLogin.associate = function(models) {};
+
+  UserLogin.findOneById = id => {
+    return UserLogin.findOne({
+      where: {
+        id,
+      },
+    });
+  };
+
+  UserLogin.createTransaction = (id, pw, transaction) => {
+    return UserLogin.create(
+      {
+        id,
+        hash: pw,
+      },
+      { transaction },
+    );
+  };
+
   return UserLogin;
 };
