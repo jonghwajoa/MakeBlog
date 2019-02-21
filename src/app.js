@@ -8,6 +8,8 @@ const helmet = require('helmet');
 const hpp = require('hpp');
 const visitMiddle = require('./lib/middleware/visit');
 const cors = require('./lib/middleware/cors');
+const favicon = require('serve-favicon');
+const path = require('path');
 
 require('dotenv').config();
 if (process.env.NODE_ENV === 'production') {
@@ -25,6 +27,7 @@ app.disable('x-powered-by');
 app.use(helmet());
 app.use(express.static(`${__dirname}/public`));
 app.use(express.static(`${__dirname}/uploads`));
+app.use(favicon(path.join(__dirname, 'public/img', 'favicon.ico')));
 app.set('trust proxy', 1);
 app.use(
   session({

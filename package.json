@@ -37,6 +37,7 @@
     "prettier": "^1.14.2",
     "sequelize": "^4.38.0",
     "sequelize-cli": "^4.1.1",
+    "serve-favicon": "^2.5.0",
     "tui-editor": "^1.2.6",
     "ua-parser-js": "^0.7.19",
     "uuid": "^3.3.2",
