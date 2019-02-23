@@ -8,105 +8,12 @@ class Post {
     this.listData;
   }
 
-  async listInit() {
-    this.postInsertArea = document.getElementById('post-area');
-    let tagQuery = this.getQueryStringValue('tag').trim();
-
-    if (tagQuery) {
-      this.tagFilter(tagQuery);
-    } else {
-      this.tagFilter('notFilter');
-    }
-
-    let initPath = tagQuery ? `/posts?tag=${tagQuery}` : '/posts';
-    window.history.replaceState(this.listData, '', initPath);
-  }
-
-  /* 리스트 페이지 전체 게시글 보기 버튼 이벤트 */
-  listPageEventInit() {
-    const showAllPost = document.getElementById('showAllPost');
-    showAllPost.addEventListener('click', () => {
-      this.tagFilter('notFilter');
-      window.history.pushState(this.listData, '', '/posts');
-    });
-  }
-
-  /**
-   * @returns boolean
-   */
-  async listPageGetDate() {
-    let reqeustListData;
-    try {
-      reqeustListData = await ajaxUtil.sendGetAjax(`/posts`);
-      reqeustListData = JSON.parse(reqeustListData);
-      this.listData = reqeustListData;
-      return true;
-    } catch (e) {
-      alert(`Server Error(${e.message})`);
-      return false;
-    }
-  }
-
-  /**
-   * @param {Array} requestTagDataArray
-   */
-  listPageDrawPost(requestTagDataArray) {
-    let postInsert = this.postInsertArea;
-    let postHtml = '';
-
-    for (let post of requestTagDataArray) {
-      postHtml += '<div class=post><div class=postTag><ul>';
-      for (let tag of post.tag) {
-        postHtml += `<li><a class='tagEvent'>&#8917;${tag.Tag.name}</a></li>`;
-      }
-      postHtml += '</ul></div>';
-      postHtml += `<h3><a href=/posts/${post.no}>${post.title}</a></h3>`;
-      postHtml += `<div class=postInfo><span>${post.created_at} | view ${post.count}</span></div></div>`;
-    }
-    postInsert.innerHTML += postHtml;
-
-    const tagEvent = Array.from(document.getElementsByClassName('tagEvent'));
-    for (let e of tagEvent) {
-      e.addEventListener('click', () => {
-        this.tagFilter(e.innerHTML.substr(1));
-      });
-    }
-    window.scrollTo(0, 0);
-  }
-
-  listPagePostAllRemove() {
-    let postInsert = this.postInsertArea;
-    while (postInsert.firstChild) {
-      postInsert.removeChild(postInsert.firstChild);
-    }
-  }
-
-  /**
-   * @param {String} reqeustTagName
-   * @returns Array
-   */
-  listPagetagFilter(reqeustTagName) {
-    return this.listData.filter(e => {
-      for (let tag of e.tag) {
-        if (tag.Tag.name == reqeustTagName) return true;
-      }
-    });
-
-    // window.history.pushState(requestTagData, '', `/posts?tag=${reqeustTag}`);
-    // this.drawListView(requestTagData);
-  }
-
-  backLoadList(prevState) {
-    console.log(prevState);
-    this.postInsertArea.innerHTML = prevState;
-  }
-
   readInit() {
     this.content = document.getElementById('postContent');
     this.viewCount = document.getElementById('viewCount');
     this.date = document.getElementById('createDate');
     this.postTitle = document.getElementById('title');
-    this.readEditor();
+    this.editor = new Editor().readEditor('content-text');
     let trimContent = this.content.value.trim();
     this.editor.setMarkdown(trimContent);
     this.subPostViewHandle();
@@ -115,7 +22,7 @@ class Post {
   writeInit() {
     this.postTitle = document.getElementById('title');
     this.tag = document.getElementById('tag');
-    this.writeEditor();
+    this.editor = new Editor().writeEditor('content-text');
     this.tagEvent();
     this.writeSubmit();
   }
@@ -417,64 +324,6 @@ class Post {
     this.viewCount.innerHTML = `${count}`;
     this.postTitle.innerHTML = title;
     this.editor.setValue(content.trim());
-  }
-
-  readEditor() {
-    this.editor = new tui.Editor({
-      el: document.getElementById('content-text'),
-      exts: [
-        'table',
-        'uml',
-        {
-          name: 'chart',
-          minWidth: 100,
-          minHeight: 100,
-          maxHeight: 300,
-        },
-      ],
-    });
-  }
-
-  writeEditor() {
-    this.editor = new tui.Editor({
-      el: document.getElementById('content-content'),
-      initialEditType: 'markdown',
-      previewStyle: 'vertical',
-      height: '100vh',
-      exts: [
-        'scrollSync',
-        'table',
-        'uml',
-        {
-          name: 'chart',
-          minWidth: 100,
-          maxWidth: 600,
-          minHeight: 100,
-          maxHeight: 300,
-        },
-        'colorSyntax',
-      ],
-
-      hooks: {
-        async addImageBlobHook(photo, cb) {
-          try {
-            let result = await ajaxUtil.saveFileAjax(photo);
-            return cb(`https://weknowjs.xyz/images/${result}`);
-          } catch (e) {
-            alert(e.statusText);
-          }
-        },
-      },
-    });
-  }
-
-  getQueryStringValue(key) {
-    return decodeURIComponent(
-      window.location.search.replace(
-        new RegExp('^(?:.*[&\\?]' + encodeURIComponent(key).replace(/[\.\+\*]/g, '\\$&') + '(?:\\=([^&]*))?)?.*$', 'i'),
-        '$1',
-      ),
-    );
   }
 }
 

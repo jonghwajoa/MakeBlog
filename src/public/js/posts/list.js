@@ -7,7 +7,22 @@ class Post {
   async listInit() {
     let tagQuery = this.getQueryStringValue('tag').trim();
 
-    if (!(await this.getAllPost())) return;
+    if (sessionStorage.getItem('list')) {
+      let curTime = new Date().getTime();
+      let saveTime = sessionStorage.getItem('getTimeListData');
+      if ((curTime - saveTime) / 1000 / 60 < 10) {
+        this.listData = JSON.parse(sessionStorage.getItem('list'));
+      } else {
+        if (!(await this.getAllPost())) return;
+        sessionStorage.setItem('list', JSON.stringify(this.listData));
+        sessionStorage.setItem('getTimeListData', new Date().getTime());
+      }
+    } else {
+      if (!(await this.getAllPost())) return;
+      sessionStorage.setItem('list', JSON.stringify(this.listData));
+      sessionStorage.setItem('getTimeListData', new Date().getTime());
+    }
+
     this.showAllBtnEvent();
 
     let drawData = this.listData;

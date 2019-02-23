@@ -19,6 +19,11 @@ class Solving {
       }
     }
   }
+  listEditorInit() {
+    const content = document.getElementById('content-input').value;
+    this.editor = new Editor().readEditor('content-content');
+    this.editor.setMarkdown(content.trim());
+  }
 
   solvingWrite() {
     this.postTitle = document.getElementById('title');
@@ -27,66 +32,13 @@ class Solving {
     this.categorySelect = document.getElementById('category-select');
     this.deleteSelect = document.getElementById('category-delete');
     this.categoryAdd = document.getElementById('category-add');
-    this.writeEditorInit();
+    this.editor = new Editor().writeEditor('content-content');
   }
 
   solvingUpdate() {
     this.solvingWrite();
     const hiddenContent = document.getElementById('content-hidden').value;
     this.editor.setMarkdown(hiddenContent.trim());
-  }
-
-  listEditorInit() {
-    const content = document.getElementById('content-input').value;
-    this.editor = new tui.Editor({
-      el: document.getElementById('content-content'),
-      height: '100vh',
-      exts: [
-        'table',
-        'uml',
-        {
-          name: 'chart',
-          minWidth: 100,
-          minHeight: 100,
-          maxHeight: 300,
-        },
-      ],
-    });
-
-    this.editor.setMarkdown(content.trim());
-  }
-
-  writeEditorInit() {
-    this.editor = new tui.Editor({
-      el: document.getElementById('content-input'),
-      initialEditType: 'markdown',
-      previewStyle: 'vertical',
-      height: '100vh',
-      exts: [
-        'scrollSync',
-        'table',
-        'uml',
-        {
-          name: 'chart',
-          minWidth: 100,
-          maxWidth: 600,
-          minHeight: 100,
-          maxHeight: 300,
-        },
-        'colorSyntax',
-      ],
-
-      hooks: {
-        async addImageBlobHook(photo, cb) {
-          try {
-            let result = await ajaxUtil.saveFileAjax(photo);
-            return cb(`https://www.weknowjs.xyz/images/${result}`);
-          } catch (e) {
-            alert(e.statusText);
-          }
-        },
-      },
-    });
   }
 
   async read(problemNum) {

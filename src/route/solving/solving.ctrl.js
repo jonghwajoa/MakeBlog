@@ -83,9 +83,11 @@ const show = async (req, res, next) => {
     path = 'team/solving/list';
   }
 
+  let org = postResult.content.substr(0, 100).replace(/\n/g, ' ');
   return res.render(path, {
     category: categoryResult,
     post: postResult,
+    org,
   });
 };
 

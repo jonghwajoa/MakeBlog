@@ -159,7 +159,8 @@ const read = async (req, res, next) => {
     path = 'team/posts/read';
   }
 
-  return res.render(path, { post, subPost });
+  let org = post.content.substr(0, 100).replace(/\n/g, ' ');
+  return res.render(path, { post, subPost, org });
 };
 
 const showSubPost = async (req, res, next) => {
@@ -193,8 +194,8 @@ const showSubPost = async (req, res, next) => {
   if (req.session.isLogin) {
     path = 'team/subpost/read';
   }
-
-  return res.render(path, { post, subPost, home: id });
+  let org = post.content.substr(0, 100).replace(/\n/g, ' ');
+  return res.render(path, { post, subPost, home: id, org });
 };
 
 const getContent = async (req, res, next) => {

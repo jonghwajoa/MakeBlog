@@ -9,6 +9,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta http-equiv="Cache-Control" content="no-cache" />
     <meta http-equiv="Pragma" content="no-cache" />
+    <meta property="og:url" content="https://www.jonghwa.xyz/solving" />
+    <meta property="og:title" content='<%= post.title %>' />
+    <meta property="og:description" content='<%=org%>'/>
+    <meta property="og:site_name" content='Jonghwa BLOG' />
 
     <% include ../../../partials/essentialCss.ejs %>
   <link rel="stylesheet" href="/css/solving/list.css" />
@@ -81,6 +85,7 @@
     <script src="/js/disqus/disqus.js"></script>
     <script>let disqus = new Disqus("https://weknowjs-xyz/solving/<%=post.problemNum%>",'<%=post.problemNum%>') </script>
     <script src="/js/util/ajaxUtil.js"></script>
+    <script src="/js/editor/editor.js"></script>
     <script src="/js/solving/solving.js"></script>
     <script>
       let solving = new Solving();
