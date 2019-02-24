@@ -38,7 +38,7 @@
         <!-- //tags -->
 
         <!-- editsection -->
-        <div id="content-content" name="content">
+        <div id="content-text" name="content">
           <input type="hidden" id="content-hidden" value="<%= post.content %>" />
         </div>
         <!-- //editsection -->
@@ -53,6 +53,7 @@
     <% include ../../../partials/footer.ejs %>
     <script src="/js/nav/nav.js"></script>
     <script src="/js/util/ajaxUtil.js"></script>
+    <script src="/js/editor/editor.js"></script>
     <script src="/js/posts/posts.js"></script>
     <script>
       post.updateInit();

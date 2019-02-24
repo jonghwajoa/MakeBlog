@@ -29,7 +29,7 @@ class Post {
 
   updateInit() {
     this.content = document.getElementById('content-hidden');
-    this.writeEditor();
+    this.editor = new Editor().writeEditor('content-text');
     this.editor.setMarkdown(this.content.value.trim());
     this.postTitle = document.getElementById('title');
     this.tag = document.getElementById('tag');
