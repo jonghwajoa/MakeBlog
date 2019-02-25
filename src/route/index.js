@@ -13,7 +13,7 @@ router.use('/about', require('./about'));
 router.use('/robots.txt', require('./robots'));
 
 router.use((req, res) => {
-  if (req.headers['content-type'] === 'application/json') {
+  if (req.headers.accept.indexOf('json') > -1) {
     return res.status(404).json({ message: 'Not Found' });
   }
 
@@ -28,7 +28,7 @@ router.use((err, req, res, next) => {
     db.ErrorLog.createLog(err.status, err.stack, req.ip.substr(7), req.headers['referer'], req._parsedUrl.path);
   }
 
-  if (req.headers['content-type'] === 'application/json') {
+  if (req.headers.accept.indexOf('json') > -1) {
     return res.status(err.status).json({ message: err.message });
   }
 

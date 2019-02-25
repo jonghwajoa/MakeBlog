@@ -87,6 +87,7 @@ describe('/solving은 *********************', () => {
             url: ' ',
             problemNum: '11252',
           })
+          .set('Accept', 'application/json')
           .expect(401)
           .expect('Content-Type', /json/)
           .end(done);
@@ -102,6 +103,7 @@ describe('/solving은 *********************', () => {
             url: ' ',
             problemNum: '11252',
           })
+          .set('Accept', 'application/json')
           .expect(400)
           .expect('Content-Type', /json/)
           .end(done);
@@ -117,6 +119,7 @@ describe('/solving은 *********************', () => {
             url: ' ',
             problemNum: '11252',
           })
+          .set('Accept', 'application/json')
           .expect(400)
           .expect('Content-Type', /json/)
           .end(done);
@@ -132,6 +135,7 @@ describe('/solving은 *********************', () => {
             url: ' ',
             problemNum: '11252',
           })
+          .set('Accept', 'application/json')
           .expect(400)
           .expect('Content-Type', /json/)
           .end(done);
@@ -147,6 +151,7 @@ describe('/solving은 *********************', () => {
             url: ' ',
             problemNum: null,
           })
+          .set('Accept', 'application/json')
           .expect(400)
           .expect('Content-Type', /json/)
           .end(done);
@@ -195,6 +200,7 @@ describe('/solving은 *********************', () => {
         request(app)
           .get('/solving/1')
           .send({ problemNum: '1' })
+          .set('Accept', 'application/json')
           .expect(200)
           .expect('Content-Type', /json/)
           .end(done);
@@ -213,6 +219,7 @@ describe('/solving은 *********************', () => {
         request(app)
           .get('/solving/asdlqwd532')
           .send({})
+          .set('Accept', 'application/json')
           .expect(404)
           .expect('Content-Type', /json/)
           .end(done);
@@ -273,6 +280,7 @@ describe('/solving은 *********************', () => {
             url: ' ',
             problemNum: '11252',
           })
+          .set('Accept', 'application/json')
           .expect(400)
           .expect('Content-Type', /json/)
           .end(done);
@@ -288,6 +296,7 @@ describe('/solving은 *********************', () => {
             url: ' ',
             problemNum: '11252',
           })
+          .set('Accept', 'application/json')
           .expect(400)
           .expect('Content-Type', /json/)
           .end(done);
@@ -303,6 +312,7 @@ describe('/solving은 *********************', () => {
             url: ' ',
             problemNum: '11252',
           })
+          .set('Accept', 'application/json')
           .expect(400)
           .expect('Content-Type', /json/)
           .end(done);
@@ -357,6 +367,7 @@ describe('/solving은 *********************', () => {
           .send({
             requestCategoryName: 'name1',
           })
+          .set('Accept', 'application/json')
           .expect(201)
           .expect('Content-Type', /json/)
           .end((err, res) => {

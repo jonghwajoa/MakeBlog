@@ -67,7 +67,7 @@ const show = async (req, res, next) => {
   res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate');
   res.header('Expires', '-1');
   res.header('Pragma', 'no-cache');
-  if (req.headers['content-type'] === 'application/json') {
+  if (req.headers['accept'] === 'application/json') {
     return res.json(postResult);
   }
 

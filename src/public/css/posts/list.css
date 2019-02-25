@@ -195,7 +195,7 @@ aside .aside-container > div {
 }
 
 .aside-container .allTag li:hover {
-  border: 2px solid violet;
+  border: 1px solid violet;
 }
 
 .aside-container .allTag li span {

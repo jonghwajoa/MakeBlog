@@ -15,6 +15,7 @@ const ajaxUtil = {
       };
 
       xhr.open('GET', url, true);
+      xhr.setRequestHeader('Accept', 'application/json');
       xhr.setRequestHeader('Content-type', 'application/json');
       xhr.send();
       xhr.onerror = () => reject(req.status);
@@ -37,6 +38,7 @@ const ajaxUtil = {
         }
       };
       xhr.open('POST', url, true);
+      xhr.setRequestHeader('Accept', 'application/json');
       xhr.setRequestHeader('Content-type', 'application/json');
       xhr.send(JSON.stringify(params));
       xhr.onerror = () => reject(req.status);
@@ -59,6 +61,7 @@ const ajaxUtil = {
         }
       };
       xhr.open('PUT', url, true);
+      xhr.setRequestHeader('Accept', 'application/json');
       xhr.setRequestHeader('Content-type', 'application/json');
       xhr.send(JSON.stringify(params));
       xhr.onerror = () => reject(req.status);
@@ -81,6 +84,7 @@ const ajaxUtil = {
       };
 
       xhr.open('DELETE', url, true);
+      xhr.setRequestHeader('Accept', 'application/json');
       xhr.setRequestHeader('Content-type', 'application/json');
       xhr.send();
       xhr.onerror = () => reject(req.status);
@@ -99,6 +103,7 @@ const ajaxUtil = {
           reject(xhr);
         }
       };
+      xhr.setRequestHeader('Accept', 'application/json');
       xhr.open('POST', '/posts/file', true);
       xhr.send(formData);
       xhr.onerror = () => reject(req.status);

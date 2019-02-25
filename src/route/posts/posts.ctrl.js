@@ -97,7 +97,7 @@ const list = async (req, res, next) => {
   let hotPost, hotSubPost, monthCount, totalCount;
 
   headerNoCache(res);
-  if (req.headers['content-type'] === 'application/json') {
+  if (req.headers['accept'] === 'application/json') {
     try {
       let result = await db.Posts.findAllWithPaging();
       return res.json(result);
@@ -150,7 +150,7 @@ const read = async (req, res, next) => {
     return next(e);
   }
 
-  if (req.headers['content-type'] === 'application/json') {
+  if (req.headers['accept'] === 'application/json') {
     return res.json({ post, subPost });
   }
 
@@ -166,7 +166,7 @@ const read = async (req, res, next) => {
 const showSubPost = async (req, res, next) => {
   const { id, subId } = req.params;
 
-  if (req.headers['content-type'] === 'application/json') {
+  if (req.headers['accept'] === 'application/json') {
     return getContent(req, res, next);
   }
 

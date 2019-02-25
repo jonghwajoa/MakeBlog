@@ -60,6 +60,7 @@ describe('/Posts는********************************', () => {
       request(app)
         .get('/posts')
         .set('Content-Type', 'application/json')
+        .set('Accept', 'application/json')
         .expect('Content-Type', /json/)
         .expect(200)
         .end(done);
@@ -77,6 +78,7 @@ describe('/Posts는********************************', () => {
       agent
         .get('/posts')
         .set('Content-Type', 'application/json')
+        .set('Accept', 'application/json')
         .expect(200)
         .expect('Content-Type', /json/)
         .end(done);
@@ -101,6 +103,7 @@ describe('/Posts는********************************', () => {
         request(app)
           .get('/posts/new')
           .expect(401)
+          .set('Accept', 'application/json')
           .expect('Content-Type', /json/)
           .send({})
           .end(done);
@@ -128,6 +131,7 @@ describe('/Posts는********************************', () => {
         request(app)
           .post('/posts')
           .send({ title, tags, content })
+          .set('Accept', 'application/json')
           .expect(401)
           .expect('Content-Type', /json/)
           .end((err, res) => {
@@ -146,6 +150,7 @@ describe('/Posts는********************************', () => {
               title: '5번',
               content: '1번글 content입니다.',
             })
+            .set('Accept', 'application/json')
             .expect(400)
             .expect('Content-Type', /json/)
             .end((err, res) => {
@@ -174,6 +179,7 @@ describe('/Posts는********************************', () => {
               tags,
               content,
             })
+            .set('Accept', 'application/json')
             .expect(400)
             .expect('Content-Type', /json/)
             .end(done);
@@ -199,6 +205,7 @@ describe('/Posts는********************************', () => {
               title,
               tags,
             })
+            .set('Accept', 'application/json')
             .expect(400)
             .expect('Content-Type', /json/)
             .end(done);
@@ -211,6 +218,7 @@ describe('/Posts는********************************', () => {
               title,
               tags,
             })
+            .set('Accept', 'application/json')
             .expect(400)
             .expect('Content-Type', /json/)
             .end((err, res) => {
@@ -230,6 +238,7 @@ describe('/Posts는********************************', () => {
               content,
               tags,
             })
+            .set('Accept', 'application/json')
             .expect(201)
             .expect('Content-Type', /json/)
             .end(done);
@@ -303,6 +312,7 @@ describe('/Posts는********************************', () => {
             request(app)
               .get('/posts/6688')
               .send({})
+              .set('Accept', 'application/json')
               .expect(404)
               .expect('Content-Type', /json/)
               .end(done);
@@ -312,6 +322,7 @@ describe('/Posts는********************************', () => {
             request(app)
               .get('/posts/-1')
               .set('Content-Type', 'application/json')
+              .set('Accept', 'application/json')
               .expect(400)
               .expect('Content-Type', /json/)
               .end(done);
@@ -321,6 +332,7 @@ describe('/Posts는********************************', () => {
             request(app)
               .get('/posts/99999')
               .set('Content-Type', 'application/json')
+              .set('Accept', 'application/json')
               .expect(404)
               .end(done);
           });
@@ -329,6 +341,7 @@ describe('/Posts는********************************', () => {
             request(app)
               .get('/posts/6688')
               .set('Content-Type', 'application/json')
+              .set('Accept', 'application/json')
               .expect(404)
               .expect('Content-Type', /json/)
               .end(done);
@@ -338,6 +351,7 @@ describe('/Posts는********************************', () => {
             request(app)
               .get('/posts/-1')
               .set('Content-Type', 'application/json')
+              .set('Accept', 'application/json')
               .expect(400)
               .expect('Content-Type', /json/)
               .end(done);
@@ -362,6 +376,7 @@ describe('/Posts는********************************', () => {
             request(app)
               .get('/posts/1')
               .send({})
+              .set('Accept', 'application/json')
               .expect(200)
               .expect('Content-Type', /json/)
               .end((err, res) => {
@@ -374,6 +389,7 @@ describe('/Posts는********************************', () => {
             request(app)
               .get('/posts/1')
               .send({})
+              .set('Accept', 'application/json')
               .expect(200)
               .expect('Content-Type', /json/)
               .end(done);
@@ -469,6 +485,7 @@ describe('/Posts는********************************', () => {
               title,
               tags,
             })
+            .set('Accept', 'application/json')
             .expect(400)
             .expect('Content-Type', /json/)
             .end(done);
@@ -494,6 +511,7 @@ describe('/Posts는********************************', () => {
               tags,
               content,
             })
+            .set('Accept', 'application/json')
             .expect(400)
             .expect('Content-Type', /json/)
             .end(done);
@@ -519,6 +537,7 @@ describe('/Posts는********************************', () => {
               title,
               content,
             })
+            .set('Accept', 'application/json')
             .expect(400)
             .expect('Content-Type', /json/)
             .end(done);
@@ -575,6 +594,7 @@ describe('/Posts는********************************', () => {
         request(app)
           .delete('/posts/5')
           .send({})
+          .set('Accept', 'application/json')
           .expect(401)
           .expect('Content-Type', /json/)
           .end(done);
@@ -603,6 +623,7 @@ describe('/Posts는********************************', () => {
           agent
             .delete('/posts/999999')
             .set('Content-Type', 'application/json')
+            .set('Accept', 'application/json')
             .expect(404)
             .expect('Content-Type', /json/)
             .end(done);

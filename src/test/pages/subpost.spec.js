@@ -50,6 +50,7 @@ describe('subPost는******************************', () => {
         it('JSON으로 요청하면 401과 JSON을 응답한다.', done => {
           request(app)
             .get('/posts/1/new')
+            .set('Accept', 'application/json')
             .expect(401)
             .expect('Content-Type', /json/)
             .send({})
@@ -109,6 +110,7 @@ describe('subPost는******************************', () => {
       it('401과 json을 반환한다.', done => {
         request(app)
           .post('/posts/1/')
+          .set('Accept', 'application/json')
           .send(writePost)
           .expect(401)
           .expect('Content-Type', /json/)
@@ -128,6 +130,7 @@ describe('subPost는******************************', () => {
             .send({
               content: 'sub content입니다.',
             })
+            .set('Accept', 'application/json')
             .expect(400)
             .expect('Content-Type', /json/)
             .end(done);
@@ -139,6 +142,7 @@ describe('subPost는******************************', () => {
             .send({
               title: 'subpost title입니다.',
             })
+            .set('Accept', 'application/json')
             .expect(400)
             .expect('Content-Type', /json/)
             .end(done);
@@ -151,6 +155,7 @@ describe('subPost는******************************', () => {
               title: 'subpost title입니다.',
               content: 'subpost content입니다',
             })
+            .set('Accept', 'application/json')
             .expect(404)
             .expect('Content-Type', /json/)
             .end(done);
@@ -163,6 +168,7 @@ describe('subPost는******************************', () => {
               title: 'subpost title입니다.',
               content: 'subpost content입니다',
             })
+            .set('Accept', 'application/json')
             .expect(400)
             .expect('Content-Type', /json/)
             .end(done);
@@ -178,6 +184,7 @@ describe('subPost는******************************', () => {
               title: 'subpost title입니다.',
               content: 'subpost content입니다',
             })
+            .set('Accept', 'application/json')
             .expect(201)
             .expect('Content-Type', /json/)
             .end((err, res) => {
@@ -291,6 +298,7 @@ describe('subPost는******************************', () => {
           request(app)
             .get('/posts/10000/1')
             .send({})
+            .set('Accept', 'application/json')
             .expect(404)
             .expect('Content-Type', /json/)
             .end(done);
@@ -300,6 +308,7 @@ describe('subPost는******************************', () => {
           request(app)
             .get('/posts/1/10000')
             .send({})
+            .set('Accept', 'application/json')
             .expect('Content-Type', /json/)
             .expect(404)
             .end(done);
@@ -309,6 +318,7 @@ describe('subPost는******************************', () => {
           request(app)
             .get('/posts/a/1')
             .send({})
+            .set('Accept', 'application/json')
             .expect('Content-Type', /json/)
             .expect(400)
             .end(done);
@@ -318,6 +328,7 @@ describe('subPost는******************************', () => {
           request(app)
             .get('/posts/1/a')
             .send({})
+            .set('Accept', 'application/json')
             .expect('Content-Type', /json/)
             .expect(400)
             .end(done);
@@ -329,6 +340,7 @@ describe('subPost는******************************', () => {
           request(app)
             .get(`/posts/1/${deleteNo}`)
             .send({})
+            .set('Accept', 'application/json')
             .expect('Content-Type', /json/)
             .expect(200)
             .end(done);
