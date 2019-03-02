@@ -5,7 +5,6 @@ src/uploads/
 src/config
 .env
 src/bin/www.js
-src/public/lib
-src/public/dist
+
 
 object.js

@@ -1,37 +1,40 @@
 # Make Tech Blog
 
-https://www.weknowjs.xyz/
+* https://www.jonghwa.xyz
+* https://www.weknowjs.xyz
+
+***
 
 ## Route
 
-| Route                  | METHOD | 기능                  | 기타       |
-| ---------------------- | ------ | --------------------- | ---------- |
-| /auth/login            | GET    | 로그인 form           | V 1.0      |
-| /auth/login            | POST   | 로그인                | V 1.0      |
-| /auth/register         | GET    | 회원가입 form         | V 1.0      |
-| /auth/register         | POST   | 회원가입              | V 1.0      |
-| /posts?tag             | GET    | 포스트 리스트 출력    | V 1.0      |
-| /posts/new             | GET    | 포스트 생성 form      | V 1.0      |
-| /posts                 | POST   | 포스트 생성           | V 1.0      |
-| /posts/:id             | GET    | 포스트 보기           | V 1.0      |
-| /posts/:id             | PUT    | 포스트 수정           | V 1.0      |
-| /posts/:id             | DELETE | 포스트 삭제           | V 1.0      |
-| /posts/:id/edit        | GET    | 포스트 수정 form      | V 1.0      |
-| /posts/:id/            | POST   | 서브 포스트 생성      | V 1.0      |
-| /posts/:id/:subId      | GET    | 서브 포스트 보기      | V 1.0      |
-| /posts/:id/:subId      | PUT    | 서브 포스트 수정      | V 1.0      |
-| /posts/:id/:subId      | DELETE | 서브 포스트 삭제      | V 1.0      |
-| /posts/:id/:subId/edit | GET    | 서브 포스트 수정 form | V 1.0      |
-| /posts/file            | POST   | 사진 저장             | V 1.0      |
-| /posts/tag             | POST   | 포스트 TAG 추가       | V 2.1      |
-| /posts/category        | POST   | 포스트 카테고리 추가  | deprecated |
-| /posts/category/:id    | DELETE | 포스트 카테고리 삭제  | deprecated |
-| /solving               | GET    | solving home          | V 2.0      |
-| /solving               | POST   | solving 생성          | V 2.0      |
-| /solving/new           | GET    | 문제 생성 form        | V 2.0      |
-| /solving/:id           | GET    | solving 보기          | V 2.0      |
-| /solving/:id/edit      | GET    | solving 수정 form     | V 2.0      |
-| /solving               | put    | solving 수정          | V 2.0      |
+| Route                  | METHOD | 기능              | 기타         |
+| ---------------------- | ------ | --------------- | ---------- |
+| /auth/login            | GET    | 로그인 form        | V 1.0      |
+| /auth/login            | POST   | 로그인             | V 1.0      |
+| /auth/register         | GET    | 회원가입 form       | V 1.0      |
+| /auth/register         | POST   | 회원가입            | V 1.0      |
+| /posts?tag             | GET    | 포스트 리스트 출력      | V 1.0      |
+| /posts/new             | GET    | 포스트 생성 form     | V 1.0      |
+| /posts                 | POST   | 포스트 생성          | V 1.0      |
+| /posts/:id             | GET    | 포스트 보기          | V 1.0      |
+| /posts/:id             | PUT    | 포스트 수정          | V 1.0      |
+| /posts/:id             | DELETE | 포스트 삭제          | V 1.0      |
+| /posts/:id/edit        | GET    | 포스트 수정 form     | V 1.0      |
+| /posts/:id/            | POST   | 서브 포스트 생성       | V 1.0      |
+| /posts/:id/:subId      | GET    | 서브 포스트 보기       | V 1.0      |
+| /posts/:id/:subId      | PUT    | 서브 포스트 수정       | V 1.0      |
+| /posts/:id/:subId      | DELETE | 서브 포스트 삭제       | V 1.0      |
+| /posts/:id/:subId/edit | GET    | 서브 포스트 수정 form  | V 1.0      |
+| /posts/file            | POST   | 사진 저장           | V 1.0      |
+| /posts/tag             | POST   | 포스트 TAG 추가      | V 2.1      |
+| /posts/category        | POST   | 포스트 카테고리 추가     | deprecated |
+| /posts/category/:id    | DELETE | 포스트 카테고리 삭제     | deprecated |
+| /solving               | GET    | solving home    | V 2.0      |
+| /solving               | POST   | solving 생성      | V 2.0      |
+| /solving/new           | GET    | 문제 생성 form      | V 2.0      |
+| /solving/:id           | GET    | solving 보기      | V 2.0      |
+| /solving/:id/edit      | GET    | solving 수정 form | V 2.0      |
+| /solving               | put    | solving 수정      | V 2.0      |
 | /solving/category      | POST   | solving 카테고리 추가 | V 2.0      |
 | /solving/category/:id  | DELETE | solving 카테고리 삭제 | V 2.0      |
 
