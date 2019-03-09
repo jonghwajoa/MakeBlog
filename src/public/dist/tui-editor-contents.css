@@ -37,9 +37,8 @@
   font-size: 1rem;
   line-height: 1.7rem;
   margin: 10px 0;
-  color: black;
   font-family: 'Jeju Gothic';
-  font-weight: 600;
+  font-weight: 450;
 }
 
 .tui-editor-contents > h1:first-of-type,
@@ -112,6 +111,7 @@
     'Apple SD Gothic Neo', '맑은 고딕', 'Malgun Gothic', 'Segoe UI', '돋움', dotum, sans-serif;
   border: 0;
   border-radius: 0;
+  overflow-x: auto;
 }
 
 .tui-editor-contents pre {
