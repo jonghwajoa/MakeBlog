@@ -8,7 +8,8 @@ router.get('/', (req, res, next) => {
     .status(200)
     .type('text/plain')
     .send(
-      'User-agent: *\nDisallow: /auth/\n\nUser-agent: Baiduspider\nDisallow: /\nUser-agent: MJ12bot\nDisallow: / ',
+      'User-agent: *\nDisallow: /auth/\n\nUser-agent: Baiduspider\nDisallow: /\nUser-agent: MJ12bot\nDisallow: / ' +
+        '\n\nSitemap: https://www.jonghwa.xyz/sitemap.xml',
     );
 });
 

@@ -137,6 +137,7 @@ class Solving {
       url,
       problemNum,
     };
+
     try {
       await ajaxUtil.sendPutAjax('/solving', params);
       location.href = `/solving/${problemNum}`;
