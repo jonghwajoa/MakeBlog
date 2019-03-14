@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <title>JONGHWA BLOG</title>
+    <meta charset="UTF-8" />
+
+    <!-- 웹 페이지에 쓰일 언어 지정 -->
+    <meta name="author" content="JongHwa" />
+    <meta name="description" content="JONGHWA BLOG" />
+    <meta name="generator" content="Visual Studio Code" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <% include ../../../partials/essentialCss.ejs %>
+    <link rel="stylesheet" href="/css/admin/index.css" />
+  </head>
+
+  <body>
+    <% include ../../../partials/headerTeam.ejs %>
+
+    <div class="inner-nav">
+      <div class="inner-nav-container">
+        <ul>
+          <li><a href="/admin">방문자</a></li>
+          <li><a href="/admin/error">에러로그</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <section>
+      <div class="container">
+        <div class="visit-count">
+          <ul>
+            <% result.forEach((e,i) => { %>
+            <li>day : <%= e.day %> count : <%= e.count %></li>
+            <% }) %>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <script src="/js/nav/nav.js"></script>
+  </body>
+</html>

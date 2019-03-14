@@ -108,7 +108,8 @@ body {
 }
 
 ol,
-ul {
+ul,
+li {
   list-style: none;
 }
 
@@ -154,4 +155,9 @@ input:-webkit-autofill:active {
 @font-face {
   font-family: 'Nanum Gothic';
   src: url('../../fonts/NanumGothic-Regular.ttf') format('ttf');
+}
+
+@font-face {
+  font-family: 'Jeju Gothic';
+  src: url('../../fonts/JejuGothic.ttf') format('ttf');
 }

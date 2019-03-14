@@ -17,12 +17,17 @@
   </head>
 
   <body>
-    <% include ../../partials/header.ejs %>
+
+    <% if (auth)  { %>
+      <% include ../../partials/headerTeam.ejs %>
+    <% } else { %>
+      <% include ../../partials/header.ejs %>
+    <% } %>
 
     <div id="wrap">
       <div class="container">
-        <h1>500 Server Error</h1>
-        <p>서버오류입니다.. 잠시 후 다시 시도해주세요..</p>
+        <h1><%= status %></h1>
+        <p><%= message %></p>
       </div>
     </div>
     <% include ../../partials/footer.ejs %>

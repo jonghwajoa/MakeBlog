@@ -1,9 +1,8 @@
 const isLogin = (req, res, next) => {
   if (req.session.isLogin === undefined || !req.session.isLogin) {
-    if (req.headers['content-type'] === 'application/json') {
-      return res.status(401).json({ message: 'UnAuthorized' });
-    }
-    return res.status(401).render('error/unauthorized');
+    let error = new Error('UnAuthorized');
+    error.status = 401;
+    return next(error);
   }
   next();
 };

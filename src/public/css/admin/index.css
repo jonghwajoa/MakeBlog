@@ -1,0 +1,40 @@
+section {
+}
+
+.container {
+  width: 1280px;
+  margin: 0 auto;
+  min-height: 80vh;
+}
+
+.inner-nav {
+  margin-top: 80px;
+  height: 50px;
+  position: relative;
+}
+
+.inner-nav .inner-nav-container {
+  width: 1280px;
+  margin: 0 auto;
+  min-height: 80vh;
+}
+
+.inner-nav .inner-nav-container ul {
+  width: inherit;
+  box-shadow: 0 0 10px 1px #eebefa;
+}
+
+.inner-nav .inner-nav-container ul li {
+  display: inline-block;
+  padding: 10px 10px;
+  font-size: 2rem;
+  font-weight: bold;
+  font-family: 'Jeju Gothic';
+}
+
+.visit-count {
+  min-height: 70vh;
+  margin-top: 1rem;
+  box-shadow: 0 0 10px 1px #eebefa;
+  padding: 1rem;
+}
