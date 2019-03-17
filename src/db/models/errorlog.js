@@ -45,5 +45,22 @@ module.exports = (sequelize, DataTypes) => {
     });
   };
 
+  ErrorLog.findAllWithPaging = () => {
+    return ErrorLog.findAll({
+      raws: true,
+      limit: 20,
+      attributes: [
+        'no',
+        'status',
+        'content',
+        'isCheck',
+        'referrer',
+        'path',
+        [sequelize.fn('date_format', sequelize.col('created_at'), '%Y-%m-%d %h시%d분%s초'), 'created_at'],
+      ],
+      order: [['created_at', 'DESC']],
+    });
+  };
+
   return ErrorLog;
 };

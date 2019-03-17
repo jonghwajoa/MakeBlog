@@ -29,17 +29,17 @@
       <article>
         <section class="inner-nav">
           <h2>월별 방문자 보기</h2>
-          <select id="monthly-year">
+          <select id="daily-year">
             <option value="2018">2018</option>
             <option value="2019">2019</option>
           </select>
 
-          <select id="monthly-month">
+          <select id="daily-month">
             <% for(let i=1; i<=12; i++) { %>
             <option value="<%=i%>"><%=i%></option>
             <% } %>
           </select>
-          <input type="button" value="보기" id="monthly-search-btn" />
+          <input type="button" value="보기" id="daily-search-btn" />
         </section>
 
         <section class="content">
@@ -52,11 +52,11 @@
       <article>
         <section class="inner-nav">
           <h2>년별 방문자 보기</h2>
-          <select id="yearly-year">
+          <select id="monthly-year">
             <option value="2018">2018</option>
             <option value="2019">2019</option>
           </select>
-          <input type="button" value="보기" id="yearly-search-btn" />
+          <input type="button" value="보기" id="monthly-search-btn" />
         </section>
 
         <section class="content">

@@ -1,7 +1,7 @@
 const db = require('../../db');
 const validation = require('../../lib/validation');
 
-const searchMonthly = async (req, res, next) => {
+const searchDaily = async (req, res, next) => {
   let result;
   const { year, month } = req.query;
 
@@ -23,7 +23,7 @@ const searchMonthly = async (req, res, next) => {
   return res.json({ day, count });
 };
 
-const searchYear = async (req, res, next) => {
+const searchMonthly = async (req, res, next) => {
   let result;
   const { year } = req.query;
 
@@ -32,8 +32,6 @@ const searchYear = async (req, res, next) => {
   } catch (e) {
     next(e);
   }
-
-  console.log(result);
 
   const month = [];
   const count = [];
@@ -48,6 +46,6 @@ const searchYear = async (req, res, next) => {
 };
 
 module.exports = {
+  searchDaily,
   searchMonthly,
-  searchYear,
 };

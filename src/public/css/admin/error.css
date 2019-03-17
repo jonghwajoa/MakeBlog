@@ -1,0 +1,77 @@
+.wrap {
+  display: flex;
+}
+
+.wrap > aside {
+  flex: 0 0 200px;
+  padding: 1rem 1rem;
+  min-height: 50vh;
+  box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  margin-left: 20px;
+}
+
+.wrap > aside li {
+  margin-left: 1rem;
+  list-style: circle;
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+
+.wrap > aside li + li {
+  margin-top: 1.5rem;
+}
+
+.wrap article {
+  margin: 5px auto 20px;
+  padding: 2rem 1.5rem;
+  width: 80%;
+  box-sizing: border-box;
+  box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.15);
+  border-radius: 10px;
+  position: relative;
+  background: white;
+  min-height: 80vh;
+}
+
+article section > h2 {
+  font-weight: bold;
+  font-size: 1.5rem;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.post {
+  margin: 5px 0;
+  padding: 10px 5px;
+  box-sizing: border-box;
+}
+
+.post + .post {
+  margin-top: 10px;
+  border-top: 2px solid #ededed;
+}
+
+.post span.square {
+  display: inline-block;
+  border-radius: 7px;
+  padding: 4px 8px;
+  font-weight: bold;
+  font-family: 'Nanum Gothic', sans-serif;
+  background: #f8f9fa;
+  color: #495057;
+  border: 1px solid #dee2e6;
+  font-size: 0.8rem;
+  margin-right: 5px;
+}
+
+.post .error-body {
+  padding: 10px 5px 0;
+  font-size: 1rem;
+  font-family: 'Nanum Gothic', sans-serif;
+}
+
+.post .error-body .error-body-info {
+  margin: 10px 0;
+  overflow: hidden;
+}

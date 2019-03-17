@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <title>JONGHWA BLOG</title>
+    <meta charset="UTF-8" />
+
+    <!-- 웹 페이지에 쓰일 언어 지정 -->
+    <meta name="author" content="JongHwa" />
+    <meta name="description" content="JONGHWA BLOG" />
+    <meta name="generator" content="Visual Studio Code" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <% include ../../../partials/essentialCss.ejs %>
+    <link rel="stylesheet" href="/css/admin/error.css" />
+  </head>
+
+  <body>
+    <% include ../../../partials/headerTeam.ejs %>
+
+    <div class="wrap">
+      <aside>
+        <ul>
+          <li><a href="/admin">방문자</a></li>
+          <li><a href="/admin/error">에러로그</a></li>
+        </ul>
+      </aside>
+
+      <article>
+        <section class="content">
+        <% data.forEach(e => { %>
+        <div id=<%= e.no%> class='post'>
+          <div class='error-header'>
+            <span class='square check'><%= e.isCheck %></span> 
+            <span class='square status'><%= e.status %></span> <span class='square createdAt'><%= e.created_at %></span> 
+          </div>
+          <div class='error-body hide'>
+            <%= e.content %>
+
+            <div class='error-body-info'>
+              <span class='square referrer'>referrer: <%= e.referrer%> </span> <span class='square path'>path: <%= e.path%> </span>
+              <select>
+                <% if (e.isCheck) { %>
+                  <option value="0">false</option>  
+                  <option value="1" selected="selected">확인함</option>   
+                <% }else { %>
+                  <option value="0" selected="selected">확인안함</option>  
+                  <option value="1">true</option> 
+                <% } %>
+
+              </select>
+              <input type='button' value='확인' id='check-btn' class= 'check-btn'/>
+            </div>
+          </div>
+        </div>
+        <% }) %>
+      </section>
+
+
+      </article>
+    </div>
+
+    <script src="/js/nav/nav.js"></script>
+    <script src="/js/util/ajaxUtil.js"></script>
+    <script src="/js/admin/admin.js"></script>
+    <link rel="stylesheet" type="text/css" href="/dist/Chart.min.css" />
+  </body>
+</html>
