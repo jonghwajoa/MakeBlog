@@ -9,6 +9,7 @@
     <meta name="description" content="JONGHWA BLOG" />
     <meta name="generator" content="Visual Studio Code" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- <meta http-equiv="refresh" content="2" /> -->
 
     <% include ../../../partials/essentialCss.ejs %>
     <link rel="stylesheet" href="/css/admin/index.css" />
@@ -17,27 +18,43 @@
   <body>
     <% include ../../../partials/headerTeam.ejs %>
 
-    <div class="inner-nav">
-      <div class="inner-nav-container">
+    <div class="wrap">
+      <aside>
         <ul>
           <li><a href="/admin">방문자</a></li>
           <li><a href="/admin/error">에러로그</a></li>
         </ul>
-      </div>
+      </aside>
+
+      <article>
+        <section class="inner-nav">
+          <select id="year">
+            <option value="2018">2018</option>
+            <option value="2019">2019</option>
+          </select>
+
+          <select id="month">
+            <option value="all">all</option>
+            <% for(let i=1; i<=12; i++) { %>
+            <option value="<%=i%>"><%=i%></option>
+            <% } %>
+          </select>
+          <input type="button" value="보기" id="search-btn" />
+        </section>
+
+        <section class="content">
+          <canvas id="myChart" width="500" height="200">
+            Your browser does not support the canvas element.
+          </canvas>
+        </section>
+      </article>
     </div>
 
-    <section>
-      <div class="container">
-        <div class="visit-count">
-          <ul>
-            <% result.forEach((e,i) => { %>
-            <li>day : <%= e.day %> count : <%= e.count %></li>
-            <% }) %>
-          </ul>
-        </div>
-      </div>
-    </section>
-
     <script src="/js/nav/nav.js"></script>
+    <script src="/dist/Chart.min.js"></script>
+    <script src="/js/util/ajaxUtil.js"></script>
+    <script src="/js/util/colorUtil.js"></script>
+    <script src="/js/admin/admin.js"></script>
+    <link rel="stylesheet" type="text/css" href="/dist/Chart.min.css" />
   </body>
 </html>

@@ -6,6 +6,7 @@ router.get('/', async (req, res) => {
   return res.status(301).redirect('/posts');
 });
 
+router.use('/api', require('./api'));
 router.use('/solving', require('./solving'));
 router.use('/auth', require('./auth'));
 router.use('/posts', require('./posts'));

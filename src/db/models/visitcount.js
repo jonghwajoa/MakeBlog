@@ -45,6 +45,14 @@ module.exports = (sequelize, DataTypes) => {
     });
   };
 
+  VisitCount.findMontly = (year, month) => {
+    return VisitCount.findAll({
+      raw: true,
+      where: { year, month },
+      attributes: ['day', 'count'],
+    });
+  };
+
   VisitCount.findMonthCount = (year, month) => {
     return VisitCount.sum('count', {
       where: { year, month },

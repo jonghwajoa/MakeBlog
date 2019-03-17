@@ -1,40 +1,68 @@
-section {
+.wrap {
+  display: flex;
 }
 
-.container {
-  width: 1280px;
-  margin: 0 auto;
-  min-height: 80vh;
+canvas {
 }
 
-.inner-nav {
-  margin-top: 80px;
-  height: 50px;
-  position: relative;
+.wrap > aside {
+  flex: 0 0 200px;
+  padding: 1rem 1rem;
+  min-height: 50vh;
+  box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  margin-left: 20px;
 }
 
-.inner-nav .inner-nav-container {
-  width: 1280px;
-  margin: 0 auto;
-  min-height: 80vh;
-}
-
-.inner-nav .inner-nav-container ul {
-  width: inherit;
-  box-shadow: 0 0 10px 1px #eebefa;
-}
-
-.inner-nav .inner-nav-container ul li {
-  display: inline-block;
-  padding: 10px 10px;
-  font-size: 2rem;
+.wrap > aside li {
+  margin-left: 1rem;
+  list-style: circle;
   font-weight: bold;
-  font-family: 'Jeju Gothic';
+  font-size: 1.5rem;
 }
 
-.visit-count {
-  min-height: 70vh;
-  margin-top: 1rem;
-  box-shadow: 0 0 10px 1px #eebefa;
-  padding: 1rem;
+.wrap > aside li + li {
+  margin-top: 1.5rem;
+}
+
+.wrap > article {
+  flex: 1 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.wrap > article > .inner-nav {
+  flex: 0 0 50px;
+
+  margin: 5px auto 20px;
+  padding: 10px 30px;
+  width: 95%;
+  box-sizing: border-box;
+  box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.15);
+  border-radius: 10px;
+  position: relative;
+  background: white;
+}
+
+.wrap > article > .inner-nav select {
+  width: 100px;
+  height: 20px;
+  margin-right: 20px;
+}
+
+.wrap > article > .inner-nav input[type='button'] {
+  width: 50px;
+}
+
+.wrap > article > .content {
+  border: 1px solid yellowgreen;
+
+  margin: 5px auto 20px;
+  padding: 2rem 1.5rem;
+  width: 95%;
+  box-sizing: border-box;
+  box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.15);
+  border-radius: 10px;
+  position: relative;
+  background: white;
 }
