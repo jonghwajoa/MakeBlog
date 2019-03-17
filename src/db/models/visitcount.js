@@ -45,11 +45,21 @@ module.exports = (sequelize, DataTypes) => {
     });
   };
 
-  VisitCount.findMontly = (year, month) => {
+  VisitCount.findDailyCount = (year, month) => {
     return VisitCount.findAll({
       raw: true,
       where: { year, month },
       attributes: ['day', 'count'],
+    });
+  };
+
+  //SELECT year, month, sum(count) FROM tbl_visitcount where year = 2019 group by month;
+  VisitCount.findMonthlyVisitorCount = (year, month) => {
+    return VisitCount.findAll({
+      raw: true,
+      where: { year },
+      attributes: ['month', [VisitCount.sequelize.fn('sum', VisitCount.sequelize.col('count')), 'count']],
+      group: 'month',
     });
   };
 

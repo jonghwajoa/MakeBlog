@@ -1,6 +1,7 @@
 class Admin {
   constructor() {
-    this.ctx = document.getElementById('myChart');
+    this.dailyChartCanvas = document.getElementById('daily-chart');
+    this.monthlyChartCanvas = document.getElementById('monthly-chart');
     let date = new Date();
     let year = date.getFullYear();
     let month = date.getMonth() + 1;
@@ -9,41 +10,70 @@ class Admin {
   }
 
   eventInit(year, month) {
-    const searchBtn = document.getElementById('search-btn');
-    const yearSelect = document.getElementById('year');
-    const monthSelect = document.getElementById('month');
+    const monthlySearchBtn = document.getElementById('monthly-search-btn');
+    const monthlyYearSelect = document.getElementById('monthly-year');
+    const monthlyMonthSelect = document.getElementById('monthly-month');
+    const yearlySearchBtn = document.getElementById('yearly-search-btn');
+    const yearlyYearSelect = document.getElementById('yearly-year');
 
-    yearSelect.value = year;
-    monthSelect.value = month;
+    yearlyYearSelect.value = year;
+    monthlyYearSelect.value = year;
+    monthlyMonthSelect.value = month;
 
-    searchBtn.addEventListener('click', () => {
-      this.getDateAndDraw(yearSelect.value, monthSelect.value);
+    monthlySearchBtn.addEventListener('click', () => {
+      this.getDateAndDraw(monthlyYearSelect.value, monthlyMonthSelect.value);
+    });
+
+    yearlySearchBtn.addEventListener('click', () => {
+      console.log('dsadas');
     });
   }
 
   async getDateAndDraw(year, month) {
-    let result;
+    let dailyData, yearlyData;
     try {
-      result = await ajaxUtil.sendGetAjax(`/api/admin/monthly?year=${year}&month=${month}`);
+      dailyData = await ajaxUtil.sendGetAjax(`/api/admin/daily?year=${year}&month=${month}`);
+      yearlyData = await ajaxUtil.sendGetAjax(`/api/admin/monthly?year=${year}`);
     } catch (e) {
       console.log(e);
     }
-    this.drawChart(JSON.parse(result));
-  }
 
-  drawChart(data) {
-    this.myChart = new Chart(this.ctx, {
-      type: 'line',
+    dailyData = JSON.parse(dailyData);
+    yearlyData = JSON.parse(yearlyData);
+
+    this.dailyChart = ChartFactory.createChart(
+      'line',
+      dailyData.day,
+      dailyData.count,
+      this.dailyChartCanvas,
+      'Monthly Visit Count',
+      '일별 카운트',
+    );
+
+    this.monthlyChart = ChartFactory.createChart(
+      'line',
+      yearlyData.month,
+      yearlyData.count,
+      this.monthlyChartCanvas,
+      'Yearly Visit Count',
+      '월별 카운트',
+    );
+  }
+}
+
+class ChartFactory {
+  static createChart(type, labels, data, canvas, text, label) {
+    return new Chart(canvas, {
+      type: type,
       data: {
-        labels: [...data.day],
+        labels: [...labels],
         datasets: [
           {
-            label: 'day',
-            data: [...data.count],
-            backgroundColor: backgroundColorUtil.white,
-            borderColor: colorUtil.first,
+            label,
+            data: [...data],
+            backgroundColor: backgroundColorUtil.purple,
+            borderColor: colorUtil.second,
             borderWidth: 3,
-
             fillColor: 'rgba(0,0,0,0.2)',
           },
         ],
@@ -57,7 +87,7 @@ class Admin {
         },
         title: {
           display: true,
-          text: 'Monthly Visit Count',
+          text,
           fontSize: 30,
         },
         scales: {

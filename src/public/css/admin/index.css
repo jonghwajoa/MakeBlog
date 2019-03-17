@@ -31,9 +31,15 @@ canvas {
   flex-direction: column;
 }
 
+article section > h2 {
+  font-weight: bold;
+  font-size: 1.5rem;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
 .wrap > article > .inner-nav {
   flex: 0 0 50px;
-
   margin: 5px auto 20px;
   padding: 10px 30px;
   width: 95%;
@@ -51,12 +57,18 @@ canvas {
 }
 
 .wrap > article > .inner-nav input[type='button'] {
-  width: 50px;
+  height: 30px;
+  width: 70px;
+  cursor: pointer;
+  font-weight: bold;
+  background-color: blueviolet;
+  border-radius: 5%;
+  border: none;
+  color: white;
+  font-size: 1rem;
 }
 
 .wrap > article > .content {
-  border: 1px solid yellowgreen;
-
   margin: 5px auto 20px;
   padding: 2rem 1.5rem;
   width: 95%;
