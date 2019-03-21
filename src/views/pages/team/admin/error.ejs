@@ -29,26 +29,29 @@
         <section class="content">
         <% data.forEach(e => { %>
         <div id=<%= e.no%> class='post'>
-          <div class='error-header'>
+        <div class='error-header'>
+            <span class='square check'><%= e.no %></span> 
             <span class='square check'><%= e.isCheck %></span> 
             <span class='square status'><%= e.status %></span> <span class='square createdAt'><%= e.created_at %></span> 
           </div>
-          <div class='error-body hide'>
-            <%= e.content %>
+          <div class='error-body'>
+            <div class='error-body-content' >
+              <%= e.content %>
+            </div>
 
             <div class='error-body-info'>
               <span class='square referrer'>referrer: <%= e.referrer%> </span> <span class='square path'>path: <%= e.path%> </span>
-              <select>
+              <select id='s<%= e.no%>'>
                 <% if (e.isCheck) { %>
-                  <option value="0">false</option>  
+                  <option value="0">확인안함</option>  
                   <option value="1" selected="selected">확인함</option>   
                 <% }else { %>
                   <option value="0" selected="selected">확인안함</option>  
-                  <option value="1">true</option> 
+                  <option value="1">확인함</option> 
                 <% } %>
 
               </select>
-              <input type='button' value='확인' id='check-btn' class= 'check-btn'/>
+              <input type='button' value='확인' id='c<%= e.no %>' class= 'check-btn'/>
             </div>
           </div>
         </div>
@@ -61,7 +64,7 @@
 
     <script src="/js/nav/nav.js"></script>
     <script src="/js/util/ajaxUtil.js"></script>
-    <script src="/js/admin/admin.js"></script>
+    <script src="/js/admin/error.js"></script>
     <link rel="stylesheet" type="text/css" href="/dist/Chart.min.css" />
   </body>
 </html>

@@ -9,6 +9,7 @@
   box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.3);
   border-radius: 10px;
   margin-left: 20px;
+  height: 300px;
 }
 
 .wrap > aside li {
@@ -66,9 +67,21 @@ article section > h2 {
 }
 
 .post .error-body {
+}
+
+.post .error-body .error-body-content {
   padding: 10px 5px 0;
   font-size: 1rem;
+  height: 1rem;
   font-family: 'Nanum Gothic', sans-serif;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.post .error-body .error-body-content.click {
+  overflow: visible;
+  white-space: normal;
 }
 
 .post .error-body .error-body-info {

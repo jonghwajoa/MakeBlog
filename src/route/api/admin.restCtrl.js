@@ -45,7 +45,27 @@ const searchMonthly = async (req, res, next) => {
   return res.json({ month, count });
 };
 
+const errorCheck = async (req, res, next) => {
+  let { no, isCheck } = req.body;
+
+  no = Number(no);
+  isCheck = Number(isCheck);
+
+  let result;
+  try {
+    result = await db.ErrorLog.findById(no);
+    if (!result) {
+      next(result);
+    }
+    await result.update({ no, isCheck }, { raws: true });
+  } catch (e) {
+    next(e);
+  }
+  return res.status(204).end();
+};
+
 module.exports = {
   searchDaily,
   searchMonthly,
+  errorCheck,
 };

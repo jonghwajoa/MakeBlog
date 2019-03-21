@@ -91,6 +91,24 @@ const ajaxUtil = {
     });
   },
 
+  sendPatchAjax(url, params) {
+    return new Promise((resolve, reject) => {
+      const xhr = new XMLHttpRequest();
+      xhr.onload = function() {
+        if (xhr.status === 204) {
+          resolve(xhr.responseText);
+        } else {
+          reject({ status: xhr.status, message: xhr.responseText });
+        }
+      };
+      xhr.open('PATCH', url, true);
+      xhr.setRequestHeader('Accept', 'application/json');
+      xhr.setRequestHeader('Content-type', 'application/json');
+      xhr.send(JSON.stringify(params));
+      xhr.onerror = () => reject(req.status);
+    });
+  },
+
   saveFileAjax(photo) {
     return new Promise((resolve, reject) => {
       const xhr = new XMLHttpRequest();
