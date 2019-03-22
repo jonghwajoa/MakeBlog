@@ -88,3 +88,29 @@ article section > h2 {
   margin: 10px 0;
   overflow: hidden;
 }
+
+section.paging {
+  padding: 10px 3px;
+  text-align: center;
+}
+
+section.paging span {
+  font-size: 1.3rem;
+}
+
+section.paging span a {
+  color: #868e96;
+}
+
+section.paging span.targetPage {
+  font-size: 1.3rem;
+}
+
+section.paging span.targetPage a {
+  color: black;
+  font-weight: bold;
+}
+
+section.paging span + span {
+  margin-left: 0.5rem;
+}

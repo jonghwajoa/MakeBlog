@@ -24,6 +24,8 @@ router.use((err, req, res, next) => {
   err.status = err.status || 500;
   err.message = err.message || 'Server Error';
 
+  console.log(err);
+
   if (err.status >= 500) {
     db.ErrorLog.createLog(err.status, err.stack, req.ip.substr(7), req.headers['referer'], req._parsedUrl.path);
   }

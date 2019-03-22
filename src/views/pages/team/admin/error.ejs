@@ -9,7 +9,7 @@
     <meta name="description" content="JONGHWA BLOG" />
     <meta name="generator" content="Visual Studio Code" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-
+    
     <% include ../../../partials/essentialCss.ejs %>
     <link rel="stylesheet" href="/css/admin/error.css" />
   </head>
@@ -58,7 +58,24 @@
         <% }) %>
       </section>
 
+        <section class='paging'>
+          <% if(pagingInfo.page > 10) { %>
+            <span class='paing-arrow'><a href="/admin/error?page=<%=pagingInfo.startPage -1%>&perPageNum=<%=pagingInfo.perPageNum %>">PREV</a></span>
+          <% } %>
 
+          <% for (let i=pagingInfo.startPage; i <= pagingInfo.endPage ; i++) { %>
+            
+              <% if(parseInt(pagingInfo.page) === i) { %>
+              <span class="pagingNum targetPage"><a href="/admin/error?page=<%=i%>&perPageNum=<%=pagingInfo.perPageNum %>"><%= i %></a></span>
+              <% }else { %>
+              <span class="pagingNum"><a href="/admin/error?page=<%=i%>&perPageNum=<%=pagingInfo.perPageNum %>"><%= i %></a></span>
+              <% } %>
+            </span>
+          <% } %>
+          <% if (pagingInfo.endPage < pagingInfo.totalPage) { %>
+            <span class='paing-arrow'><a href="/admin/error?page=<%=pagingInfo.endPage +1%>&perPageNum=<%=pagingInfo.perPageNum %>">NEXT</a></span>
+          <% } %>
+        </section>
       </article>
     </div>
 

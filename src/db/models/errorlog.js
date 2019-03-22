@@ -45,10 +45,11 @@ module.exports = (sequelize, DataTypes) => {
     });
   };
 
-  ErrorLog.findAllWithPaging = () => {
+  ErrorLog.findAllWithPaging = (perPageNum = 20, offset = 0) => {
     return ErrorLog.findAll({
       raws: true,
-      limit: 20,
+      limit: perPageNum,
+      offset,
       attributes: [
         'no',
         'status',
@@ -60,6 +61,10 @@ module.exports = (sequelize, DataTypes) => {
       ],
       order: [['created_at', 'DESC']],
     });
+  };
+
+  ErrorLog.totalCount = () => {
+    return ErrorLog.count();
   };
 
   return ErrorLog;

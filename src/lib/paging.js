@@ -12,14 +12,12 @@ function paging(totalCnt, { page = 1, perPageNum = 20 }) {
   let totalPage = Math.floor(totalCnt / perPageNum);
   totalCnt % perPageNum ? totalPage++ : '';
   !totalPage ? totalPage++ : '';
-
   if (totalPage < page) page = totalPage;
 
   const startPage = Math.floor((page - 1) / pageListNum) * 10 + 1;
   let endPage = startPage + pageListNum - 1;
   endPage = endPage > totalPage ? totalPage : endPage;
-
   return { startPage, endPage, page, perPageNum, totalPage };
 }
 
-module.exports = paging;
+module.exports = { paging };
