@@ -213,7 +213,7 @@ describe('Auth는********************************', () => {
       it('비로그인상태에서 로그아웃 요청시..', done => {
         request(app)
           .get('/auth/logout')
-          .expect(401)
+          .expect(302)
           .end(done);
       });
     });

@@ -1,25 +1,9 @@
 /**
- * @since version 1.0
- * @deprecated
+ *
+ * @param {Array} strArray
+ * @returns {Boolean}
+ * @since version 2.1
  */
-const isString = str => {
-  return typeof str === 'string';
-};
-
-/**
- * @since version 1.0
- * @deprecated
- */
-const paramsIsNotNull = params => {
-  let objectVal = Object.values(params);
-  for (let e of objectVal) {
-    if (typeof e !== 'string') {
-      return false;
-    }
-  }
-  return true;
-};
-
 const arrayElementIsString = strArray => {
   if (!Array.isArray(strArray)) {
     return false;
@@ -34,6 +18,7 @@ const arrayElementIsString = strArray => {
 };
 
 /**
+ * 
  * @param {String} val
  * @param {number} min
  * @param {number} max
@@ -51,19 +36,6 @@ const isLength = (val, min, max = Number.MAX_SAFE_INTEGER) => {
 const isUINT = num => {
   num = Number(num);
   return num > 0;
-};
-
-/**
- * /**
- * @since version 1.0
- * @deprecated
- */
-const checkTag = tag => {
-  let array = tag.split(' ');
-  for (let item of array) {
-    if (item[0] !== '#') return false;
-  }
-  return true;
 };
 
 /**
@@ -101,28 +73,8 @@ const postValidationV2 = ({ title = '', tags, content = '' }) => {
 };
 
 /**
- * @since version 1.0
- * @deprecated
+ * @since version 2.1
  */
-const postValidation = ({ title, tag, content = '', category }) => {
-  content = content.trim();
-  if (!content) return false;
-
-  if (!arrayElementIsString([title, tag, content, category])) {
-    return false;
-  }
-
-  if (!isLength(title, 1, 100) || !isLength(tag, 1, 100)) {
-    return false;
-  }
-
-  if (!checkTag(tag)) {
-    return false;
-  }
-
-  return true;
-};
-
 const subPostValidation = ({ title, content = '' }) => {
   content = content.trim();
   if (!content) return false;
@@ -140,6 +92,7 @@ const subPostValidation = ({ title, content = '' }) => {
  * @param {String} params.resource
  * @param {Number} params.category
  * @returns {Boolean}
+ * @since version 2.1
  */
 const solvingValidation = ({ title, content, url, problemNum, category }) => {
   if (!arrayElementIsString([title, content, url, problemNum, category])) {
@@ -154,11 +107,9 @@ const solvingValidation = ({ title, content, url, problemNum, category }) => {
 };
 
 module.exports = {
-  isString,
   arrayElementIsString,
   isLength,
   isUINT,
-  postValidation,
   subPostValidation,
   solvingValidation,
   postValidationV2,

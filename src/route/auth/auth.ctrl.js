@@ -107,11 +107,6 @@ const logout = (req, res, next) => {
    * 사용자가 로그아웃상태인지 인지하지 못한상태로 요청한 것이기때문에..
    * 200을 사용하라고 한다..
    */
-
-  if (!req.session.isLogin) {
-    return res.status(401).end();
-  }
-
   req.session.destroy(err => {
     if (err) {
       return next(err);

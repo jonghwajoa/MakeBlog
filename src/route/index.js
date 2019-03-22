@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const db = require('../db');
+const needsAuth = require('../lib/middleware/needsAuth');
 
 router.get('/', async (req, res) => {
   return res.status(301).redirect('/posts');
@@ -11,7 +12,7 @@ router.use('/solving', require('./solving'));
 router.use('/auth', require('./auth'));
 router.use('/posts', require('./posts'));
 router.use('/about', require('./about'));
-router.use('/admin', require('./admin'));
+router.use('/admin', needsAuth, require('./admin'));
 router.use('/robots.txt', require('./robots'));
 
 router.use((req, res, next) => {
@@ -23,8 +24,6 @@ router.use((req, res, next) => {
 router.use((err, req, res, next) => {
   err.status = err.status || 500;
   err.message = err.message || 'Server Error';
-
-  console.log(err);
 
   if (err.status >= 500) {
     db.ErrorLog.createLog(err.status, err.stack, req.ip.substr(7), req.headers['referer'], req._parsedUrl.path);

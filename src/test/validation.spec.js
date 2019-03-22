@@ -4,7 +4,6 @@ const {
   arrayElementIsString,
   isLength,
   isUINT,
-  postValidation,
   subPostValidation,
   solvingValidation,
   postValidationV2,
@@ -12,7 +11,6 @@ const {
 } = require('../lib/validation');
 
 const content = 'content 입니다..';
-const tag = '#헤헤 #호호';
 const category = '1';
 const title = 'title입니다.';
 const url = 'www';
@@ -79,48 +77,6 @@ describe('벨리데이션 함수 검증테스트......', () => {
       isUINT(1000).should.be.true();
       isUINT(321124).should.be.true();
       isUINT(+845451).should.be.true();
-    });
-  });
-
-  describe('postValidation 함수는 ....', () => {
-    it('content의 값이 공백이면 false를 응답한다..', () => {
-      postValidation({ title, tag, content: '   ', category }).should.be.false();
-      postValidation({ title, tag, content: '', category }).should.be.false();
-    });
-
-    it('content의 값이 없다면 false를 응답한다..', () => {
-      postValidation({ tag, content, category }).should.be.false();
-    });
-
-    it('tag의 값이 없다면 false를 응답한다..', () => {
-      postValidation({ title, content, category }).should.be.false();
-    });
-
-    it('content의 값이 없다면 false를 응답한다..', () => {
-      postValidation({ title, tag, category }).should.be.false();
-    });
-
-    it('category의 값이 없다면 false를 응답한다..', () => {
-      postValidation({ title, tag, content }).should.be.false();
-    });
-
-    it('title의 길이가 100이 넘으면 false를 응답한다.', () => {
-      postValidation({ title: 'testval'.repeat(100), tag, content, category }).should.be.false();
-    });
-
-    it('tag의 길이가 100이 넘으면 false를 응답한다.', () => {
-      postValidation({ title, tag: 'tag'.repeat(100), content, category }).should.be.false();
-    });
-
-    it('tag맨 앞글자가 #이 아니라면 false르 응답한다....', () => {
-      postValidation({ title, tag: 'dadqw #dqdqw #dqwd', content, category }).should.be.false();
-      postValidation({ title, tag: 'dadqw', content, category }).should.be.false();
-      postValidation({ title, tag: '#dadqw dqwdqw', content, category }).should.be.false();
-    });
-
-    it('tag 형식이 맞다면 true를 응답한다.', () => {
-      postValidation({ title, tag: '#dadqw #dqdqw #dqwd', content, category }).should.be.true();
-      postValidation({ title, tag: '#dadqw', content, category }).should.be.true();
     });
   });
 
