@@ -18,7 +18,7 @@ const arrayElementIsString = strArray => {
 };
 
 /**
- * 
+ *
  * @param {String} val
  * @param {number} min
  * @param {number} max
@@ -88,8 +88,8 @@ const subPostValidation = ({ title, content = '' }) => {
 /**
  * @param {Object} params
  * @param {String} params.title
- * @param {String} params.scontent
- * @param {String} params.resource
+ * @param {String} params.content
+ * @param {String} params.url
  * @param {Number} params.category
  * @returns {Boolean}
  * @since version 2.1

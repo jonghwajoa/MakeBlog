@@ -1,12 +1,11 @@
 const db = require('../../db');
-const validation = require('../../lib/validation');
 
 const searchDaily = async (req, res, next) => {
-  let result;
   const { year, month } = req.query;
+  let result;
 
   try {
-    result = await db.VisitCount.findDailyCount(year, Number(month));
+    result = await db.VisitCount.findDailyCount(year, month);
   } catch (e) {
     next(e);
   }

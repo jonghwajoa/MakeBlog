@@ -8,7 +8,7 @@ const {
   solvingValidation,
   postValidationV2,
   checkArrayTag,
-} = require('../lib/validation');
+} = require('../../lib/validation');
 
 const content = 'content 입니다..';
 const category = '1';
