@@ -5,8 +5,8 @@ const bulkCreate = require('./dataBulk');
 // 미들웨어, 함수 벨리데이션
 
 describe('테스트 코드 전체 실행.....', () => {
-  require('./validation.spec');
-  require('./paging.spec');
+  require('./lib/validation.spec');
+  require('./lib/paging.spec');
   require('./pages/auth.spec');
 
   require('./pages/posts.spec');

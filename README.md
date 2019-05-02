@@ -7,16 +7,16 @@
 
 ## 프로젝트 진행하면서 생긴 궁금증
 
-- [가독성 : ! or false](https://github.com/jonghwajoa/MakeBlog/blob/master/Memo/!%20or%20false.md)
+- [! or false](https://github.com/jonghwajoa/MakeBlog/blob/master/Memo/!%20or%20false.md)
 - [선언식 vs 표현식](https://github.com/jonghwajoa/MakeBlog/blob/master/Memo/%EC%84%A0%EC%96%B8%EC%8B%9Dvs%ED%91%9C%ED%98%84%EC%8B%9D.md)
 - [반복적인 요청 ( Map vs Object )](https://github.com/jonghwajoa/MakeBlog/blob/master/Memo/Map%20vs%20Object.md)
-- [pushState](https://github.com/jonghwajoa/MakeBlog/blob/master/Memo/pushState.md)
+- [pushState, replaceState](https://github.com/jonghwajoa/MakeBlog/blob/master/Memo/pushState.md)
 - [Robots.txt](https://github.com/jonghwajoa/MakeBlog/blob/master/Memo/robotstxt.md)
 - [HTML5 로컬스토리지](https://github.com/jonghwajoa/MakeBlog/blob/master/Memo/%EC%9B%B9%EC%8A%A4%ED%86%A0%EB%A6%AC%EC%A7%80.md)
 
 <br>
 
-## v 1
+## v 1.1
 
 개발기간 : 180814 ~ 180901
 
@@ -30,7 +30,7 @@
 
 - 게시글 안에 게시글 작성가능
 - 방문자 카운트
-- 페이징 처리
+- 페이징 처리(perPage 적용)
 - 댓글 (disqus)
 
 ### V1 오류 수정
